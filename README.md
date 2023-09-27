@@ -11,6 +11,10 @@ $ python actionscript_dumper.py -s symbols.txt -a asm_funcs.txt earthbound.smc o
 ## Requirements
 - Python 3.6+
 
+## TODO
+- Modularize the extractor code so a module can be loaded and configured per-game, instead of having multiple copies of essentially the same program.
+- Look into Kirby Super Star action scripts.
+
 
 ## FAQ
 ### "Action Script"? What the hey is that?
