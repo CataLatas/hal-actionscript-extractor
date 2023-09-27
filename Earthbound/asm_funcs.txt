@@ -1,0 +1,727 @@
+; IMPORTANT NOTE:
+;   Be sure to use appropriate datatypes with the "PARAMS" option, as using inappropriate
+;   datatypes will cause the dumper to not work properly, since the parameters would be read wrong
+;   and possibly
+;
+;   By default, all functions have their "PARAMS" option set to anything appropriate, so only change
+;   them if you really know what you're doing. Undocumented functions described below don't need
+;   any parameters, so they're fine not being included for now
+;
+
+; Format:
+;   ASM_FUNCTION ADDRESS
+;   PARAMS=datatype1,datatype2,...,datatypeN (optional)
+;   COMMENT=some comment                     (optional)
+;
+
+; Functions still needing documentation:
+;
+; $C05ECE - Enemy something
+; $C06478
+; $C0A06C
+; $C0A480 - Refresh graphics?
+; $C0AAFD - WUT "LDA #$0000 : LDY #$000C : STA ($84),Y : RTL"
+; $C0C353 - Update present graphics depending if it's opened
+; $C0CC11 - Similar to $C0CBD3, but not quite
+; $C0CD50 - Unknown, returns an angle
+; $C0CEBE - Unknown, input is an angle
+; $C0D0D9
+; $C0D0E6
+; $C0D5B0 - Enemy touched?
+; $C0EC77 - Unknown graphics decompression. REG is a boolean telling which graphics to decompress
+; $C0ECB7 - Load title screen palette??
+; $C0ED5C - Something to do with title screen palette
+; $C0EDD1 - $9641 = 2
+; $C0EDDA - Unknown palette fuckery
+; $C426ED - Unknown, palette fuckery
+; $C47269 - Unknown. Compares current (x, y) position with (var0, var2) and (var1, var3). Returns a facing direction+1
+; $C47A6B
+; $C49740 - Unknown palette fuckery
+; $C4CB4F - Unset unknown flag for objects undergoing graphical fades
+; $C4CB8F - Reveal objects undergoing graphical fade
+; $C4CBE3 - Hide objects undergoing graphical fade
+;
+
+ASM_FUNCTION C018F3
+  COMMENT = Load the overworld map?
+
+ASM_FUNCTION C020F1
+  COMMENT = Delete object
+
+ASM_FUNCTION C03DAA
+  COMMENT = Initialize some party member data
+
+ASM_FUNCTION C03F1E
+  COMMENT = Lots of stuff related to party members
+
+ASM_FUNCTION C04EF0
+  COMMENT = Initialize party member direction, surface flags and walk style based on WalkHistory?
+
+ASM_FUNCTION C05E76
+  COMMENT = Do collision with map
+
+ASM_FUNCTION C05E82
+  COMMENT = Do collision with map, along with some unknown enemy-related stuff
+
+ASM_FUNCTION C064A6
+  COMMENT = Do collision with other objects
+
+ASM_FUNCTION C0778A
+  COMMENT = Tiny Ghost circle-around function?
+
+ASM_FUNCTION C08E9A
+  COMMENT = rand()
+
+ASM_FUNCTION C09451
+  COMMENT = Unfreeze all active objects
+
+; UNUSED IN VANILLA!
+ASM_FUNCTION C09DAE
+  COMMENT = Create object with script "arg-1" at (arg-2, arg-3, arg-4) relative to current object, with var0 as "arg-5", var1 as "current object's var1 + arg-6" and var2 as "current object's index
+  PARAMS  = imm_u16, imm_16, imm_16, imm_16, imm_u16, imm_16
+
+; UNUSED IN VANILLA!
+ASM_FUNCTION C09E0A
+  COMMENT = Create object with script "arg-3", allocate a slot within (arg-1, arg-2), at (arg-4, arg-5, arg-6) relative to current object, with var0 as "arg-7", var1 as "current object's var1 + arg-8" and var2 as "current object's index
+  PARAMS  = imm_u8, imm_u8, imm_u16, imm_16, imm_16, imm_16, imm_u16, imm_16
+
+; UNUSED IN VANILLA!
+ASM_FUNCTION C09E18
+  COMMENT = Create object with script "arg-2" in slot "arg-1", at (arg-3, arg-4, arg-5) relative to current object, with var0 as "arg-6", var1 as "current object's var1 + arg-7" and var2 as "current object's index
+  PARAMS  = imm_u8, imm_u16, imm_16, imm_16, imm_16, imm_u16, imm_16
+
+; UNUSED IN VANILLA!
+ASM_FUNCTION C09E25
+  COMMENT = Create object with script "arg-2" in slot "arg-1", at (arg-3, arg-4, arg-5) relative to current object, with var0 as "arg-6", var1 as "current object's var1 + arg-7" and var2 as "current object's index. This one also runs function $C09C3B, which is an unknown function
+  PARAMS  = imm_u8, imm_u16, imm_16, imm_16, imm_16, imm_u16, imm_16
+
+; UNUSED IN VANILLA! (TODO)
+;ASM_FUNCTION C09E3B
+;  COMMENT =
+;  PARAMS  =
+
+ASM_FUNCTION C09E71
+  COMMENT = Create a "blank" object with the specified movement script
+  PARAMS  = imm_u16
+
+; TODO: C09E79
+; TODO: C09E8E
+; TODO: C09E98
+; TODO: C09EAC
+; TODO: C09ECE
+; TODO: C09EE0
+; TODO: C09EE5
+; TODO: C09EE9
+; TODO: C09EFF
+; TODO: C09F04
+; TODO: C09F08
+; TODO: C09F3B?
+
+ASM_FUNCTION C09F43
+  COMMENT = Backup every object's TICK callback and freeze every active object except the current object
+
+ASM_FUNCTION C09F71
+  COMMENT = Restore every object's TICK callback after backup from $C09F43
+
+ASM_FUNCTION C09F82
+  COMMENT = Random choice
+  PARAMS  = varargs
+
+ASM_FUNCTION C09FA8
+  COMMENT = rand() << 8
+
+ASM_FUNCTION C09FAE
+  COMMENT = Fade-in
+  PARAMS  = imm_s8, imm_s8
+
+ASM_FUNCTION C09FBB
+  COMMENT = Fade-out
+  PARAMS  = imm_s8, imm_s8
+
+ASM_FUNCTION C0A4A8
+  COMMENT = Set animation frame #0 and refresh graphics
+
+ASM_FUNCTION C0A4B2
+  COMMENT = Set animation frame #1 and refresh graphics
+
+ASM_FUNCTION C0A4BF
+  COMMENT = Refresh graphics
+
+ASM_FUNCTION C0A633
+  COMMENT = rand() % 4
+
+ASM_FUNCTION C0A63B
+  COMMENT = rand() % 8
+
+ASM_FUNCTION C0A643
+  COMMENT = Set NPC ID and movement direction if not blocked
+  PARAMS  = imm_u16
+
+ASM_FUNCTION C0A651
+  COMMENT = Set facing and movement direction if not blocked
+  PARAMS  = imm_u8
+
+ASM_FUNCTION C0A65F
+  COMMENT = Set facing direction if not blocked
+
+ASM_FUNCTION C0A66D
+  COMMENT = Set facing direction
+
+ASM_FUNCTION C0A673
+  COMMENT = Get facing direction
+
+ASM_FUNCTION C0A679
+  COMMENT = Set surface flags
+  PARAMS  = imm_8
+
+ASM_FUNCTION C0A685
+  COMMENT = Set movement speed to argument
+  PARAMS  = imm_16
+
+ASM_FUNCTION C0A68B
+  COMMENT = Set movement speed to REG
+
+ASM_FUNCTION C0A691
+  COMMENT = Get movement speed
+
+ASM_FUNCTION C0A697
+  COMMENT = Calculate velocity with argument movement direction
+  PARAMS  = imm_u8
+
+ASM_FUNCTION C0A6A2
+  COMMENT = Walk argument pixels in movement direction
+  PARAMS  = imm_u16
+
+ASM_FUNCTION C0A6AD
+  COMMENT = Walk argument pixels using current
+  PARAMS  = imm_u16
+
+ASM_FUNCTION C0A6B8
+  COMMENT = Check if has collided with another object?
+
+ASM_FUNCTION C0A6D1
+  COMMENT = Disallow object collisions?
+
+ASM_FUNCTION C0A6DA
+  COMMENT = Allow object collisions?
+
+ASM_FUNCTION C0A6E3
+  COMMENT = Refresh object graphics if facing direction changed? [only used for party members, does weird checks with $2C22, $3456 and $2AF6]
+
+ASM_FUNCTION C0A82F
+  COMMENT = Disallow object collisions?
+
+ASM_FUNCTION C0A838
+  COMMENT = Allow object collisions?
+
+ASM_FUNCTION C0A841
+  COMMENT = Play sound effect
+  PARAMS  = imm_u16
+
+ASM_FUNCTION C0A84C
+  COMMENT = Get event flag
+  PARAMS  = imm_u16
+
+ASM_FUNCTION C0A857
+  COMMENT = Set event flag
+  PARAMS  = imm_u16
+
+ASM_FUNCTION C0A864
+  COMMENT = Teleport to argument party member (255 = party leader)
+  PARAMS  = imm_u8
+
+ASM_FUNCTION C0A86F
+  COMMENT = Teleport to argument object
+  PARAMS  = imm_u16
+
+ASM_FUNCTION C0A87A
+  COMMENT = Set screen position
+  PARAMS  = imm_u16, imm_u16
+
+ASM_FUNCTION C0A88D
+  COMMENT = Call text script
+  PARAMS  = addr_32
+
+ASM_FUNCTION C0A8A0
+  COMMENT = Call text script (what's different from $C0A88D?)
+  PARAMS  = addr_32
+
+ASM_FUNCTION C0A8B3
+  COMMENT = Store (x_pos+arg0, y_pos+arg1) to (var0, var1)
+  PARAMS  = imm_u16, imm_u16
+
+ASM_FUNCTION C0A8C6
+  COMMENT = Move towards (var6, var7) with radius var5
+
+ASM_FUNCTION C0A8D1
+  COMMENT = Move towards (var6, var7) with radius var5 (MOONWALKING)
+
+ASM_FUNCTION C0A8DC
+  COMMENT = Move towards (var6, var7) with radius var5 (KEEP FACING)
+
+ASM_FUNCTION C0A8E7
+  COMMENT = Call $C472A8(0) [UNKNOWN]
+
+ASM_FUNCTION C0A8EF
+  COMMENT = Call $C472A8(0) [UNKNOWN]
+
+ASM_FUNCTION C0A8F7
+  COMMENT = Call $C46DAD(0) [Save object's position to ($9E2D,$9E2F) and movement direction to $9E31]
+
+ASM_FUNCTION C0A8FF
+  COMMENT = Call $C46DAD(1) [Save party leader's position to ($9E2D,$9E2F) and movement direction to $9E31]
+
+ASM_FUNCTION C0A907
+  COMMENT = Teleport to preset coordinates
+  PARAMS  = imm_u8
+
+ASM_FUNCTION C0A912
+  COMMENT = Set $9E2D, $9E2F and $9E31
+  PARAMS  = imm_u16, imm_u16, imm_u8
+
+ASM_FUNCTION C0A92D
+  COMMENT = Set (var6, var7) to location of argument NPC
+  PARAMS  = imm_u16
+
+ASM_FUNCTION C0A938
+  COMMENT = Set (var6, var7) to location of argument object
+  PARAMS  = imm_u16
+
+ASM_FUNCTION C0A943
+  COMMENT = Set (var6, var7) to location of argument party member
+  PARAMS  = imm_u8
+
+ASM_FUNCTION C0A94E
+  COMMENT = Make argument NPC face this object
+  PARAMS  = imm_u16
+
+ASM_FUNCTION C0A959
+  COMMENT = Make argument object face this object
+  PARAMS  = imm_u16
+
+ASM_FUNCTION C0A964
+  COMMENT = Set (var0, var1) and (var2, var3) to something [Restrict movement from the current position to the X,Y radius given by 'arg1' and 'arg2']
+  PARAMS  = imm_u16, imm_u16
+
+ASM_FUNCTION C0A977
+  COMMENT = Load argument video drugs
+  PARAMS  = imm_u16, imm_u16
+
+ASM_FUNCTION C0A98B
+  COMMENT = Create new object 'arg1' with movement script 'arg2' at this object
+  PARAMS  = imm_u16, imm_u16
+
+ASM_FUNCTION C0A99F
+  COMMENT = Create new object 'arg1' with movement script 'arg2' at (var0, var1)
+  PARAMS  = imm_u16, imm_u16
+
+ASM_FUNCTION C0A9B3
+  COMMENT = Display CAST screen text. Arguments are still a mystery
+  PARAMS  = imm_u16, imm_u16, imm_u16
+
+ASM_FUNCTION C0A9CF
+  COMMENT = Call $C4EC05 [Something about CAST sequence?]
+  PARAMS  = imm_u16, imm_u16, imm_u16
+
+ASM_FUNCTION C0A9EB
+  COMMENT = Call $C4EC52 [Something about CAST sequence?]
+  PARAMS  = imm_u16, imm_u16, imm_u16
+
+ASM_FUNCTION C0AA07
+  COMMENT = Fade out with mosaic (amount, speed, mosaic_bgs)
+  PARAMS  = imm_u16, imm_u16, imm_u16
+
+ASM_FUNCTION C0AA23
+  COMMENT = Call $C47765 [UNKNOWN. Weird one]
+  PARAMS  = imm_u16, imm_u16, imm_u16
+
+ASM_FUNCTION C0AA3F
+  COMMENT = Set color math color data (BGR format). REG is a boolean (false = color subtraction, true = color addition)
+  PARAMS  = imm_u8, imm_u8, imm_u8
+
+ASM_FUNCTION C0AA6E
+  COMMENT = Set object facing and animation
+  PARAMS  = imm_u8, imm_u8
+
+ASM_FUNCTION C0AAAC
+  COMMENT = Also refresh graphics? Accepts diagonal frames?
+
+ASM_FUNCTION C0AAB5
+  COMMENT = Call $C497C0 [UNKNOWN. Something about palettes?]
+  PARAMS  = imm_u16, imm_u8, imm_u8
+
+ASM_FUNCTION C0AACD
+  COMMENT = X REGISTER = 2 (does this even do anything?)
+
+ASM_FUNCTION C0AAD1
+  COMMENT = X REGISTER = 4 (does this even do anything?)
+
+ASM_FUNCTION C0AAD5
+  COMMENT = THIS ONE IS WEIRD!
+  PARAMS  = imm_u8, imm_u16
+
+ASM_FUNCTION C0C19B 
+  COMMENT = Pathfind to player (returns 1 if no path is found)
+
+ASM_FUNCTION C0C251
+  COMMENT = Pathfind away from player (returns 1 if no path is found)
+
+ASM_FUNCTION C0C35D
+  COMMENT = Check if player is moving
+
+ASM_FUNCTION C0C48F
+  COMMENT = Check if far from party leader (larger range)
+
+ASM_FUNCTION C0C4AF
+  COMMENT = Check if far from party leader (smaller range)
+
+ASM_FUNCTION C0C4F7
+  COMMENT = Get facing towards party leader
+
+ASM_FUNCTION C0C62B
+  COMMENT = Calculate angle towards (var6, var7), turned 180 degrees if the object is an enemy that fears the player
+
+ASM_FUNCTION C0C682
+  COMMENT = Get facing direction plus REG
+
+ASM_FUNCTION C0C69E
+  COMMENT = Get facing direction plus or minus 1 (randomly chosen)
+
+ASM_FUNCTION C0C6B6
+  COMMENT = Check if object is within 320 pixels of the player in a square radius
+
+ASM_FUNCTION C0C7DB
+  COMMENT = Update object surface flags
+
+ASM_FUNCTION C0C83B
+  COMMENT = Set velocity according to REG direction
+
+ASM_FUNCTION C0CA4E
+  COMMENT = Walk for REG pixels
+
+; ASM_FUNCTION C0CCCC
+;   COMMENT = Set destination to 16 pixels either north or south, chosen at random?
+
+ASM_FUNCTION C0D15C
+  COMMENT = Check if party leader has collided with the object
+
+ASM_FUNCTION C0D59B
+  COMMENT = Check if battle swirl is happening
+
+ASM_FUNCTION C0D77F
+  COMMENT = Freeze all objects except this object and party leader?
+
+ASM_FUNCTION C0D7B3
+  COMMENT = Save object coordinates to ($4DBE, $4DC0)
+
+ASM_FUNCTION C0D7C7
+  COMMENT = Restore object coordinates from ($4DBE, $4DC0)
+
+ASM_FUNCTION C0D98F
+  COMMENT = Lots of tile collision(?) related stuff (TODO: INVESTIGATE)
+
+ASM_FUNCTION C0ED14
+  COMMENT = Make the background fully white
+
+ASM_FUNCTION C0ED39
+  COMMENT = Make the background fully black
+
+ASM_FUNCTION C0EE53
+  COMMENT = Make object visible
+
+ASM_FUNCTION C0F3B2
+  COMMENT = Set Gas Station screen palette #1
+
+ASM_FUNCTION C0F3E8
+  COMMENT = Set Gas Station screen palette #2
+
+ASM_FUNCTION C1FFD3
+  COMMENT = Check if running a pirated copy
+
+ASM_FUNCTION C20000
+  COMMENT = Attempt to inflict sunstroke
+
+ASM_FUNCTION C2654C
+  COMMENT = Purple flash and PP replenish (Magic Butterfly)
+
+ASM_FUNCTION C2DB3F
+  COMMENT = Process Video Drugs
+
+ASM_FUNCTION C2EA15
+  COMMENT = Init some windowing effect (UNK_0, CIRCLE, UNK_2)
+
+ASM_FUNCTION C2EA74
+  COMMENT = Do something unknown with windowing effect [one notable usage is closing the CIRCLE effect]
+
+ASM_FUNCTION C2EACF
+  COMMENT = Check if a battle effect or swirl is happening
+
+ASM_FUNCTION C2FF9A
+  COMMENT = Check invalid delivery location
+
+ASM_FUNCTION C30100
+  COMMENT = Show anti-piracy screen
+
+ASM_FUNCTION C40015
+  COMMENT = Set animation to zero and check for proximity with party leader (320 pixels in a square radius)?????
+
+ASM_FUNCTION C40023
+  COMMENT = Set wait timer to (object_index & 0x0F)
+
+ASM_FUNCTION C423DC
+  COMMENT = Windowing and color math setup (Buzz-Buzz Meteorite light)
+
+ASM_FUNCTION C4240A
+  COMMENT = Windowing and color math setup (Monotoli Building elevator)
+
+ASM_FUNCTION C4248A
+  COMMENT = Disable HDMA channel 4 and OBJ/Color window masking
+
+ASM_FUNCTION C424D1
+  COMMENT = Windowing and color math setup (Runaway Five spotlight)
+
+ASM_FUNCTION C4257F
+  COMMENT = Disable HDMA channel 4
+
+ASM_FUNCTION C4258C
+  COMMENT = Windowing and color math setup (Venus spotlight)
+
+ASM_FUNCTION C425F3
+  COMMENT = Disable HDMA channel 4
+
+ASM_FUNCTION C42624
+  COMMENT = Disable HDMA channel 5
+
+ASM_FUNCTION C46712
+  COMMENT = Freeze party leader and hide remaining party members
+
+ASM_FUNCTION C4675C
+  COMMENT = Unfreeze party leader and reveal remaining party members
+
+ASM_FUNCTION C467B4
+  COMMENT = Get random number from 12 to 43
+
+ASM_FUNCTION C467C2
+  COMMENT = Return random-something related to object's Y position (TODO: INVESTIGATE)
+
+ASM_FUNCTION C467E6
+  COMMENT = Unfreeze leaves floating around Tessie Lake
+
+ASM_FUNCTION C4681A
+  COMMENT = Call NPC primary text script
+
+ASM_FUNCTION C468A9
+  COMMENT = Get pressed buttons on Controller 1
+
+ASM_FUNCTION C468AF
+  COMMENT = Get held buttons on Controller 1
+
+ASM_FUNCTION C468B5
+  COMMENT = Check if the object's X position is less than REG
+
+ASM_FUNCTION C468DC
+  COMMENT = Check if the object's Y position is less than REG
+
+ASM_FUNCTION C46903
+  COMMENT = Check if party leader's Y position is greater than REG
+
+ASM_FUNCTION C46914
+  COMMENT = Get NPC original facing direction
+
+ASM_FUNCTION C46957
+  COMMENT = Set facing direction, if different from current
+
+ASM_FUNCTION C46A6E
+  COMMENT = Return $C46A5E[leader_facing] (which is either 1 or 5)
+
+ASM_FUNCTION C46A9A
+  COMMENT = Return $C46A7A[REG]
+
+ASM_FUNCTION C46ADB
+  COMMENT = Get angle towards (var6, var7)
+
+ASM_FUNCTION C46B0A
+  COMMENT = Set object movement direction based on angle
+
+ASM_FUNCTION C46B2D
+  COMMENT = Convert facing to angle
+
+ASM_FUNCTION C46B37
+  COMMENT = Get reverse facing
+
+ASM_FUNCTION C46B51
+  COMMENT = Convert angle to facing direction then return $C46B41[direction]
+
+ASM_FUNCTION C46B65
+  COMMENT = Set (var6, var7) to location of party leader
+
+ASM_FUNCTION C46B79
+  COMMENT = Set (var6, var7) to ($9E2D, $9E2F)
+
+ASM_FUNCTION C46C45
+  COMMENT = Copy (X, Y) position to (var0, var1)
+
+ASM_FUNCTION C46C87
+  COMMENT = Teleport object to (var6, var7)
+
+ASM_FUNCTION C46D23
+  COMMENT = Does something with the object position based on the BG1 scroll (TODO: INVESTIGATE)
+
+ASM_FUNCTION C46D4B
+  COMMENT = Set photo man position (based on weird $E12F8A table)
+
+ASM_FUNCTION C46E46
+  COMMENT = Signal text script to continue from [WAIT_MOVEMENT] (a.k.a [1F 61])
+
+ASM_FUNCTION C46E74
+  COMMENT = Check if player is near position (var0, var1) in radius (var2, var3), always returns FALSE if teleporting
+
+ASM_FUNCTION C46EF8
+  COMMENT = Check if player is near this object in radius (var2, var3), always returns FALSE if teleporting
+
+ASM_FUNCTION C47044
+  COMMENT = Set velocity based on angle (does not clobber REG)
+
+ASM_FUNCTION C4730E
+  COMMENT = Halve Y velocity? (only integer part) (TODO: INVESTIGATE)
+
+ASM_FUNCTION C47333
+  COMMENT = Get amount of party members
+
+ASM_FUNCTION C4733C
+  COMMENT = Modify the map based on event flags
+
+ASM_FUNCTION C4734C
+  COMMENT = Update the tilemap (argument is a mystery for now...) Also returns the argument
+
+ASM_FUNCTION C47369
+  COMMENT = Call $C019E2 (some map-related thing...)
+
+ASM_FUNCTION C47499
+  COMMENT = Call $C4746B(var0) [Mysterious color stuff]
+
+ASM_FUNCTION C474A8
+  COMMENT = Darken/brighten screen using color math ('var0' contains dark/bright factor, in range -15..15. Where -15 is dark, 0 is normal and 15 is bright)
+
+ASM_FUNCTION C47A9E
+  COMMENT = Load animation 'var0'
+
+ASM_FUNCTION C47B77
+  COMMENT = Play animation 'var0'. Start from frame 'var1', play 'var2' frames of animation, with 'var3' delay between animation frames
+
+ASM_FUNCTION C4800B
+  COMMENT = Restore textbox graphics
+
+ASM_FUNCTION C4880C
+  COMMENT = Lumine Hall something
+
+ASM_FUNCTION C48A6D
+  COMMENT = Also related to Lumine Hall
+
+ASM_FUNCTION C48B2C
+  COMMENT = Begin learning Teleport (set facing to EAST and set teleport type to LEARNING)
+
+ASM_FUNCTION C48B3B
+  COMMENT = Make party members face this object??
+
+ASM_FUNCTION C4978E
+  COMMENT = Copy current palette into $4476
+
+ASM_FUNCTION C4981F
+  COMMENT = Clear BG3
+
+ASM_FUNCTION C49841
+  COMMENT = Call $C2EA15(1) [prayer circle windowing effect?]
+
+ASM_FUNCTION C49EC4
+  COMMENT = Display flyover text REG
+
+ASM_FUNCTION C4A7B0
+  COMMENT = Process swirl
+
+ASM_FUNCTION C4CC2C
+  COMMENT = NOP
+
+ASM_FUNCTION C4CC2F
+  COMMENT = Modify graphics pixel (UNKNOWN graphics fade)
+
+ASM_FUNCTION C4CD44
+  COMMENT = Modify graphics pixel (UNKNOWN graphics fade)
+
+ASM_FUNCTION C4CEB0
+  COMMENT = Clear pixel modification buffer (SPRAY graphics fade)
+
+ASM_FUNCTION C4CED8
+  COMMENT = Modify random graphics pixel (SPRAY graphics fade)
+
+ASM_FUNCTION C4DD28
+  COMMENT = Display 'Produced by Shigesato Itoi'
+
+ASM_FUNCTION C4DDD0
+  COMMENT = Display 'Presented by Nintendo'
+
+ASM_FUNCTION C4DE98
+  COMMENT = Tileset and palette something?
+
+ASM_FUNCTION C4DED0
+  COMMENT = Palette (and tileset?) init (for what?)
+
+ASM_FUNCTION C4E2D7
+  COMMENT = Lots of DMA and stuff
+
+ASM_FUNCTION C4E4DA
+  COMMENT = Set 'var0' to (REG*8 + BG3_y_scroll) -- used for the CAST screen
+
+ASM_FUNCTION C4E4F9
+  COMMENT = Check if (var0 < BG3_y_scroll) -- used for the CAST screen
+
+ASM_FUNCTION C4EC6E
+  COMMENT = Load $0380 palette from $7F7000 buffer? (arg = palette row)
+
+ASM_FUNCTION C4ECE7
+  COMMENT = Check if object is at the top of the screen?
+
+ASM_FUNCTION EF027D
+  COMMENT = Unknown Bubble Monkey party NPC initialization
+
+ASM_FUNCTION EF0C87
+  COMMENT = Get delivery fail attempts
+
+ASM_FUNCTION EF0C97
+  COMMENT = Reset delivery fail attempts
+
+ASM_FUNCTION EF0CA7
+  COMMENT = Increment delivery fail attempts. Returns true if limit was reached?
+
+ASM_FUNCTION EF0D23
+  COMMENT = Get delivery retry timer?
+
+ASM_FUNCTION EF0D46
+  COMMENT = Init delivery timer
+
+ASM_FUNCTION EF0D73
+  COMMENT = Decrement delivery timer
+
+ASM_FUNCTION EF0D8D
+  COMMENT = Related to failed delivery?
+
+ASM_FUNCTION EF0DFA
+  COMMENT = Seems to be related to timed deliveries
+
+ASM_FUNCTION EF0E67
+  COMMENT = Get deliveryman walk-in speed
+
+ASM_FUNCTION EF0E8A
+  COMMENT = Get deliveryman walk-out speed
+
+ASM_FUNCTION EF0F60
+  COMMENT = Check if delivery would fail
+
+ASM_FUNCTION EF0FDB
+  COMMENT = Set OSS flag, freeze the player, start delivery music and exit bicycle
+
+ASM_FUNCTION EF0FF6
+  COMMENT = Reset OSS flag and restore music
+
+ASM_FUNCTION EFE556
+  COMMENT = DMA Kirby graphics to VRAM?

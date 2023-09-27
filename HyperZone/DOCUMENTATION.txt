@@ -1,0 +1,121 @@
+HAL'S OBJECT SCRIPT VM (EARLY VERSION - HYPERZONE)
+
+#define MAX_OBJ 18
+#define MAX_SCR 36
+
+RAM USED:
+$0B55[MAX_OBJ] - Associated script index
+$0B79[MAX_OBJ] - X position (unknown specifics)
+$0B9D[MAX_OBJ] - Y position (unknown specifics)
+$0BC1[MAX_OBJ] - X position (unknown specifics)
+$0BE5[MAX_OBJ] - Y position (unknown specifics)
+$0C09[MAX_OBJ] - X map position fraction
+$0C2D[MAX_OBJ] - Y map position fraction
+$0C51[MAX_OBJ] - X velocity
+$0C75[MAX_OBJ] - Y velocity
+$0C99[MAX_OBJ] - X velocity fraction
+$0CBD[MAX_OBJ] - Y velocity fraction
+$0CE1[MAX_OBJ] - X map position
+$0D05[MAX_OBJ] - Y map position
+$0D29[MAX_OBJ] - Object variable #0
+$0D4D[MAX_OBJ] - Object variable #1
+$0D71[MAX_OBJ] - Object variable #2
+$0D95[MAX_OBJ] - Object variable #3
+$0DB9[MAX_OBJ] - Tick callback pointer (low)
+$0DDD[MAX_OBJ] - Tick callback pointer (high)
+$0E01[MAX_OBJ] - Animation frame
+$0E25[MAX_OBJ] - Animation data pointer (low)
+$0E49[MAX_OBJ] - Animation data pointer (high)
+$0E6D[MAX_SCR] - Index to associated TASK script? (equivalent to Earthbound's $125A)
+$0EB5[MAX_SCR] - Equivalent to Earthbound's $12E6
+$0EFD[MAX_SCR] - Script wait timer
+$0F45[MAX_SCR] - Script program counter (low)
+$0F8D[MAX_SCR] - Script program counter (high)
+$0FD5[MAX_SCR] - Script work register
+
+$125D[4]       - Equivalent to Earthbound's $1A02
+$1265[4]       - Equivalent to Earthbound's $1A0A
+$126D[4]       - Equivalent to Earthbound's $1A12
+$1275[4]       - Equivalent to Earthbound's $1A1A
+$127D[4]       - Equivalent to Earthbound's $1A22
+$1285[4]       - Equivalent to Earthbound's $1A2A
+$128D[4]       - Equivalent to Earthbound's $1A32
+$1295[4]       - Equivalent to Earthbound's $1A3A
+$129D[4]       - Inexistant in Earthbound? (EB uses $1A02 instead)
+$12A5[4]       - Inexistant in Earthbound? (EB uses $1A0A instead)
+$12AD          - Current object index
+$12AF          - Current script index
+
+$12B5          - Index of the script currently being processed
+
+$132F[MAX_OBJ] - Z velocity
+$1353[MAX_OBJ] - Z velocity fraction
+$1377[MAX_OBJ] - Z map position
+
+INSTRUCTIONS:
+[00] - END                      (95FC)
+[01] - STARTLOOP  #imm8         (960F)
+[02] - ENDLOOP                  (9633)
+[03] - JML        long          (965D)
+[04] - JSL        long          (96A2)
+[05] - RTL                      (96D0)
+[06] - WAIT       #imm8         (96EF)
+[07] - ASMCALL    long          (9A3C)
+[08] - TASK       abs           (9AF4)
+[09] - ONTICK     long          (9B54)
+[0A] - HALT                     (9B6A)
+[0B] - JEQ        abs           (9A62)
+[0C] - JNE        abs           (9A77)
+[0D] - ENDTASK                  (9ADC)
+[0E] - BINOP      mem,op,#imm16 (9BE2) // AND, OR, ADD (no XOR like in Earthbound!)
+[0F] - MOV        var,#imm16    (9C23) // Objects have only 4 variables, not 8 like in Earthbound!
+[10] - ONTICK     NOP           (9C4D)
+[11] - MULTIJMP   varargs       (9A8C)
+[12] - MULTIJSR   varargs       (9AB2)
+[13] - MOV        mem,#imm8     (9C56)
+[14] - UNK_TASK   #imm8         (9B21) // Kinda similar to Earthbound's ENDLASTTASK, but actually not?
+[15] - BINOP      var,op,#imm16 (9BCD) // AND, OR, ADD (no XOR like in Earthbound!) // Objects have only 4 variables, not 8 like in Earthbound!
+[16] - MOV        mem,#imm16    (9C6B)
+[17] - BREAKEQ    abs           (9C7E)
+[18] - BREAKNE    abs           (9C9D)
+[19] - BINOP      mem,op,#imm8  (9BA2) // AND, OR, ADD (no XOR like in Earthbound!)
+[1A] - JMP        abs           (9655)
+[1B] - JSR        abs           (966F)
+[1C] - RTS                      (968C)
+[1D] - SETANIMPTR long          (9CAC)
+[1E] - MOV        reg,#imm16    (9CC2)
+[1F] - MOV        reg,mem       (9CD1)
+[20] - UNK20      #imm8         (9CE4) // Unknown stuff that doesn't exist in Earthbound #1
+[21] - UNK21      #imm8         (9D01) // Unknown stuff that doesn't exist in Earthbound #2
+[22] - UNK22      #imm8         (9D20) // Unknown stuff that doesn't exist in Earthbound #3
+[23] - MOV        var,reg       (9D36)
+[24] - MOV        reg,var       (9D53)
+[25] - WAIT       var           (9D70)
+
+// SPECIAL INSTRUCTIONS, HAVE WAIT TIMER BUILT INTO THEIR LOWER 4 BITS
+[30] - SETANIM    #imm8         (96FF)
+[38] - SETXPOS    #imm16        (9717)
+[40] - SETYPOS    #imm16        (9765)
+[48] - ADDXPOS    #imm16        (99A1)
+[50] - ADDYPOS    #imm16        (99B4)
+[58] - SETXVEL    #imm16        (97EC)
+[60] - SETYVEL    #imm16        (980D)
+[68] - ADDXVEL    #imm16        (984F)
+[70] - ADDZVEL    #imm16        (9877)
+[78] - UNK_1      #imm8,#imm16  (98C7) // UNK31 in Earthbound
+[80] - UNK_2      #imm8,#imm16  (98DF) // UNK32 in Earthbound
+[88] - UNK_3      #imm8,#imm16  (98F7) // UNK33 in Earthbound
+[90] - UNK_4      #imm8,#imm16  (991E) // UNK34 in Earthbound
+[98] - UNK_5      #imm8,#imm16  (9945) // UNK35 in Earthbound
+[A0] - UNK_6      #imm8,#imm16  (9973) // UNK36 in Earthbound
+[A8] - INCANIM                  (9B74)
+[B0] - DECANIM                  (9B7D)
+[B8] - ADDANIM    #imm8         (9B86)
+[C0] - UNK_7      #imm8,#imm16  (99DA) // UNK37 in Earthbound
+[C8] - UNK_8      #imm8,#imm16  (99F3) // UNK38 in Earthbound
+[D0] - ZEROVEL                  (9A0C)
+[D8] - UNK_9      #imm8         (9A24) // UNK3A in Earthbound
+[E0] - SETZPOS    #imm16        (97B3)
+[E8] - ADDZPOS    #imm16        (99C7)
+[F0] - SETZVEL    #imm16        (982E)
+[F8] - ADDZVEL    #imm16        (989F)

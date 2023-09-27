@@ -1,0 +1,727 @@
+; Scripts
+SCR_KirbyCursor                = C2FFB7 ; 000      (Debug menu cursor)
+SCR_PlayerController           = C3A043 ; 001
+SCR_PartyMember                = C3A05E ; 002
+SCR_PartyMember_BMonkey        = C3A080 ; 003
+
+SCR_Billboard                  = C3A287 ; 007      (Stand still, ignore foreground)
+SCR_MapObjStill                = C3A2AA ; 008      (Stand still)
+
+SCR_PeopleWalk0                = C3A2D3 ; 010, 011 (Walk in place)
+SCR_PeopleWalk1                = C3A2E4 ; 006, 012 (Move around randomly)
+SCR_PeopleWalk_Narrow          = C3A33B ; 013      (Move around randomly, limited to a small 8x8 area)
+
+SCR_MagicButterfly_Out         = C3DF72 ; 033
+SCR_MagicButterfly_Approach    = C3DF1E ; 034
+
+SCR_NessHome_Shake             = C3ACAD ; 036      (Meteor impact screen shake)
+
+SCR_KnockDoor                  = C3AE1E ; 038      (Ness's house door knocking)
+SCR_Ness_JumpBack              = C3AE78 ; 039      (Ness jumps back a bit after the knocking door opens)
+
+SCR_TelephoneRing              = C3AEAC ; 041      (Ringing telephone)
+SCR_PeopleWalk0_Live           = C3AE02 ; 042      (Like PeopleWalk0, but don't despawn if far away)
+SCR_PeopleWalk1_Live           = C3ADE1 ; 043      (Like PeopleWalk1, but don't despawn if far away)
+SCR_MapObjStill_Live           = C3AE0F ; 044      (Like MaoObjStill, but don't despawn if far away)
+
+SCR_ReturnDog                  = C3AF4E ; 046      (King goes back home after reaching the meteorite)
+SCR_AddParty                   = C3AFD8 ; 047      (New party member joins, walk straight to the end of the line)
+SCR_AddPartyViaLeader          = C3AFFA ; 048      (New party member joins, walk to leader first then to the end of the line)
+SCR_AddParty_BMonkey           = C3B021 ; 049      (Bubble Monkey joins)
+SCR_BuzzBuzz_Appear            = C3B0EC ; 050
+SCR_BuzzBuzz                   = C3B06D ; 051
+SCR_BuzzBuzz_Die               = C3B1A6 ; 052
+
+SCR_BuzzBuzz_Beam              = C3B13E ; 054
+
+SCR_Lier_A                     = C3B1E9 ; 056      (Lier goes down the ladder into the basement)
+
+SCR_HallMayor_C                = C3B35D ; 061      (Guard in mayor office doesn't let Ness in)
+SCR_GetOutHallMayor            = C3B3A2 ; 062      (Ness walks to the exit of the mayor office)
+
+SCR_Bus_TwosonThreed_In        = C3B445 ; 064      (Bus appears at the Twoson bus stop with destination to Threed)
+
+SCR_Bus_TwosonTunnel           = C3B4FB ; 067      (Bus going through Twoson Tunnel to Threed)
+SCR_Bus_ReturnTwoson           = C3B5D6 ; 068      (Bus returns to Twoson after ghosts do their thing)
+SCR_Bus_ReturnTwoson_B         = C3B538 ; 069      (Player decides to go back to the bus station)
+SCR_Bus_IntoThreed             = C3B633 ; 070      (Bus goes from Threed entrance to the bus station)
+SCR_OutBus_R                   = C3B69C ; 071      (Player gets off the bus to the right)
+SCR_OutBus_L                   = C3B6D4 ; 072      (Player gets off the bus to the left)
+SCR_IntoBus                    = C3B757 ; 073      (Player gets in the bus)
+
+; C3B784: Script0074
+; C3B7BC: Script0075
+; C3B7EF: Script0076
+; ANIM_OUT_TBUS_R               = 74
+; ANIM_OUT_TBUS_GORGEOUS        = 75
+; ANIM_INTO_TBUS_GORGEOUS       = 76
+;
+; ANIM_OSHIOKI_POKEY            = 81
+; ANIM_OSHIOKI_PICKEY           = 82
+; ANIM_OSHIOKI_MINCE            = 83
+; ANIM_LARDNA_KEE               = 84
+;
+; ANIM_GHOST_PLUS1              = 91
+; ANIM_GHOST_PLUS2              = 92
+; ANIM_RET_GHOSTTUNNEL          = 93
+;
+; ANIM_GHOST_THRK_PLUS1         = 99
+; ANIM_GHOST_THRK_PLUS2         = 100
+; ANIM_MOUSE_DOOR               = 101
+;
+; ANIM_MICHIKO_INTO_ROOM        = 109
+; ANIM_MICHIKO_INTO_ROOM_B      = 110
+; ANIM_FOLLOW_TO_MICHIKO        = 111
+; ANIM_FOLLOW_TO_MICHIKO_B      = 112
+;
+; ANIM_WAKEUP_TONY              = 114
+; ANIM_GORGEOUS_FREE            = 115
+; ANIM_LUCKY_FREE               = 116
+; ANIM_NICE_FREE                = 117
+; ANIM_OK_FREE                  = 118
+; ANIM_GROOVE_FREE              = 119
+; ANIM_MOGIRI_TO_RIGHT          = 120
+; ANIM_MOGIRI_TO_DOWN           = 121
+; ANIM_MONOTORY_OUT_A_GORGEOUS  = 122
+; ANIM_MONOTORY_OUT_A_LUCKY     = 123
+; ANIM_MONOTORY_OUT_A_NICE      = 124
+; ANIM_MONOTORY_OUT_A_OK        = 125
+; ANIM_MONOTORY_OUT_A_GROOVE    = 126
+;
+; ANIM_GIANTSTEP_COP            = 133
+;
+; ANIM_KIFUYA_TUKIMATOU         = 135
+; ANIM_FATHER_CALL_PAULA        = 136
+; ANIM_SW_WINS                  = 137
+; ANIM_SW2_WINS                 = 138
+; ANIM_NEAR_ANDOUGHNUT          = 139
+; ANIM_ANDOUGHNUT_MESSAGE       = 140
+; ANIM_WINS_NEAR_KANAI          = 141
+; ANIM_WINS_NEAR_BMONKEY        = 142
+; ANIM_WINS_AWAY_KANAI          = 143
+; ANIM_WINS_AWAY_BMONKEY        = 144
+; ANIM_INTO_SW_WINS             = 145
+; ANIM_SW_WINS_A                = 146
+; ANIM_SW_SKY_A                 = 147
+; ANIM_SW_SKY_B                 = 148
+; ANIM_SW_SKY_C                 = 149
+; ANIM_SW_SKY_D                 = 150
+; ANIM_SW_SKY_E                 = 151
+; ANIM_SW_SKY_F                 = 152
+; ANIM_SW_FOUR_A                = 153
+; ANIM_SW_FOUR_B                = 154
+; ANIM_SW_FOUR_SHADOW_A         = 155
+; ANIM_SW_FOUR_SHADOW_B         = 156
+; ANIM_SW_DSRT_A                = 157
+; ANIM_SW_DSRT_B                = 158
+; ANIM_SW_DSRT_SHADOW_A         = 159
+; ANIM_SW_DSRT_SHADOW_B         = 160
+; ANIM_SW_THRK_A                = 161
+; ANIM_SW_THRK_B                = 162
+; ANIM_SW_WINS_SHADOW_A         = 163 ; GUESSED
+; ANIM_SW_THRK_SHADOW_A         = 164
+; ANIM_SW_THRK_SHADOW_B         = 165
+; ANIM_SW_WINS_LAND             = 166
+; ANIM_SW_WINS_LAND2            = 167
+; ANIM_WINS_SKYWALKER_SHADOW    = 168
+; ANIM_OUT_SKYWALKER            = 169
+; ANIM_SW_SUMS_A                = 170
+; ANIM_SW_SUMS_SHADOW_A         = 171
+; ANIM_SW_SPLINTER1             = 172
+; ANIM_SW_SPLINTER2             = 173
+; ANIM_SW_SPLINTER3             = 174
+; ANIM_ODOROKI_NES_POLA         = 175
+; ANIM_KUROKOGE_JEFF            = 176
+; ANIM_JEFF_ADD_PARTY           = 177
+;
+; ANIM_GORGEOUS_CHAOUS          = 179
+; ANIM_TO_GORGEOUS_CHAOUS       = 180
+; ANIM_TONZURABUS_CHAOUS        = 181
+; ANIM_INTO_TONZURABUS_CHAOUS   = 182
+; ANIM_GORGEOUS_CHAOUS_RIDE     = 183
+; ANIM_TONZURABUS_TO_THRK       = 184
+; ANIM_TBUS_TO_THRK_TUNNEL      = 185
+; ANIM_TBUS_INTO_THRK           = 186
+; ANIM_GORGEOUS_MONO            = 187
+;
+; ANIM_TBUS_RIDE_MONO           = 189
+;
+; ANIM_INTO_TONZURABUS_MONO     = 191
+; ANIM_GORGEOUS_MONO_RIDE       = 192
+; ANIM_TBUS_TO_FOUR_TUNNEL      = 193
+; ANIM_TBUS_FOUR_TUNNEL         = 194
+; ANIM_TBUS_TUNNEL_BRDG         = 195
+; ANIM_TBUS_BRDG_TUNNEL         = 196
+; ANIM_TBUS_TUNNEL_DSRT         = 197
+; ANIM_TBUS_DSRT_TUNNEL         = 198
+; ANIM_TBUS_TUNNEL_HWAY_L       = 199
+; ANIM_TBUS_HWAY_TUNNEL_L       = 200
+; ANIM_TBUS_TUNNEL_THRK_L       = 201
+; ANIM_BUS_THRK_TWSN_IN         = 202
+; ANIM_BUS_TO_THRK_TUNNEL       = 203
+; ANIM_BUS_THRK_TUNNEL          = 204
+; ANIM_BUS_TUNNEL_TWSN          = 205
+; ANIM_BUS_THRK_DSRT_IN         = 206
+; ANIM_BUS_THRK_TO_DSRT         = 207
+; ANIM_BUS_THRK_TUNNEL_R        = 208
+; ANIM_BUS_TUNNEL_HWAY_R        = 209
+; ANIM_BUS_HWAY_TUNNEL_R        = 210
+; ANIM_BUS_TUNNEL_DSRT_R        = 211
+; ANIM_BUS_DSRT_TUNNEL_R        = 212
+; ANIM_BUS_TUNNEL_BRDG_R        = 213
+; ANIM_BUS_BRDG_TUNNEL_R        = 214
+; ANIM_BUS_TUNNEL_FOUR          = 215
+; ANIM_BUS_TUNNEL_DSRT_R_J      = 216
+; ANIM_BUS_DSRT_THRK_IN         = 217
+; ANIM_BUS_DSRT_TO_THRK         = 218
+; ANIM_BUS_DSRT_FOUR_IN         = 219
+; ANIM_BUS_DSRT_TO_FOUR         = 220
+;
+; ANIM_SYOCHO_A                 = 222
+; ANIM_SYOCHO_B                 = 223
+; ANIM_SYOCHO_C                 = 224
+; ANIM_FOLLOW_TO_SYOCHO_A       = 225
+; ANIM_FOLLOW_TO_SYOCHO_B       = 226
+; ANIM_FOLLOW_TO_SYOCHO_C       = 227
+; ANIM_COP5_A                   = 228
+; ANIM_COP5_B                   = 229
+; ANIM_COP5_C                   = 230
+; ANIM_COP5_D                   = 231
+; ANIM_COP5_E                   = 232
+; ANIM_COP5_TO_NESS_A           = 233
+; ANIM_COP5_TO_NESS_B           = 234
+; ANIM_COP5_TO_NESS_C           = 235
+; ANIM_COP5_TO_NESS_D           = 236
+; ANIM_COP5_TO_NESS_E           = 237
+; ANIM_COP5_ESCAPE              = 238
+; ANIM_SYOCHO_TO_NESS           = 239
+;
+; ANIM_GRFD_POLA_ADD_PARTY      = 241
+; ANIM_TOPOLLO_HALL_A           = 242
+; ANIM_MUSEUM_KOMORITA          = 243
+; ANIM_FRSD_FIELD_O             = 244
+; ANIM_FRSD_FIELD_L             = 245
+; ANIM_FRSD_FIELD_M             = 246
+; ANIM_FRSD_FIELD_P             = 247
+; ANIM_FRSD_FIELD_Q             = 248
+; ANIM_TONCHIKI                 = 249
+;
+; ANIM_TACY_NEAR_BMONKEY        = 251
+; ANIM_BMONKEY_GUM              = 252
+; ANIM_BMONKEY_GUM1             = 253
+; ANIM_BMONKEY_FLY              = 254
+; ANIM_BMONKEY_FLY_S            = 255
+;
+; ANIM_YUNBO_BACK               = 257
+;
+; ANIM_SIGE_YUNBO_MOVE          = 259
+;
+; ANIM_BMONKEY_ROPE             = 261
+; ANIM_BMONKEY_ROPE_S           = 262
+; ANIM_BMONKEY_ROPE_OROSU       = 263
+; ANIM_BMONKEY_ROPE_DOWN        = 264
+; ANIM_BMONKEY_ROPE_GOOD        = 265
+; ANIM_DASH_TONY                = 266
+; ANIM_JUMP_JEF                 = 267
+; ANIM_JUMP_JEF_S               = 268
+; ANIM_OUT_TONY                 = 269
+; ANIM_JEF_INTO_SW_THRK         = 270
+; ANIM_INTO_SW_THRK             = 271
+; ANIM_SW_TO_SUMS_1             = 272
+;
+; ANIM_KOYA_HH1                 = 274
+; ANIM_KOYA_HH2                 = 275
+; ANIM_KOYA_KARASU              = 276
+; ANIM_CARP_DUNG_L              = 277
+; ANIM_CARP_DUNG_R              = 278
+;
+; ANIM_BMONKEY_BYE              = 285
+;
+; ANIM_DOSE_SPACETUNNEL         = 287
+; ANIM_INTO_ST_KUROKOGE         = 288
+; ANIM_OUT_ST_KUROKOGE          = 289
+; ANIM_AND_DOSE                 = 290
+; ANIM_INTO_SHIP                = 291
+; ANIM_TO_SAILOR                = 292
+; ANIM_SHIP_TO_SKRB_1           = 293
+; ANIM_SHIP_SMALL               = 294
+; ANIM_EVT_KRAKEN_APPROACH      = 295
+; ANIM_SHIP_TO_SKRB_2           = 296
+; ANIM_OUT_SHIP                 = 297
+; ANIM_SUBMARINE_1              = 298
+; ANIM_SUBMARINE_2              = 299
+; ANIM_OUT_SUBMARINE            = 300
+; ANIM_GUARD_A_1                = 301
+; ANIM_GUARD_A_2                = 302
+; ANIM_GUARD_B_1                = 303
+; ANIM_GUARD_B_2                = 304
+; ANIM_GUARD_3                  = 305
+; ANIM_TO_GUARD                 = 306
+; ANIM_MOCHI_1                  = 307 ; GUESSED
+; ANIM_MOCHI_YUNBO              = 308 ; GUESSED
+; ANIM_MOCHI_2                  = 309 ; GUESSED
+; ANIM_ST_ST3                   = 310
+; ANIM_DOSEI_ST3                = 311
+; ANIM_AND_ST3_1                = 312
+; ANIM_AND_ST3_2                = 313
+; ANIM_KID_ST3                  = 314
+; ANIM_AND_NEAR_ST3             = 315
+; ANIM_OUT_ST3                  = 316
+; ANIM_GEPPU_PASS               = 317
+; ANIM_MABOROSHI_IN             = 318
+; ANIM_POO_TO_OLDMAN            = 319
+; ANIM_MABOROSHI_OUT_1          = 320
+; ANIM_MABOROSHI_OUT_2          = 321
+; ANIM_HOIHOI_A                 = 322
+; ANIM_HOIHOI_B                 = 323
+; ANIM_HOIHOI_C                 = 324
+; ANIM_HOIHOI_D                 = 325
+; ANIM_HOIHOI_E                 = 326
+; ANIM_HOIHOI_F                 = 327
+; ANIM_HOIHOI_G                 = 328
+; ANIM_HOIHOI_H                 = 329
+; ANIM_HOIHOI_I                 = 330
+; ANIM_HOIHOI_J                 = 331
+; ANIM_HOIHOI_K                 = 332
+; ANIM_HOIHOI_L                 = 333
+; ANIM_HOIHOI_M                 = 334
+;
+; ANIM_INTO_ST2                 = 336
+; ANIM_CHKA_ST2_STILL           = 337
+; ANIM_OUT_ST2                  = 338
+; ANIM_POO_SYUGYOU_1            = 339
+; ANIM_POO_SYUGYOU_2            = 340
+; ANIM_MESSENGER                = 341
+; ANIM_SENZO_1                  = 342
+; ANIM_SENZO_2                  = 343
+; ANIM_POO_TELEPORT             = 344
+; ANIM_SYUGYOU_ADD_POO          = 345
+; ANIM_KAITEN_NESS              = 346
+; ANIM_NESS_AWAKE               = 347
+; ANIM_TALK_PAULA               = 348
+; ANIM_TALK_JEFF                = 349
+; ANIM_TALK_POO                 = 350
+; ANIM_BG_CHANGE                = 351
+; ANIM_POWSPOT                  = 352
+; ANIM_KOKE                     = 353
+; ANIM_MONO_R_MAN               = 354
+; ANIM_STAGE_PARTY              = 355
+; ANIM_STAGE_FADEOUT            = 356
+; ANIM_TSTAGE1_SCR_1            = 357
+; ANIM_TSTAGE1_THANK            = 358
+; ANIM_TSTAGE1_OK               = 359
+;
+; ANIM_TSTAGE1_MIKE_L           = 361
+; ANIM_TSTAGE1_MIKE_R           = 362
+; ANIM_TSTAGE1_NICE             = 363
+; ANIM_TSTAGE1_GROOVE           = 364
+; ANIM_TSTAGE1_GORGEOUS         = 365
+; ANIM_TSTAGE1_LUCKY_DANCE      = 366
+; ANIM_TSTAGE1_GORGEOUS_DANCE   = 367
+; ANIM_TSTAGE1_LUCKY            = 368
+; ANIM_TSTAGE1_SCR_2            = 369
+; ANIM_TSTAGE1_FLIP             = 370
+; ANIM_TSTAGE1_FLIP_TURN        = 371
+; ANIM_TSTAGE2_SCR_1            = 372
+; ANIM_TSTAGE2_MIKE_L           = 373
+; ANIM_TSTAGE2_MIKE_R           = 374
+; ANIM_TSTAGE2_THANK            = 375
+; ANIM_TSTAGE2_OK               = 376
+; ANIM_TSTAGE2_NICE             = 377
+; ANIM_TSTAGE2_GROOVE           = 378
+; ANIM_TSTAGE2_HIGHHAT          = 379
+; ANIM_TSTAGE2_SPOTINIT_PLAYER  = 380
+; ANIM_TSTAGE2_PLAYER           = 381
+; ANIM_TSTAGE2_SPOTLIGHT        = 382
+; ANIM_TSTAGE2_GORGEOUS         = 383
+; ANIM_TSTAGE2_LUCKY            = 384
+; ANIM_TSTAGE2_GORGEOUS_WALK    = 385
+; ANIM_TSTAGE2_LUCKY_WALK       = 386
+; ANIM_TSTAGE2_GORGEOUS_DANCE   = 387
+; ANIM_TSTAGE2_LUCKY_DANCE      = 388
+; ANIM_TSTAGE2_GORGEOUS_DANCE_3 = 389
+; ANIM_TSTAGE2_LUCKY_DANCE_3    = 390
+; ANIM_TSTAGE2_GORGEOUS_DANCE_4 = 391
+; ANIM_TSTAGE2_LUCKY_DANCE_4    = 392
+; ANIM_TSTAGE2_GORGEOUS_DANCE_5 = 393
+; ANIM_TSTAGE2_LUCKY_DANCE_5    = 394
+; ANIM_TSTAGE2_GORGEOUS_DANCE_6 = 395
+; ANIM_TSTAGE2_LUCKY_DANCE_6    = 396
+; ANIM_TSTAGE2_SPOT_A           = 397
+; ANIM_TSTAGE2_SPOT_B           = 398
+; ANIM_TSTAGE2_GROOVE_ADLIB     = 399
+; ANIM_TSTAGE2_SCR_2            = 400
+; ANIM_TSTAGE3_SCR_1            = 401
+; ANIM_TSTAGE3_MIKE_L           = 402
+; ANIM_TSTAGE3_MIKE_R           = 403
+; ANIM_TSTAGE3_THANK            = 404
+; ANIM_TSTAGE3_OK               = 405
+; ANIM_TSTAGE3_NICE             = 406
+; ANIM_TSTAGE3_GROOVE           = 407
+; ANIM_TSTAGE3_HIGHHAT          = 408
+; ANIM_TSTAGE3_BAND             = 409
+; ANIM_TSTAGE3_LUCKY_1          = 410
+; ANIM_TSTAGE3_GORGEOUS_1       = 411
+; ANIM_TSTAGE3_LUCKY_2          = 412
+; ANIM_TSTAGE3_GORGEOUS_2       = 413
+; ANIM_TSTAGE3_LUCKY_3          = 414
+; ANIM_TSTAGE3_GORGEOUS_3       = 415
+; ANIM_TSTAGE3_LUCKY_4          = 416
+; ANIM_TSTAGE3_GORGEOUS_4       = 417
+; ANIM_TSTAGE3_LUCKY_5          = 418
+; ANIM_TSTAGE3_GORGEOUS_5       = 419
+; ANIM_TSTAGE3_LUCKY_6          = 420
+; ANIM_TSTAGE3_GORGEOUS_6       = 421
+; ANIM_TSTAGE3_LUCKY_7          = 422
+; ANIM_TSTAGE3_GORGEOUS_7       = 423
+; ANIM_TSTAGE3_LUCKY_8          = 424
+; ANIM_TSTAGE3_GORGEOUS_8       = 425
+; ANIM_TSTAGE3_LUCKY_9          = 426
+; ANIM_TSTAGE3_GORGEOUS_9       = 427
+; ANIM_TSTAGE3_LUCKY_10         = 428
+; ANIM_TSTAGE3_GORGEOUS_10      = 429
+; ANIM_TSTAGE3_THANK_3          = 430
+; ANIM_TSTAGE3_OK_3             = 431
+; ANIM_TSTAGE3_NICE_3           = 432
+; ANIM_TSTAGE3_GROOVE_3         = 433
+; ANIM_TSTAGE3_HIGHHAT_3        = 434
+; ANIM_TSTAGE3_VENUS            = 435
+; ANIM_TSTAGE3_TBUS             = 436
+;
+; ANIM_VSTAGE1_SCR_1            = 438
+; ANIM_VSTAGE1_VENUS_STILL      = 439
+; ANIM_VSTAGE1_VENUS_LIGHT1     = 440
+; ANIM_VSTAGE1_VENUS_LIGHT2     = 441
+; ANIM_VSTAGE1_VENUS            = 442
+; ANIM_VSTAGE1_KOMORITA_CROSS   = 443
+; ANIM_VSTAGE1_KOMORITA_APPEAR  = 444
+; ANIM_VSTAGE1_BODYGUARD_L      = 445
+; ANIM_VSTAGE1_BODYGUARD_R      = 446
+; ANIM_VSTAGE1_SCR_2            = 447
+; ANIM_PHOTOGRAPHER             = 448
+; ANIM_PHOTOGRAPHER_S           = 449
+; ANIM_NES_PEACE                = 450
+; ANIM_NES_PEACE_SAIKYOU        = 451
+; ANIM_CAMERA_EYE               = 452
+; ANIM_BUS_DRIVER_L             = 453
+; ANIM_BUS_DRIVER_R             = 454
+; ANIM_BUS_FOUR_THRK_IN         = 455
+; ANIM_BUS_FOUR_THRK_GO         = 456
+; ANIM_BUS_FOUR_TUNNEL          = 457
+; ANIM_BUS_TUNNEL_BRDG_L        = 458
+; ANIM_BUS_BRDG_TUNNEL_L        = 459
+; ANIM_BUS_TUNNEL_DSRT_L        = 460
+; ANIM_BUS_DSRT_TUNNEL_L        = 461
+; ANIM_BUS_TUNNEL_HWAY_L        = 462
+; ANIM_BUS_HWAY_TUNNEL_L        = 463
+; ANIM_BUS_TUNNEL_THRK_L        = 464
+; ANIM_TELEPORT_FAIL            = 465
+; ANIM_TELEPORT_SUCCESS         = 466
+;
+; ANIM_GORGEOUS_FREE_2A         = 468
+; ANIM_LUCKY_FREE_2A            = 469
+; ANIM_NICE_FREE_2A             = 470
+; ANIM_OK_FREE_2A               = 471
+; ANIM_GROOVE_FREE_2A           = 472
+; ANIM_TONZURA_FREE_2B          = 473
+; ANIM_GROOVE_FREE_2B           = 474
+; ANIM_GORGEOUS_FREE_2C         = 475
+; ANIM_PROLOGUE_POKEY_1         = 476
+; ANIM_PROLOGUE_POKEY_2         = 477
+; ANIM_PROLOGUE_POKEY_3         = 478
+; ANIM_BMONKEY_TASSI_1A         = 479
+; ANIM_TASSI_1                  = 480
+; ANIM_BMONKEY_TASSI_1B         = 481
+; ANIM_BMONKEY_TASSI_1C         = 482
+; ANIM_RIDE_TASSI_1             = 483
+; ANIM_OUT_TASSI_1              = 484
+; ANIM_UZU_1                    = 485
+; ANIM_UZU_2                    = 486
+; ANIM_TACYMASK1                = 487
+; ANIM_TACYMASK2                = 488
+; ANIM_TACYMASK3                = 489
+; ANIM_TACYMASK4                = 490
+; ANIM_UZU_1_TASSI_BYE          = 491
+; ANIM_UZU_2_TASSI_BYE          = 492
+; ANIM_UZU_3_TASSI_BYE_U        = 493
+; ANIM_UZU_3_TASSI_BYE_L        = 494
+; ANIM_LEAF_1                   = 495
+; ANIM_LEAF_2                   = 496
+;
+; ANIM_MD_TOTO                  = 535
+; ANIM_MD_THRK                  = 536
+; ANIM_MD_MAKYO                 = 537
+; ANIM_MD_MAKYO_RAFURESIA       = 538
+; ANIM_MD_HASHI_BUS             = 539
+; ANIM_MD_HASHI_YUNBO           = 540
+; ANIM_MD_DUNG                  = 541
+; ANIM_MD_TWSN                  = 542
+; ANIM_MD_SKRB                  = 543
+; ANIM_MD_FRSD                  = 544
+; ANIM_MD_SUMS                  = 545
+; ANIM_MD_ONET                  = 546
+; ANIM_LAST_BATTLE              = 547
+; ANIM_NES_FACE                 = 548
+; ANIM_LAST_BATTLE_POKEY        = 549
+;
+; ANIM_SPIRIT_RETURN_NES        = 551
+; ANIM_SPIRIT_RETURN_POLA       = 552
+; ANIM_SPIRIT_RETURN_JEF        = 553
+; ANIM_SPIRIT_RETURN_POO        = 554
+; ANIM_WHITEOUT                 = 555
+; ANIM_SPIRIT_RETURN_NES2       = 556
+; ANIM_SPIRIT_RETURN_POLA2      = 557
+; ANIM_SPIRIT_RETURN_JEF2       = 558
+; ANIM_SPIRIT_RETURN_POO2       = 559
+; ANIM_COME_BACK_NES            = 560
+; ANIM_COME_BACK_POLA           = 561
+; ANIM_COME_BACK_JEF            = 562
+; ANIM_COME_BACK_POO            = 563
+; ANIM_POO_EXPLOSION            = 564
+; ANIM_DOSE_ANDONUT_END         = 565
+; ANIM_DOSE_DOSEI_END           = 566
+; ANIM_POLA_POLASTAR_RETURN     = 567
+; ANIM_POLA_POLASTAR_RETURN_L   = 568
+; ANIM_POLA_POLASTAR_RETURN_R   = 569
+; ANIM_PRESENTBOX_FALL1         = 570
+; ANIM_PRESENTBOX_FALL2         = 571
+; ANIM_PRESENTBOX_FALL3         = 572
+; ANIM_PRESENTBOX_SHADOW1       = 573
+; ANIM_PRESENTBOX_SHADOW2       = 574
+; ANIM_PRESENTBOX_SHADOW3       = 575
+;
+; ANIM_DOSEI_NES_DOWN           = 577
+; ANIM_DOSEI_POLA_DOWN          = 578
+; ANIM_DOSEI_JEF_DOWN           = 579
+; ANIM_DOSEI_POO_DOWN           = 580
+;
+; ANIM_ELEVATER_UP              = 582
+; ANIM_ELEVATER_DOWN            = 583
+;
+; ANIM_MATENT_AWAY_ZOMBI1       = 593
+; ANIM_MATENT_AWAY_ZOMBI2       = 594
+;
+; ANIM_GUMI_STONE_RISE          = 596
+;
+; ANIM_APPLEMOUSE_STEPBACK      = 604
+; ANIM_MAPOBJTBACK              = 605
+; ANIM_PEOPLE_TBACK             = 606 ; GUESSED
+;
+; ANIM_FOUR_MUSEUM_BILK         = 611
+; ANIM_FOUR_MUSEUM_RID          = 612
+; ANIM_FOUR_FOLLOW_MUSEUM_A     = 613
+; ANIM_FOUR_MUSEUM_RETURN       = 614
+; ANIM_SUMS_MUSEUM_BILK         = 615
+; ANIM_SUMS_MUSEUM_RID          = 616
+; ANIM_SUMS_FOLLOW_MUSEUM_A     = 617
+; ANIM_SUMS_MUSEUM_RETURN       = 618
+; ANIM_SYOCHO_ESCAPE            = 619
+; ANIM_SAITEI_MABOROSHI_IN      = 620
+; ANIM_SAITEI_MABOROSHI_OUT     = 621
+; ANIM_INSEKI_STARMAN           = 622
+; ANIM_AKANBE_POKEY             = 623
+;
+; ANIM_MOUSE_ADDPARTY           = 625
+; ANIM_INSEKI_WAKEUP_WALK       = 626
+; ANIM_PEOPLESLEEP              = 627
+;
+; ANIM_LARDNA_SLAP_BUNBUUN      = 630
+;
+; ANIM_INTO_NIGHT               = 633
+; ANIM_BLACKOUT                 = 634
+; ANIM_BLINK_SUICIDE            = 635
+; ANIM_BUTUKARIZARU             = 636
+; ANIM_LEAVE_BUTUKARIZARU       = 637
+; ANIM_UKKARI_CARRIER           = 638
+; ANIM_LEAVE_UKKARI_CARRIER     = 639
+; ANIM_APPROACH_CONT_SCRIPT     = 640
+; ANIM_EAVES_MAID               = 641
+;
+; ANIM_PANNING_WINTERS_1        = 643
+; ANIM_PANNING_WINTERS_2        = 644
+; ANIM_PANNING_RAMMA_1          = 645
+; ANIM_PANNING_RAMMA_2          = 646
+;
+; ANIM_JUMP_TONCHIKI            = 648
+; ANIM_JUMP_TONCHIKI_SHADOW     = 649
+; ANIM_TONCHIKI_ENTER_HOUSE     = 650
+; ANIM_STRIKE_NESS              = 651
+; ANIM_TAKE_NESS_KATACOMB_1A    = 652
+; ANIM_TAKE_NESS_KATACOMB_1B    = 653
+; ANIM_TAKE_NESS_KATACOMB_1C    = 654
+; ANIM_TAKE_NESS_KATACOMB_2A    = 655
+; ANIM_TAKE_NESS_KATACOMB_2B    = 656
+; ANIM_TAKE_NESS_KATACOMB_2C    = 657
+; ANIM_NESS_FOLLOW_ZOMBI_1      = 658
+; ANIM_NESS_FOLLOW_ZOMBI_2      = 659
+; ANIM_PAULA_FOLLOW_ZOMBI_1     = 660
+; ANIM_PAULA_FOLLOW_ZOMBI_2     = 661
+; ANIM_NESS_STILL               = 662
+; ANIM_PAULA_STILL              = 663
+; ANIM_BIKINI_LOOK_NESS         = 664
+; ANIM_AYASII                   = 665
+;
+; ANIM_MU_MABOROSHI_OUT         = 667
+; ANIM_LEAVE_SARUSENSEI         = 668
+; ANIM_LEAD_SARUSENSEI          = 669
+; ANIM_TELEPORT_SARUSENSEI      = 670
+; ANIM_RETURN_SARUSENSEI        = 671
+;
+; ANIM_CHITEI_QUAKE             = 675
+; ANIM_TO_FOUNTAIN_A            = 676
+; ANIM_TO_FOUNTAIN_B            = 677
+; ANIM_TO_FOUNTAIN_C            = 678
+; ANIM_LIFT_BY_FOUNTAIN         = 679
+; ANIM_MAID_INTO_BUILDING       = 680
+; ANIM_MAKYO_DOCTOR_APPROACH    = 681
+; ANIM_GO_OUT_CAKEWIFE          = 682
+;
+; ANIM_SLOTBROS_ROTATE_L        = 685
+; ANIM_SLOTBROS_ROTATE_M        = 686
+; ANIM_SLOTBROS_ROTATE_N        = 687
+; ANIM_SLOTBROS_STOP_L          = 688
+; ANIM_SLOTBROS_STOP_M          = 689
+; ANIM_SLOTBROS_STOP_N          = 690
+; ANIM_SLOTBROS_STOP_N_REACH    = 691
+; ANIM_SLOTBROS_PRESENT         = 692
+;
+; ANIM_EVT_INTO_PSYCHO_MYHOME   = 695
+; ANIM_EVT_PSYCHO_MYHOME_1F     = 696
+; ANIM_EVT_PSYCHO_MYHOME_ROUKA  = 697
+; ANIM_EVT_PSYCHO_MYROOM        = 698
+;
+; ANIM_EVT_MONOTOLY_GO_SWITCH   = 701
+; ANIM_EVT_MONOKUMA_MOVE        = 702
+; ANIM_EVT_MONOKABE_MOVE        = 703
+;
+; ANIM_CARPAINTER_THUNDER       = 705
+; ANIM_CARPAINTER_THUNDERHEAD   = 706
+;
+; ANIM_EVT_MONO_HELI_BOATMAN    = 712
+; ANIM_EVT_HELI_FWING_START     = 713
+; ANIM_EVT_HELI_RWING_START     = 714
+; ANIM_EVT_MONO_HELI_SHADOW     = 715
+; ANIM_HELI_POKEY_FACE          = 716
+; ANIM_EVT_PRAY_1_MAMA          = 717
+; ANIM_EVT_PRAY_1_TRACY         = 718
+; ANIM_EVT_PRAY_1_DOG           = 719
+; ANIM_EVT_PRAY_2_BIKINI        = 720
+; ANIM_EVT_PRAY_2_NICE          = 721
+; ANIM_EVT_PRAY_2_OKAY          = 722
+; ANIM_EVT_PRAY_2_GROOVY        = 723
+; ANIM_EVT_PRAY_3_POLAPAPA      = 724
+; ANIM_EVT_PRAY_3_POLAMAMA      = 725
+; ANIM_EVT_PRAY_3_CHILDA        = 726
+; ANIM_EVT_PRAY_3_CHILDB        = 727
+; ANIM_EVT_PRAY_3_CHILDD        = 728 ; (Not a typo! There's no "CHILDC" anim)
+; ANIM_EVT_PRAY_4_TONY          = 729
+; ANIM_EVT_PRAY_4_GAZE_TONY     = 730
+; ANIM_EVT_PRAY_4_PUPIL_A       = 731
+; ANIM_EVT_PRAY_4_PUPIL_B       = 732
+; ANIM_EVT_PRAY_4_PUPIL_C       = 733
+; ANIM_EVT_PRAY_4_PUPIL_D       = 734
+; ANIM_EVT_PRAY_4_GAUS          = 735
+; ANIM_EVT_PRAY_4_EXPLAIN       = 736
+; ANIM_EVT_PRAY_4_DIR_DOWN      = 737
+; ANIM_EVT_PRAY_4_DIR_LEFT      = 738
+; ANIM_EVT_PRAY_4_DIR_RIGHT     = 739
+;
+; ANIM_EVT_PRAY_5_GIRL_A        = 741
+; ANIM_EVT_PRAY_5_GIRL_B        = 742
+; ANIM_EVT_PRAY_5_GIRL_C        = 743
+; ANIM_EVT_PRAY_6_FRANK         = 744
+;
+; ANIM_EVT_PRAY_7_STUNNEL       = 746
+; ANIM_EVT_PRAY_7_ANDOUGHNUT    = 747
+; ANIM_EVT_PRAY_7_ANDOUGHNUT2   = 748
+; ANIM_EVT_PRAY_7_APPLEKID      = 749
+; ANIM_EVT_PRAY_7_DOSEI         = 750
+; ANIM_EVT_PRAY_7_DOSEI_A       = 751
+; ANIM_EVT_PRAY_7_DOSEI_B       = 752
+; ANIM_EVT_PRAY_7_DOSEI_C       = 753
+; ANIM_EVT_PRAY_7_DOSEI_D       = 754
+; ANIM_EVT_PRAY_7_KYOROKYORO    = 755
+; ANIM_EVT_PRAY_7_MOTCHY        = 756
+; ANIM_EVT_PRAY_OVALWINDOW      = 757
+;
+; ANIM_BLOCK_ZOMBI_B            = 759
+; ANIM_END_PHOTOMAN             = 760
+; ANIM_END_SHADOW               = 761
+; ANIM_END_CAMERA               = 762
+; ANIM_EVT_EAT_MAGICCAKE        = 763
+; ANIM_EVT_POOLAAA              = 764
+; ANIM_KANJI_AT_THE_NIGHT       = 765
+; ANIM_EVT_FEEL_DIGGY           = 766
+;
+; ANIM_EVT_FLUCTUATE_MAGICANT   = 768
+;
+; ANIM_OMAR_GIVE_HIEROGRIPH     = 770
+;
+; ANIM_OPENGATE_GUMI            = 772
+; ANIM_POSSESS_PC_ALL_STILL     = 773
+; ANIM_TRACY_APPEAR             = 774
+; ANIM_TOBECONT_OVALCLOSE       = 775
+; ANIM_TOBECONT_TITLE           = 776
+; ANIM_FORBID_CONTROL           = 777
+; ANIM_PERMIT_CONTROL           = 778
+; ANIM_SEAL_PC_ALL_DIRLEFT      = 779
+; ANIM_SEAL_PC_ALL_DIRDOWN      = 780
+; ANIM_SEAL_PC_PAULA_DIRDOWN    = 781
+; ANIM_REMODEL_OPERATION        = 782
+
+; Tasks
+TASK_Anim_Var4                 = C31D2D ; Animate with (var4) frames of delay
+TASK_Fadeout                   = C31E14 ; Fade-out using color math. Sets var2 to 1 when done
+TASK_Fadein                    = C31E4D ; Fade-in using color math. Sets var2 to 1 when done
+
+TASK_RunSwirl                  = C39244 ; Runs the "process swirl" routine every frame
+
+TASK_RandomFacing              = C39481 ; Set random facing every 8 frames
+
+TASK_DestroyIfFar_2            = C39ABB ; Destroy object if 320 pixels away from player (checks every 30 frames)
+
+TASK_Anim8                     = C3A09F ; Animate with 8-frame delay
+TASK_Anim24                    = C3A0B2 ; Animate with 24-frame delay
+TASK_Anim12                    = C3A0C5 ; Animate with 12-frame delay
+TASK_AnimUnknown1              = C3A0D8 ; Unknown, animates the object
+TASK_AnimUnknown2              = C3A0EB ; Unknown, animates the object
+TASK_AnimUnknown3              = C3A0FE ; Unknown, animates the object
+TASK_AnimUnknown4              = C3A111 ; Unknown, animates the object
+TASK_Anim_Var4_DestroyIfFar    = C3A12E ; Animate with (var4) frames of delay, destroy object if 320 pixels away from player
+TASK_Anim8_Toggle_DestroyIfFar = C3A15E ; Animate with 8-frame delay (if var4 != 0, then don't animate), destroy object if 320 pixels away from player
+TASK_Anim24_48_DestroyIfFar    = C3A17B ; Animate with 24-then-48 frame delay
+TASK_Anim24_DestroyIfFar       = C3A18F ; Animate with 24-frame delay, destroy object if 320 pixels away from player
+TASK_Anim12_DestroyIfFar       = C3A1A3 ; Animate with 12-frame delay, destroy object if 320 pixels away from player
+TASK_Anim9_DestroyIfFar        = C3A1B7 ; Animate with 9-frame delay, destroy object if 320 pixels away from player
+TASK_Anim6_DestroyIfFar        = C3A1CB ; Animate with 6-frame delay, destroy object if 320 pixels away from player
+TASK_Anim2_DestroyIfFar        = C3A1DF ; Animate with 2-frame delay, destroy object if 320 pixels away from player
+TASK_Anim16_DestroyIfFar       = C3A1F3 ; Animate with 16-frame delay, destroy object if 320 pixels away from player
+
+; Animate according to var0.
+; if var0 == 0, animate with 8-frame delay
+; else if var0 == 1, force first animation frame
+; else if var0 == 2, animate with 4-frame delay
+; else if var0 == 3, animate with 32-frame delay
+; else if var0 == 4, don't animate
+;
+; Will also destroy the object automatically if it is 320 pixels away from the player
+TASK_Anim_Var0_DestroyIfFar    = C3A20E
+TASK_HandleCollision           = C3A262 ; Do object and tile collision
+
+TASK_DestroyIfFar              = C3A2B8 ; Destroy the object if 320 pixels away from the player (checks every 8 frames)
+
+TASK_Unknown1                  = C3A434 ; UNKNOWN.
+TASK_Unknown2                  = C3A448 ; UNKNOWN. VERY similar to C3A434
+
+TASK_PartyLook                 = C3AFA3 ; Make all party members look at the object
+
+TASK_SpeedUnknown              = C3B0B6 ; Oscillate movement speed?
+
+TASK_DestroyIfFar_SetFlag_10   = C3B431 ; Destroy the object if 320 pixels away from the player and set flag TEMP_10
+
+; General routines
+MoveTowardsDest                = C3AB44 ; Move towards destination, non-blocking
+MoveUntilAtDest                = C3AB59 ; Move towards destination, blocking
+MoveUntilAtDestMoonwalk        = C3AB67 ; Move towards destination with reversed facing, blocking
+WaitUntilNearPosition          = C3AB8A ; Wait until player is near (var0, var1) in radius (var2, var3)
+WaitUntilNotNearPosition       = C3AB94 ; Wait until player is NOT near (var0, var1) in radius (var2, var3)

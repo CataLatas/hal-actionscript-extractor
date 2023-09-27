@@ -1,0 +1,259 @@
+; Scripts
+Script01_Kirby                 = 14A000 ; 01
+Script02_KirbyParticle         = 16AA3A ; 02
+SCR02_BumpStar                 = 16AA84 ; 02, VAR3=0  (Bump into a wall, ground or ceiling)
+SCR02_SkidSmoke                = 16AB36 ; 02, VAR3=1  (Start dashing or skid)
+SCR02_KParticle02              = 16ABE5 ; 02, VAR3=2
+SCR02_BlockDestroyed           = 16AC72 ; 02, VAR3=3  (Block destroyed)
+SCR02_SplashIn                 = 16AC7B ; 02, VAR3=4  (Splash into water)
+SCR02_SplashOut                = 16AC9A ; 02, VAR3=5  (Splash out of water)
+SCR02_KParticle06              = 16ABDC ; 02, VAR3=6
+SCR02_CrashKirby               = 16ACAB ; 02, VAR3=7  (Crash ability, Kirby flying around)
+SCR02_CrashExplosion           = 16AD15 ; 02, VAR3=8  (Crash ability, explosion)
+SCR02_CrashShake               = 16AD3C ; 02, VAR3=9  (Crash ability, screen shake)
+SCR02_CrashKirbyCenter         = 16AD43 ; 02, VAR3=10 (Crash ability, Kirby flying to center)
+SCR02_KParticle0B              = 16AD97 ; 02, VAR3=11
+SCR02_ViolentShake             = 16AF0D ; 02, VAR3=12 (Violent screen shake)
+SCR02_KParticle0D              = 16AF47 ; 02, VAR3=13
+SCR02_WaterBubble              = 16AF69 ; 02, VAR3=14 (Underwater bubble)
+SCR02_Fireball                 = 16AFFC ; 02, VAR3=15 (Fireball particles)
+SCR02_StarDeath                = 16B049 ; 02, VAR3=16 (Big stars after dying)
+SCR02_SmallStarDeath           = 16B071 ; 02, VAR3=17 (Small star after dying)
+SCR02_KParticle12              = 16B0A0 ; 02, VAR3=18
+SCR02_HiJumpStar               = 16B1E5 ; 02, VAR3=19 (Hi-jump stars)
+SCR02_KParticle14              = 16AEE5 ; 02, VAR3=20
+SCR02_VerticalShake            = 16AEE2 ; 02, VAR3=21 (Vertical screen shake)
+SCR02_KParticle16              = 16B22A ; 02, VAR3=22
+SCR02_KParticle17              = 16B252 ; 02, VAR3=23
+SCR02_BossHurt                 = 16B26F ; 02, VAR3=24 (Boss was hit)
+SCR02_KParticle19              = 16B293 ; 02, VAR3=25
+SCR02_KParticle1A              = 16AECE ; 02, VAR3=26
+SCR02_SparkParticle            = 16B2F5 ; 02, VAR3=27 (Spark ability particles)
+SCR02_KParticle1C              = 16B206 ; 02, VAR3=28
+SCR02_EnemyHit                 = 16AC0C ; 02, VAR3=29 (Enemy was hit)
+SCR02_SwallowSparkles          = 16AC23 ; 02, VAR3=30 (Copy ability sparkles when swallowing enemy)
+SCR02_TornadoSmoke             = 16AB93 ; 02, VAR3=31 (Tornado smoke)
+
+Script03_KirbyProjectile       = 16B35B ; 03
+SCR03_StarExhale               = 16B3B7 ; 03, VAR3=0  (Exhale star)
+SCR03_Fire                     = 16B582 ; 03, VAR3=1  (Fire)
+SCR03_Cutter                   = 16B5DA ; 03, VAR3=2  (Cutter)
+SCR03_Laser                    = 16B68E ; 03, VAR3=3  (Laser)
+SCR03_Mike                     = 16B7F8 ; 03, VAR3=4  (Mike)
+SCR03_AirExhale                = 16B866 ; 03, VAR3=5  (Exhale air)
+SCR03_Beam                     = 16B8BF ; 03, VAR3=6  (Beam)
+SCR03_Crash                    = 16B8DF ; 03, VAR3=7  (Appears for a single frame after the Crash ability is used)
+SCR03_DoubleStarExhale         = 16B46B ; 03, VAR3=8  (Exhale double star)
+SCR03_ThrownEnemy              = 16B52D ; 03, VAR3=9  (Thrown enemy)
+SCR03_IceCube                  = 16B8AA ; 03, VAR3=10 (Ice cube)
+SCR03_GrabbedEnemy             = 16B8E5 ; 03, VAR3=11 (Grabbed enemy, backdrop/throw)
+SCR03_KProj0C                  = 16B45F ; 03, VAR3=12
+SCR03_StarRodStar              = 16B465 ; 03, VAR3=13 (Star rod star)
+
+Script04_KirbyDance            = 19AAC7 ; 04
+SCR04_GoalPlatform             = 19AAE4 ; 04, VAR0=0  (Goal platform)
+SCR04_KDance01                 = 19AAF1 ; 04, VAR0=1
+SCR04_BossDance                = 19A480 ; 04, VAR0=2  (Dancing Kirby, boss defeated)
+SCR04_BossDanceClone           = 19A49A ; 04, VAR0=3  (Dancing Kirby clone, boss defeated)
+SCR04_GoalStars                = 19AB1B ; 04, VAR0=4  (Goal jump stars)
+SCR04_KDance05                 = 19AB08 ; 04, VAR0=5
+SCR04_GoalKirbyHoldSign        = 19AB3D ; 04, VAR0=6  (Goal Kirby holding sign)
+SCR04_GoalSign                 = 19AC0F ; 04, VAR0=7  (Goal sign)
+SCR04_KDance08                 = 19AC54 ; 04, VAR0=8
+SCR04_GoalDance                = 19A3E5 ; 04, VAR0=9  (Dancing Kirby, goal top)
+SCR04_GoalDanceClone           = 19A405 ; 04, VAR0=10 (Dancing Kirby clone, goal top)
+
+Script05_Collectable           = 19B769 ; 05
+SCR05_MaximTomato              = 19B7CB ; 05, VAR0=0
+SCR05_OneUp                    = 19B7F3 ; 05, VAR0=1
+SCR05_HyperCandy               = 19B813 ; 05, VAR0=2
+SCR05_Drink                    = 19B7E2 ; 05, VAR0=3
+SCR05_Item04                   = 19B830 ; 05, VAR0=4
+SCR05_MetaSword                = 19BA6F ; 05, VAR0=5
+
+Script06_WarpStar              = 23A000 ; 06 TODO: And other stuf...?
+
+Script0A_MuseumDisplay         = 25BC53 ; 0A
+SCR0A_Museum00                 = 25BC8D ; 0A, VAR2=0
+SCR0A_MuseumLaser              = 25BC9A ; 0A, VAR2=1
+SCR0A_MuseumFire               = 25BCA5 ; 0A, VAR2=2
+SCR0A_Museum03                 = 25BCB0 ; 0A, VAR2=3
+SCR0A_MuseumSword              = 25BCC1 ; 0A, VAR2=4
+SCR0A_Museum05                 = 25BCD0 ; 0A, VAR2=5
+SCR0A_Museum06                 = 25BCDD ; 0A, VAR2=6
+SCR0A_MuseumHiJump             = 25BCE8 ; 0A, VAR2=7
+SCR0A_Museum08                 = 25BD05 ; 0A, VAR2=8
+SCR0A_MuseumTornado            = 25BD10 ; 0A, VAR2=9
+SCR0A_MuseumWheel              = 25BD1C ; 0A, VAR2=10
+SCR0A_Museum0B                 = 25BD27 ; 0A, VAR2=11
+SCR0A_MuseumStone              = 25BD32 ; 0A, VAR2=12
+SCR0A_Museum0D                 = 25BD42 ; 0A, VAR2=13
+SCR0A_Museum0E                 = 25BD4D ; 0A, VAR2=14
+SCR0A_Museum0F                 = 25BD5C ; 0A, VAR2=15
+
+Script0B_CannonFuse            = 23AA9C ; 0B
+
+Script0E_WaddleDee             = 24A000 ; 0E
+Script0F_WaddleDoo             = 24A149 ; 0F (Beam)
+
+Script10_CannonEnemy           = 24A325 ; 10
+Script11_SparkEnemy            = 24A673 ; 11
+Script12_PoppyBrosJr           = 24A8C2 ; 12
+Script13_PoppyBrosApple        = 24AAA4 ; 13
+Script14_PoppyBrosTomato       = 24ABB8 ; 14
+
+Script16_LaserEnemy            = 24ACA9 ; 16
+Script17_FireballEnemy         = 2BA389 ; 17
+Script18_Fish                  = 24AF44 ; 18
+Script19_WallClinger           = 24B2EC ; 19
+Script1A_Coconut               = 25B1C7 ; 1A
+Script1B_HermitCrab            = 25B241 ; 1B
+Script1C_SpinningFace          = 2AB9E6 ; 1C
+Script1D_JumpingSquidLikeEnemy = 26A000 ; 1D
+Script1E_BirdEnemy             = 26A3C9 ; 1E
+Script1F_StationaryShootUpEnemy = 26A66C ; 1F
+Script20_Sweeper               = 2DB594 ; 20
+Script21_MushroomEnemy         = 2DB779 ; 21
+Script22_PoppyBrosSr           = 27A000 ; 22 (Boss battle)
+Script23_StoneEnemy            = 2BAA3E ; 23
+Script24_TornadoEnemy          = 22BA00 ; 24
+Script25_Nuke                  = 28A7A2 ; 25
+Script26_MetaKnightCandy       = 28A102 ; 26
+
+Script28_UFO                   = 28A8EF ; 28
+Script29_FireEnemy             = 24B765 ; 29
+Script2A_Parasol               = 25A000 ; 2A
+Script2B_SwordEnemy            = 25A2F5 ; 2B
+Script2C_FrogEnemy             = 25A69C ; 2C
+Script2D_BallEnemy             = 25A9A5 ; 2D
+Script2E_SleepEnemy            = 25AB6A ; 2E
+Script2F_HiJumpEnemy           = 25AD89 ; 2F
+Script30_MetaKnightCallMinions = 27A952 ; 30
+Script31_MinionProjectile      = 27B679 ; 31
+Script32_MaceMinion            = 27AE11 ; 32
+Script33_CutterMinion          = 27AB18 ; 33
+Script34_SpearMinion           = 27B34F ; 34
+Script35_TridentMinion         = 27AFFE ; 35
+Script36_WheelEnemy            = 2DB8D9 ; 36
+Script37_LightEnemy            = 2DB894 ; 37
+Script38_FlyingEnemy           = 26A7E9 ; 38
+Script39_SpikyBall             = 26B084 ; 39
+Script3A_IceEnemy              = 26B243 ; 3A
+Script3B_FreezeEnemy           = 26B4BD ; 3B
+Script3C_NeedleEnemy           = 26B6E6 ; 3C
+Script3D_EyeCloud              = 2FA011 ; 3D (Boss battle)
+
+Script3F_NightmareBall         = 2FB2A9 ; 3F
+SCR3F_MainObject               = 2FB2DD ; 3F, VAR0=0
+SCR3F_01                       = 2FBAF0 ; 3F, VAR0=1
+SCR3F_02                       = 2FBB2B ; 3F, VAR0=2
+SCR3F_03                       = 2FBB6D ; 3F, VAR0=3
+SCR3F_04                       = 2FBB79 ; 3F, VAR0=4
+SCR3F_05                       = 2FBB85 ; 3F, VAR0=5
+SCR3F_06                       = 2FBBB0 ; 3F, VAR0=6
+SCR3F_07                       = 2FBBCA ; 3F, VAR0=7
+SCR3F_08                       = 2FB9C8 ; 3F, VAR0=8
+SCR3F_09                       = 2FB9F1 ; 3F, VAR0=9
+SCR3F_0A                       = 2FBA16 ; 3F, VAR0=10
+SCR3F_0B                       = 2FBA3B ; 3F, VAR0=11
+SCR3F_0C                       = 2FB99B ; 3F, VAR0=12
+SCR3F_0D                       = 2FBD09 ; 3F, VAR0=13
+
+Script40_CuteFlyingExplosive   = 26BA73 ; 40
+Script41_CutterEnemy           = 2DBB28 ; 41
+Script42_MetaKnightBoss        = 2BABFF ; 42 (Boss battle)
+Script43_WhispyWoods           = 2CA9B3 ; 43 (Boss battle)
+Script44_ArtistBoss            = 2CA000 ; 44 (Boss battle)
+Script45_SunAndMoon            = 28AAEE ; 45 (Boss battle)
+Script46_TunnelDigger          = 2CAD63 ; 46 (Boss battle)
+Script47_KingDedede            = 2DA000 ; 47 (Boss battle)
+Script48_FreezeBoss            = 25B3BD ; 48 (Boss battle)
+Script49_WheelBoss             = 2AA819 ; 49 (Boss battle)
+Script4A_BackDropBoss          = 29A000 ; 4A (Boss battle)
+Script4B_ThrowBoss             = 29A771 ; 4B (Boss battle)
+Script4C_HammerBoss            = 28A2EE ; 4C (Boss battle)
+Script4D_FireLion              = 2AA031 ; 4D (Boss battle)
+; 4E - Nightmare-something
+Script4F_MikeBoss              = 2AB0B3 ; 4F (Boss battle)
+
+Script51_CannonBall            = 24A592 ; 51
+
+Script5A_WhispyProjectile      = 2CAB76 ; 5A
+Script5B_ArtistDrawing         = 2CA6E4 ; 5B
+Script5C_SunAndMoonStar        = 28BD3F ; 5C
+
+Script60_NightmareProjectile   = 29B9AF ; 60
+
+Script62_NightmareFinal        = 29BB25 ; 62
+
+Script65_QuickDraw             = 3CA000 ; 65
+Script66_EggCatcher            = 3BA000 ; 66
+Script67_CraneFever            = 3BAB7F ; 67
+Script68_FirstYouDrawACircle   = 3DA000 ; 68
+Script69_TitleScreen           = 3DA9EB ; 69
+Script6A_Story                 = 36AC96 ; 6A
+
+Script6C_LevelIntro            = 34A000 ; 6C (Level introduction scene)
+
+Script6E_KirbyWalkToCenter     = 19A424 ; 6E (Walk to center after getting Star Rod piece)
+Script6F_SecretSwitch          = 29BF14 ; 6F
+
+; Subroutines
+SUB_ViolentShake                = 16AF11 ; Used by Script02
+
+; Tasks
+;TASK_Anim_Var4                 = C31D2D ; Animate with (var4) frames of delay
+;TASK_Fadeout                   = C31E14 ; Fade-out using color math. Sets var2 to 1 when done
+;TASK_Fadein                    = C31E4D ; Fade-in using color math. Sets var2 to 1 when done
+
+;TASK_RunSwirl                  = C39244 ; Runs the "process swirl" routine every frame
+
+;TASK_RandomFacing              = C39481 ; Set random facing every 8 frames
+
+;TASK_DestroyIfFar_2            = C39ABB ; Destroy object if 320 pixels away from player (checks every 30 frames)
+
+;TASK_Anim8                     = C3A09F ; Animate with 8-frame delay
+;TASK_Anim24                    = C3A0B2 ; Animate with 24-frame delay
+;TASK_Anim12                    = C3A0C5 ; Animate with 12-frame delay
+;TASK_AnimUnknown1              = C3A0D8 ; Unknown, animates the object
+;TASK_AnimUnknown2              = C3A0EB ; Unknown, animates the object
+;TASK_AnimUnknown3              = C3A0FE ; Unknown, animates the object
+;TASK_AnimUnknown4              = C3A111 ; Unknown, animates the object
+;TASK_Anim_Var4_DestroyIfFar    = C3A12E ; Animate with (var4) frames of delay, destroy object if 320 pixels away from player
+;TASK_Anim8_Toggle_DestroyIfFar = C3A15E ; Animate with 8-frame delay (if var4 != 0, then don't animate), destroy object if 320 pixels away from player
+;TASK_Anim24_48_DestroyIfFar    = C3A17B ; Animate with 24-then-48 frame delay
+;TASK_Anim24_DestroyIfFar       = C3A18F ; Animate with 24-frame delay, destroy object if 320 pixels away from player
+;TASK_Anim12_DestroyIfFar       = C3A1A3 ; Animate with 12-frame delay, destroy object if 320 pixels away from player
+;TASK_Anim9_DestroyIfFar        = C3A1B7 ; Animate with 9-frame delay, destroy object if 320 pixels away from player
+;TASK_Anim6_DestroyIfFar        = C3A1CB ; Animate with 6-frame delay, destroy object if 320 pixels away from player
+;TASK_Anim2_DestroyIfFar        = C3A1DF ; Animate with 2-frame delay, destroy object if 320 pixels away from player
+;TASK_Anim16_DestroyIfFar       = C3A1F3 ; Animate with 16-frame delay, destroy object if 320 pixels away from player
+
+; Animate according to var0.
+; if var0 == 0, animate with 8-frame delay
+; else if var0 == 1, force first animation frame
+; else if var0 == 2, animate with 4-frame delay
+; else if var0 == 3, animate with 32-frame delay
+; else if var0 == 4, don't animate
+;
+; Will also destroy the object automatically if it is 320 pixels away from the player
+;TASK_Anim_Var0_DestroyIfFar    = C3A20E
+;TASK_HandleCollision           = C3A262 ; Do object and tile collision
+
+;TASK_DestroyIfFar              = C3A2B8 ; Destroy the object if 320 pixels away from the player (checks every 8 frames)
+
+;TASK_Unknown1                  = C3A434 ; UNKNOWN.
+;TASK_Unknown2                  = C3A448 ; UNKNOWN. VERY similar to C3A434
+
+;TASK_PartyLook                 = C3AFA3 ; Make all party members look at the object
+
+;TASK_SpeedUnknown              = C3B0B6 ; Oscillate movement speed?
+
+;TASK_DestroyIfFar_SetFlag_10   = C3B431 ; Destroy the object if 320 pixels away from the player and set flag TEMP_10
+
+; General routines
+;MoveTowardsDest                = C3AB44 ; Move towards destination, non-blocking
+;MoveUntilAtDest                = C3AB59 ; Move towards destination, blocking
+;MoveUntilAtDestMoonwalk        = C3AB67 ; Move towards destination with reversed facing, blocking
+;WaitUntilNearPosition          = C3AB8A ; Wait until player is near (var0, var1) in radius (var2, var3)
+;WaitUntilNotNearPosition       = C3AB94 ; Wait until player is NOT near (var0, var1) in radius (var2, var3)

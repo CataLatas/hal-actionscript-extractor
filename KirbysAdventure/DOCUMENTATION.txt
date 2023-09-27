@@ -1,0 +1,78 @@
+Kirby's Adventure actionscript instruction reference
+
+00 - END
+01 - LOOP           #imm8
+02 - ENDLOOP
+03 - JML            long
+04 - JSL            long
+05 - RTL
+06 - WAIT           #imm8
+07 - TASK           addr
+08 - ONTICK         long
+09 - HALT
+0A - JEQ            addr
+0B - JNE            addr
+0C - ENDTASK
+0D - MOV            objvar, #imm8
+0E - NOPTICK
+0F - MULTIJMP       multi
+10 - MULTIJSR       multi
+11 - MOV.b          addr, #imm8
+12 - ENDLASTTASK
+13 - BINOP          objvar, op, #imm8 ; op can be one of: 0=AND, 1=OR, 2=ADD, 3=XOR
+14 - BREAKEQ        addr
+15 - BREAKNE        addr
+16 - BINOP          mem, op, #imm8
+17 - JMP            addr
+18 - JSR            addr
+19 - RTS
+1A - SPRITEMAP      long
+1B - MOV            reg, #imm8
+1C - MOV            reg, mem
+1D - MOV            objvar, reg
+1E - MOV            reg, objvar
+1F - WAIT           objvar
+20 - ONDRAW         addr
+21 - ONPOSITION     addr            ;  Set $615E, $6170
+22 - LOOP           reg
+23 - ONMOVE         addr
+24 - SETPOSE        objvar
+25 - BINOP          reg, op, #imm8
+26 - ASMCALL.l      long
+27 - MOV.w          addr, #imm16
+28 - SETBANK        #imm8           ; Set lower PRG ($8000-$9FFF)
+29 - UNK29          #imm8, long
+2A - SETXPOS        #imm16
+2B - SETYPOS        #imm16
+2C - ADDXPOS        #imm16
+2D - ADDYPOS        #imm16
+2E - ADDXVEL        #imm16
+2F - ADDYVEL        #imm16
+30 - UNK30          #imm8, #imm8
+31 - UNK31          #imm8, #imm8
+32 - UNK32          #imm8, #imm8
+33 - UNK33          #imm8, #imm8
+34 - UNK34          #imm8, #imm8
+35 - UNK35          #imm8, #imm8
+36 - UNK36          #imm8, #imm8
+37 - UNK37          #imm8, #imm8
+38 - ZEROVEL
+39 - UNK39
+3A - SETZPOS        #imm16
+3B - ADDZPOS        #imm16
+3C - SETZVEL        #imm16
+3D - ADDZVEL        #imm16
+3E - MULTIJSL       multi
+3F thru 4F undefined
+
+Special "waited" instructions (run instruction + WAIT #x)
+5x - POSE           #imm8
+6x - ADDPOSE        #imm8
+7x - INCPOSE
+8x - DECPOSE
+9x - INC2POSE
+Ax - DEC2POSE
+Bx - SETXVEL        #imm16
+Cx - SETYVEL        #imm16
+Dx - ASMCALL        addr
+Ex and Fx undefined

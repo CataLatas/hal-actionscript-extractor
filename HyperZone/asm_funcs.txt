@@ -1,0 +1,107 @@
+; IMPORTANT NOTE:
+;   Be sure to use appropriate datatypes with the "PARAMS" option, as using inappropriate
+;   datatypes will cause the dumper to not work properly, since the parameters would be read
+;   wrong, most likely "desyncing" the instructions read
+
+
+; Format:
+;   ASM_FUNCTION ADDRESS
+;   PARAMS=datatype1,datatype2,...,datatypeN (optional)
+;   COMMENT=some comment                     (optional)
+
+ASM_FUNCTION 00819C
+  COMMENT = Screen off and HDMA off
+
+ASM_FUNCTION 0081B4
+  COMMENT = Update screen brightness
+
+ASM_FUNCTION 008D7C
+  COMMENT = Disable IRQ
+
+ASM_FUNCTION 00A216
+  COMMENT = Set SPC Port #2 to argument
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 00A248
+  COMMENT = Set SPC Port #0 to argument if $13AF is zero
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 00A330
+  COMMENT = Unknown
+  PARAMS  = imm_16, imm_16, imm_16, imm_16, imm_16, imm_16
+
+ASM_FUNCTION 00A3B5
+  COMMENT = Unknown
+  PARAMS  = imm_16, imm_8
+
+ASM_FUNCTION 00A3D9
+  COMMENT = DMA transfer (src, dst, size)
+  PARAMS  = imm_16, imm_16, imm_16
+
+ASM_FUNCTION 00A3E9
+  COMMENT = Set BG mode
+  PARAMS  = imm_8
+
+ASM_FUNCTION 00A3EF
+  COMMENT = Setup background settings
+  PARAMS  = imm_u8, imm_8, imm_16, imm_16
+
+ASM_FUNCTION 00A414
+  COMMENT = Set OBSEL size, name base and name select
+  PARAMS  = imm_8, imm_16, imm_8
+
+ASM_FUNCTION 00A429
+  COMMENT = Enable visibility of argument layers
+  PARAMS  = imm_8
+
+ASM_FUNCTION 00A43B
+  COMMENT = Disable visibility of argument layers
+  PARAMS  = imm_8
+
+ASM_FUNCTION 00A4A3
+  COMMENT = Set Mode7 center X and Y
+  PARAMS  = imm_16, imm_16
+
+ASM_FUNCTION 00A4C4
+  COMMENT = Make argument layers affected by mosaic
+  PARAMS  = imm_8
+
+ASM_FUNCTION 00A4D6
+  COMMENT = Make argument layers unaffected by mosaic
+  PARAMS  = imm_8
+
+ASM_FUNCTION 00A4E4
+  COMMENT = Set mosaic pixel size
+  PARAMS  = imm_u8
+
+ASM_FUNCTION 00A506
+  COMMENT = Increment mosaic pixel size
+
+ASM_FUNCTION 00A51B
+  COMMENT = Increment mosaic pixel size
+
+ASM_FUNCTION 00A530
+  COMMENT = HDMA something?
+  PARAMS  = imm_16
+
+ASM_FUNCTION 00A606
+  COMMENT = Set screen brightness ($2100)
+  PARAMS  = imm_8
+
+ASM_FUNCTION 00A60D
+  COMMENT = Increment screen brightness
+
+ASM_FUNCTION 00A61D
+  COMMENT = Decrement screen brightness
+
+ASM_FUNCTION 00F7BB
+  COMMENT = Start-up logo VRAM DMA
+
+ASM_FUNCTION 00F7C3
+  COMMENT = Some Start-up logo VRAM DMA (depends on VAR0)
+
+ASM_FUNCTION 00F7E0
+  COMMENT = Start-up logo VRAM DMA
+
+ASM_FUNCTION 07D9C5
+  COMMENT = Something SPC

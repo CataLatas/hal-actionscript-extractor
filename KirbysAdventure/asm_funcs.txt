@@ -1,0 +1,230 @@
+; IMPORTANT NOTE:
+;   Be sure to use appropriate datatypes with the "PARAMS" option, as using inappropriate
+;   datatypes will cause the dumper to not work properly, since the parameters would be read wrong
+;   and possibly crashing and burning everything
+;
+;   By default, all functions have their "PARAMS" option set to anything appropriate, so only change
+;   them if you really know what you're doing. Undocumented functions described below don't need
+;   any parameters, so they're fine not being included for now
+;
+
+; Format:
+;   ASM_FUNCTION ADDRESS
+;   PARAMS=datatype1,datatype2,...,datatypeN (optional)
+;   COMMENT=some comment                     (optional)
+;
+
+ASM_FUNCTION 00C082
+  COMMENT = Write 0x00 to $37 and wait a frame
+
+ASM_FUNCTION 00C086
+  COMMENT = Write 0xFF to $37 and wait a frame
+
+ASM_FUNCTION 00DE45
+  COMMENT = Unknown ASM $DE45
+  PARAMS = imm_8
+
+ASM_FUNCTION 00DE4B
+  COMMENT = Unknown ASM $DE4B
+  PARAMS = imm_8
+
+ASM_FUNCTION 00DE51
+  COMMENT = Create a child object with script `arg1` offset by (`arg2`, `arg3`, `arg4`). With VAR0=`arg5`, VAR1=(this.VAR1+`arg6`)
+  PARAMS = imm_8, imm_8, imm_8, imm_8, imm_8, imm_8
+
+ASM_FUNCTION 00DED0
+  COMMENT = Create in any slot between `arg1` and `arg2` a child object with script `arg3` offset by (`arg4`, `arg5`, `arg6`). With VAR0=`arg7`, VAR1=(this.VAR1+`arg8`)
+  PARAMS = imm_8, imm_8, imm_8, imm_8, imm_8, imm_8, imm_8, imm_8
+
+ASM_FUNCTION 00DEE1
+  COMMENT = Create in slot `arg1` a child object with script `arg2` offset by (`arg3`, `arg4`, `arg5`). With VAR0=`arg6`, VAR1=(this.VAR1+`arg7`)
+  PARAMS = imm_8, imm_8, imm_8, imm_8, imm_8, imm_8, imm_8
+
+ASM_FUNCTION 00DEF1
+  COMMENT = Replace child object in slot `arg1` to new one with scriot `arg2` offset by (`arg3`, `arg4`, `arg5`). With VAR0=`arg6`, VAR1=(this.VAR1+`arg7`)
+  PARAMS = imm_8, imm_8, imm_8, imm_8, imm_8, imm_8, imm_8
+
+ASM_FUNCTION 00DF06
+  COMMENT = Destroy object in slot `arg`
+  PARAMS = imm_8
+
+ASM_FUNCTION 00DF0D
+  COMMENT = Destroy all other objects
+
+ASM_FUNCTION 00DF20
+  COMMENT = Unknown ASM $DF20
+  PARAMS = imm_8, imm_8, imm_8, imm_8
+
+ASM_FUNCTION 00DF38
+  COMMENT = Unknown ASM $DF38
+  PARAMS = imm_8, imm_8
+
+ASM_FUNCTION 00DF44
+  COMMENT = Set $0036 to `arg`
+  PARAMS = imm_8
+
+ASM_FUNCTION 00DF4B
+  COMMENT = Set bits in $0036
+  PARAMS = imm_8
+
+ASM_FUNCTION 00DF55
+  COMMENT = Clear bits in $0036
+  PARAMS = imm_8
+
+ASM_FUNCTION 00DF61
+  COMMENT = Unknown ASM $DF61
+  PARAMS = imm_16, imm_8, imm_8
+
+ASM_FUNCTION 00DF7D
+  COMMENT = Wait until (`arg1`) == #`arg2`
+  PARAMS = imm_16, imm_8
+
+ASM_FUNCTION 00DFA3
+  COMMENT = SUB reg, #arg2, arg1
+  PARAMS = imm_16, imm_8
+
+ASM_FUNCTION 00DFB6
+  COMMENT = SUB reg, #arg2, arg1[this.script_index]
+  PARAMS = imm_16, imm_8
+
+ASM_FUNCTION 00DFC9
+  COMMENT = AND reg, arg1, (1 << arg2)
+  PARAMS = imm_16, imm_8
+
+ASM_FUNCTION 00DFDF
+  COMMENT = Unknown ASM $DFDF
+  PARAMS = imm_8
+
+ASM_FUNCTION 00DFE5
+  COMMENT = Set MSB of OBJ_tick_bank for all other objects
+
+ASM_FUNCTION 00DFFB
+  COMMENT = Clear MSB of OBJ_tick_bank for all other objects
+
+ASM_FUNCTION 00E23C
+  COMMENT = Unknown ASM $E23C
+  PARAMS = imm_16
+
+ASM_FUNCTION 00E26A
+  COMMENT = Unknown ASM $E26A
+  PARAMS = imm_16
+
+ASM_FUNCTION 00E298
+  COMMENT = MOV.w $01A3, #$0000
+
+ASM_FUNCTION 00E2A1
+  COMMENT = ADD.w $01A3, #arg
+  PARAMS = imm_16
+
+ASM_FUNCTION 00E2D9
+  COMMENT = Unknown ASM $E2D9 (Set $05A0 and $05A1)
+  PARAMS = imm_8
+
+ASM_FUNCTION 00E2F1
+  COMMENT = Unknown ASM $E2F1
+  PARAMS = addr_24
+
+ASM_FUNCTION 16AD77
+  COMMENT = Unknown ASM $16AD77
+  PARAMS = imm_8, imm_8
+
+ASM_FUNCTION 21801F
+  COMMENT = Unknown ASM $21801F
+  PARAMS = imm_8, imm_8
+
+ASM_FUNCTION 218710
+  COMMENT = Set Kirby's X2 velocity
+
+ASM_FUNCTION 21884D
+  COMMENT = Zero Kirby's Y velocity
+
+ASM_FUNCTION 21885C
+  COMMENT = Set Kirby's Y velocity
+
+ASM_FUNCTION 218FDC
+  COMMENT = Set pose (+1 if MSB of VAR1 is set)
+  PARAMS = imm_8
+
+ASM_FUNCTION 218FF5
+  COMMENT = Return (frame_counter & 3)
+
+ASM_FUNCTION 21987D
+  COMMENT = Zero Kirby's velocities
+
+ASM_FUNCTION 21A0D5
+  COMMENT = Initialize Kirby variables?
+
+ASM_FUNCTION 21A186
+  COMMENT = Set MSB of OBJ_tick_bank for all objects with slot between 9 and 18
+
+ASM_FUNCTION 22859F
+  COMMENT = Unknown ASM $22859F
+  PARAMS = imm_16
+
+ASM_FUNCTION 228829
+  COMMENT = Set pose to 0 (1 if MSB of VAR1 is set)
+  PARAMS = imm_8
+
+ASM_FUNCTION 228B61
+  COMMENT = Unknown ASM $228B61
+  PARAMS = imm_16
+
+ASM_FUNCTION 228B7F
+  COMMENT = Unknown ASM $228B7F
+  PARAMS = imm_16
+
+ASM_FUNCTION 228BC0
+  COMMENT = Unknown ASM $228BC0
+  PARAMS = imm_16
+
+ASM_FUNCTION 228BE4
+  COMMENT = Unknown ASM $228BE4
+  PARAMS = imm_16
+
+ASM_FUNCTION 228BED
+  COMMENT = Unknown ASM $228BED
+  PARAMS = imm_16
+
+ASM_FUNCTION 228C05
+  COMMENT = Unknown ASM $228C05
+  PARAMS = imm_8
+
+ASM_FUNCTION 228C19
+  COMMENT = Unknown ASM $228C19
+  PARAMS = imm_8
+
+ASM_FUNCTION 228C53
+  COMMENT = Unknown ASM $228C53
+  PARAMS = imm_8
+
+ASM_FUNCTION 228C5F
+  COMMENT = Unknown ASM $228C5F
+  PARAMS = imm_16
+
+ASM_FUNCTION 228C71
+  COMMENT = Unknown ASM $228C71
+  PARAMS = imm_8, imm_8, imm_8
+
+ASM_FUNCTION 228C87
+  COMMENT = Unknown ASM $228C87
+  PARAMS = imm_8, imm_8, imm_8
+
+ASM_FUNCTION 228CAA
+  COMMENT = Unknown ASM $228CAA
+  PARAMS = imm_16
+
+ASM_FUNCTION 228EFB
+  COMMENT = Unknown ASM $228EFB
+  PARAMS = imm_8
+
+ASM_FUNCTION 228FC6
+  COMMENT = Unknown ASM $228FC6
+  PARAMS = imm_8
+
+ASM_FUNCTION 228FCE
+  COMMENT = Unknown ASM $228FCE
+  PARAMS = imm_8
+
+ASM_FUNCTION 2291D8
+  COMMENT = Teleport to parent object
+

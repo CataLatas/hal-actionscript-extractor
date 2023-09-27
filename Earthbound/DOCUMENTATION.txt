@@ -1,0 +1,90 @@
+This documents specifically the version present in Earthbound.
+This might be also valid for Kirby's Dream Course, but I haven't checked for sure.
+This version is *definitely* not compatible with HyperZone.
+
+"Addressing modes":
+- imm8     = 8-bit immediate
+- imm16    = 16-bit immediate
+- abs      = 16-bit memory address (in current "program bank")
+- long     = 24-bit memory address
+- mem      = 16-bit memory address (in bank 7E)
+- op       = Logical or arithmetic operation (00 = AND, 01 = OR, 02 = ADD, 03 = XOR)
+- reg      = Work register. Return value from ASMCALL instructions are stored here
+- objvar   = Object variable. Each object has 8 multipurpose 16-bit variables, which I call "var0, var1 ... var7"
+- multi    = 8-bit immediate containing number of possibilities, followed by this many "absolute" parameters
+- callback = 16-bit memory address (in bank 00)
+
+*NOTE: Mnemonics were made up by me. They are not official in any sense.
+
+*NOTE: There are a few special things I don't discuss here, like the ability to embed a "WAIT" opcode in certain opcodes (from 3B to 42)
+
+Opcode     |   Mnemonic                          |              Description
+  00       |     END                             |   Ends the script, also killing any previously assigned tasks
+  01       |     STARTLOOP   #imm8               |   Starts a loop with the specified amount of iterations. Nested loops are possible
+  02       |     ENDLOOP                         |   Ends a loop. Decrements the loop counter and, if it's not zero, jumps back to the start of the current loop
+  03       |     JML         long                |   Self-explanatory
+  04       |     JSL         long                |   Self-explanatory
+  05       |     RTL                             |   Self-explanatory
+  06       |     WAIT        #imm8               |   Waits the specified amount of frames
+  07       |     TASK        abs                 |   Creates a "task", think of it as an auxiliary script. This auxiliary script will run alongside the main script
+  08       |     ONTICK      long                |   Assigns a "tick" callback function to run every frame for this object
+  09       |     HALT                            |   Simply sets the wait timer to 65535 frames
+  0A       |     JEQ         abs                 |   Jump if (reg == 0), uses absolute address, not relative like 65816's BEQ
+  0B       |     JNE         abs                 |   Jump if (reg != 0), uses absolute address, not relative like 65816's BNE
+  0C       |     ENDTASK                         |   Ends a task. Should only be used if the script was called via the "TASK" instruction
+  0D       |     BINOP       mem,op,#imm16       |   Perform a logical or arithmetic operation on a WRAM memory address (16-bit)
+  0E       |     MOV         objvar,mem          |   Stores the contents of a WRAM memory address into the specified object variable
+  0F       |     STOPTICK                        |   Removes the assigned "tick" callback function from the object
+  10       |     MULTIJMP    multi               |   Select a jump destination based on the value of "reg". If reg is not within bounds, no jump is taken
+  11       |     MULTIJSR    multi               |   Select a subroutine destination based on the value of "reg". If reg is not within bounds, no subroutine is run
+  12       |     MOV         mem,#imm8           |   Stores an 8-bit immediate value to the specified WRAM memory address
+  13       |     ENDLASTTASK                     |   Kills the last assigned task
+  14       |     BINOP       objvar,op,#imm16    |   Perform a logical or arithmetic operation on an object variable
+  15       |     MOV         mem,#imm16          |   Stores a 16-bit immediate value to the specified WRAM memory address
+  16       |     BREAKEQ     abs                 |   Similar to "JEQ", but will also "kill" the current loop if the jump is taken
+  17       |     BREAKNE     abs                 |   Similar to "JNE", but will also "kill" the current loop if the jump is taken
+  18       |     BINOP       mem,op,#imm8        |   Perform a logical or arithmetic operation on a WRAM memory address (8-bit)
+  19       |     JMP         abs                 |   Self-explanatory
+  1A       |     JSR         abs                 |   Self-explanatory
+  1B       |     RTS                             |   Self-explanatory
+  1C       |     SETANIMPTR  long                |   Sets a pointer to the animation data. This animation data format is unknown though
+  1D       |     MOV         reg,#imm16          |   Stores a 16-bit immediate value into reg
+  1E       |     MOV         reg,mem             |   Stores the contents of a WRAM memory address into reg
+  1F       |     MOV         objvar,reg          |   Stores the contents of reg into an object variable
+  20       |     MOV         reg,objvar          |   Stores the contents of an object variable into reg
+  21       |     WAIT        objvar              |   Waits an amount of frames equal to the content of the specified object variable
+  22       |     ONDRAW      callback            |   Assigns a "draw" callback function to run for this object when it needs to be placed into the OAM buffer
+  23       |     ONPOS       callback            |   Assigns a "pos" callback function to run for this object when it needs to have its screen position updated according to its "global/map" position
+  24       |     STARTLOOP   reg                 |   Starts a loop with an iteration count of the content of reg
+  25       |     ONMOVE      callback            |   Assigns a "move" callback function to run for this object when it needs to have its "global/map" position update according to its velocity
+  26       |     SETANIM     objvar              |   Sets the animation frame of the object to the content of the specified object variable
+  27       |     BINOP       reg,op,#imm16       |   Perform a logical or arithmetic operation on reg
+  28       |     SETXPOS     #imm16              |   Sets the object's X "global/map" position
+  29       |     SETYPOS     #imm16              |   Sets the object's Y "global/map" position
+  2A       |     SETZPOS     #imm16              |   Sets the object's Z "global/map" position
+  2B       |     ADDXPOS     #imm16              |   Adds a value to the object's X "global/map" position
+  2C       |     ADDYPOS     #imm16              |   Adds a value to the object's Y "global/map" position
+  2D       |     ADDZPOS     #imm16              |   Adds a value to the object's Z "global/map" position
+  2E       |     ADDXVEL     #imm16              |   Adds a value to the object's X velocity
+  2F       |     ADDYVEL     #imm16              |   Adds a value to the object's Y velocity
+  30       |     ADDZVEL     #imm16              |   Adds a value to the object's Z velocity
+  31       |     UNK31       #imm8,#imm8         |   Mystery opcode. Earthbound never uses this, but other games may use this
+  32       |     UNK32       #imm8,#imm8         |   Mystery opcode. Earthbound never uses this, but other games may use this
+  33       |     UNK33       #imm8,#imm8         |   Mystery opcode. Earthbound never uses this, but other games may use this
+  34       |     UNK34       #imm8,#imm8         |   Mystery opcode. Earthbound never uses this, but other games may use this
+  35       |     UNK35       #imm8,#imm8         |   Mystery opcode. Earthbound never uses this, but other games may use this
+  36       |     UNK36       #imm8,#imm8         |   Mystery opcode. Earthbound never uses this, but other games may use this
+  37       |     UNK37       #imm8,#imm8         |   Mystery opcode. Earthbound never uses this, but other games may use this
+  38       |     UNK38       #imm8,#imm8         |   Mystery opcode. Earthbound never uses this, but other games may use this
+  39       |     ZEROVEL                         |   Zeroes tbe object's velocity (X, Y, Z)
+  3A       |     UNK3A       #imm8               |   Mystery opcode. Earthbound never uses this, but other games may use this
+  3B       |     SETANIM     #imm8               |   Sets the animation frame of the object
+  3C       |     INCANIM                         |   Increments the animation frame of the object
+  3D       |     DECANIM                         |   Decrements the animation frame of the object
+  3E       |     ADDANIM     #imm8               |   Adds a value to the animation frame of the object
+  3F       |     SETXVEL     #imm16              |   Sets the X velocity of the object
+  40       |     SETYVEL     #imm16              |   Sets the Y velocity of the object
+  41       |     SETZVEL     #imm16              |   Sets the Z velocity of the object
+  42       |     ASMCALL     long                |   Calls an arbitrary ASM routine. The ASM routine may also take inline arguments, advancing the script's "instruction pointer" past the arguments
+  43       |     PRIORITY    #imm8               |   Sets the object drawing priority
+  44       |     WAIT        reg                 |   Waits an amount of frames equal to the content of reg

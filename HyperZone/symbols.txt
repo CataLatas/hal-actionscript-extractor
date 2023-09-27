@@ -1,0 +1,3 @@
+; Scripts
+Script0000_ModeSelect          = 01C609
+Script0007_StartUpLogo         = 00F72B
