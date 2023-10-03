@@ -90,7 +90,7 @@ OPCODES (regular interpreter):
 35    SETPOSE.w #imm16
 36~3F UNDEFINED, GAME CRASH
 
-All opcodes above are special "waited" opcodes. The low nibble acts as "WAIT #x"
+All opcodes below are special "waited" opcodes. The low nibble acts as "WAIT #x"
 4x    SETPOSE.b   #imm8
 5x    ADDPOSE     #imm8
 6x    INCPOSE
