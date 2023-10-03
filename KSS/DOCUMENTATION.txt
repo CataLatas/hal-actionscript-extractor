@@ -1,0 +1,105 @@
+Kirby Super Star HAL sprite scripting documentation/specs
+
+---------------------------------------------------------
+
+RAM ADDRESSES TO WATCH OUT FOR:
+- MAX_OBJ is a constant 61 (61 total object slots)
+- $6014          => Head of the object linked list
+- $6018          => Next object to be processed (temp inside ProcessObjects)
+- $603C[MAX_OBJ] => Next object in the linked list
+- $62BC[MAX_OBJ] => 8000 set if object is inactive?
+- $6724[MAX_OBJ] => Script sleep timer
+- $679E[MAX_OBJ] => Script program counter
+- $6818[MAX_OBJ] => Script program bank
+  - Extra flags in high byte
+    * 80 => Skip a bunch of processing
+    * 40 => Skip actionscript
+    * 20 => Actionscript on the SA-1 side
+- $724A[MAX_OBJ] => Script work register
+
+---------------------------------------------------------
+
+WEIRD THINGS TO INVESTIGATE:
+1. Apparently "sprites" and "scripts" aren't a separate concept anymore? A sprite can only run a single script??? (TODO: NEEDS CONFIRMATION)
+2. KSS uses the SA-1 chip. Some sprites are processed by the SNES side, while others can be offloaded to the SA-1 side (TODO: $6818 SEEMS RELATED)
+3. The mysterious new interpreter that was added
+
+---------------------------------------------------------
+
+SCRIPT POINTERS START AT $00B895 (read 4 bytes for a pointer, ignore 4th byte)
+- Amount of total scripts is still unknown
+
+---------------------------------------------------------
+
+OPCODES (regular interpreter):
+(looks like someone was finally bothered about different MOVs and BINOPs not being adjacent lol)
+
+00    UNK00     (END?)
+01    UNK01
+02    WAIT      #imm8
+03    UNK03     long
+04    UNK04
+05    LOOP      #imm8
+06    LOOP      reg
+07    ENDLOOP
+08    JSL       long
+09    RTL
+0A    JSR       abs
+0B    MULTIJSR  multi
+0C    RTS
+0D    JML       long
+0E    JMP       abs
+0F    MULTIJMP  multi
+10    JEQ       abs
+11    JNE       abs
+12    BREAKEQ   abs               // JEQ and break out of loop (pop 3 bytes off of the stack)
+13    BREAKNE   abs               // Ditto but JNE
+14    UNK14     long              // Possibly either SPRITEMAP or ONTICK
+15    UNK15     abs               // Possibly one of the ONMOVE/ONPOSITION/ONDRAW callbacks
+16    UNK16     abs               // Possibly one of the ONMOVE/ONPOSITION/ONDRAW callbacks
+17    UNK17     abs               // Possibly one of the ONMOVE/ONPOSITION/ONDRAW callbacks
+18    MOV       reg, abs
+19    MOV       abs, var
+1A    MOV.b     abs, #imm8
+1B    MOV.w     abs, #imm16
+1C    BINOP     var, op, #imm16   // op can be (0=AND, 1=OR, 2=ADD, 3=EOR)
+1D    BINOP.b   abs, op, #imm8
+1E    BINOP.w   abs, op, #imm16
+1F    BINOP     reg, op, #imm16
+20    MOV       var, reg
+21    MOV       reg, var
+22    WAIT      var
+23    SETPOSE   var
+24    UNK24                       // Zero $6B6E, $6BE8, $6C62, $6CDC
+25    UNK25                       // Zero $6C62, $6CDC
+26    SETXPOS   #imm16            // Needs confirmation
+27    SETYPOS   #imm16            // Needs confirmation
+28    ADDXPOS   #imm16            // Needs confirmation
+29    ADDYPOS   #imm16            // Needs confirmation
+2A    UNK2A     #imm8, #imm16
+2B    UNK2B     #imm8, #imm16
+2C    UNK2C     #imm8, #imm16
+2D    UNK2D     #imm8, #imm16
+2E    UNK2E     #imm8
+2F    UNK2F     #imm8, #imm16
+30    UNK30     #imm8, #imm16
+31    UNK31     #imm8, #imm16
+32    UNK32     #imm8, #imm16
+33    UNK33     #imm16            // Set $64B6
+34    UNK34     #imm8             // Call $00921B
+35    SETPOSE.w #imm16
+36~3F UNDEFINED, GAME CRASH
+
+All opcodes above are special "waited" opcodes. The low nibble acts as "WAIT #x"
+4x    SETPOSE.b   #imm8
+5x    ADDPOSE     #imm8
+6x    INCPOSE
+7x    DECPOSE
+8x    UNK8x       #imm16            // Set $6B6E
+9x    UNK9x       #imm16            // Set $6BE8
+Ax    UNKAx       #imm16            // Set $6C62
+Bx    UNKBx       #imm16            // Set $6CDC
+Cx    ASMCALL     long
+Dx    PRESETCALL  #imm8             // I'll admit this has a pretty weird name. To me it looked like some sort of "preset" ASMCALL, where the byte argument indexes into a table of ASMCALLs
+Ex    UNKEx       #imm8             // Call $00D12D (sound-something)
+Fx    UNKFx       #imm8             // Call $00D003 (sound-something)

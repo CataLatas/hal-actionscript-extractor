@@ -1,0 +1,7 @@
+; Format:
+;   ASM_FUNCTION ADDRESS
+;   PARAMS=datatype1,datatype2,...,datatypeN (optional)
+;   COMMENT=some comment                     (optional)
+;
+
+; Nothing here yet...!
