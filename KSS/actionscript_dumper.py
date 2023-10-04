@@ -96,7 +96,7 @@ OPCODES_WAITED = (
     ('UNKAx',       'imm_16'),                 # AX - TODO: SET $6C62
     ('UNKBx',       'imm_16'),                 # BX - TODO: SET $6CDC
     ('ASMCALL',     'addr_24'),                # Cx
-    ('PRESETCALL',  'imm_8'),                  # Dx
+    ('PRESETCALL',  'imm_8 imm_8'),            # Dx
     ('UNKEx',       'imm_8'),                  # Ex - TODO: CALL $00D12D / SOUND SOMETHING
     ('UNKFx',       'imm_8'),                  # Fx - TODO: CALL $00D003 / SOUND SOMETHING
 )
@@ -366,20 +366,14 @@ class Disassembler(object):
             elif address not in self.bad_asmcall:
                 self.bad_asmcall.add(address)
         elif mnemonic == 'BINOP':
-            # Now THIS is what I call hacky shit!
-            if opcode == 0x27:
-                op = bytes_[1]
-            elif opcode == 0x14:
-                op = bytes_[2]
-            else:
-                op = bytes_[3]
+            op = bytes_[1 + DATA_TYPE_SIZES[types[0]]] # Ugh.
 
             if op in (0, 1, 2, 3):
                 del operands[1]
                 mnemonic = mnemonic.replace('BINOP', BINOPS[op])
                 
                 if op == 2:  # ADD, change operand type from HEXADECIMAL immediate to DECIMAL immediate
-                    data_type = 'imm_s8' if opcode == 0x18 else 'imm_s16'
+                    data_type = 'imm_s8' if opcode == 0x1D else 'imm_s16'
                     size = DATA_TYPE_SIZES[data_type]
                     self.rom_file.seek(-size, os.SEEK_CUR)
                     operands[-1] = self.datatype_to_str(data_type, self.rom_file.read(size))
@@ -464,7 +458,7 @@ class Disassembler(object):
 
             self.traversed.add(self.snes_pc)
 
-            if op_byte & 0xC0 != 0:  # ASMCALL
+            if op_byte & 0xC0 == 0xC0:  # ASMCALL
                 addr = self.read_rom(3)
                 asm_func = self.asm_functions.get(addr, None)
                 if asm_func:

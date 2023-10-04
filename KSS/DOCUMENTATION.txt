@@ -8,6 +8,9 @@ RAM ADDRESSES TO WATCH OUT FOR:
 - $6018          => Next object to be processed (temp inside ProcessObjects)
 - $603C[MAX_OBJ] => Next object in the linked list
 - $62BC[MAX_OBJ] => 8000 set if object is inactive?
+- $633C[MAX_OBJ] => Tick callback address?
+- $63B6[MAX_OBJ] => Tick callback bank? (set 8000 to disable the tick callback)
+- $66AA[MAX_OBJ] => Unknown callback
 - $6724[MAX_OBJ] => Script sleep timer
 - $679E[MAX_OBJ] => Script program counter
 - $6818[MAX_OBJ] => Script program bank

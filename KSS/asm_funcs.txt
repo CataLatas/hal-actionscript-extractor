@@ -4,4 +4,6 @@
 ;   COMMENT=some comment                     (optional)
 ;
 
-; Nothing here yet...!
+ASM_FUNCTION 00A47B
+COMMENT = Modifies the actionscript instruction pointer? Weird JML with extra stuff? WEIRD WEIRD WEIRD!!!!
+PARAMS  = addr_24
