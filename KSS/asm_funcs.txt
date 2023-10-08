@@ -4,6 +4,154 @@
 ;   COMMENT=some comment                     (optional)
 ;
 
-ASM_FUNCTION 00A47B
-COMMENT = Modifies the actionscript instruction pointer? Weird JML with extra stuff? WEIRD WEIRD WEIRD!!!!
+ASM_FUNCTION 009B25
+COMMENT = Create child object in any slot between 0 and 31 with script `arg1`, offset by (`arg2`, `arg3`), with VAR0=`arg4`, VAR1=(`arg5` + this.VAR1), VAR2=this.slot
+PARAMS  = imm_16, imm_16, imm_16, imm_16, imm_16
+
+ASM_FUNCTION 009B65
+COMMENT = Create child object in any slot between `arg1` and `arg2`, with script `arg3`, offset by (`arg4`, `arg5`), with VAR0=`arg6`, VAR1=(`arg7` + this.VAR1), VAR2=this.slot
+PARAMS  = imm_8, imm_8, imm_16, imm_16, imm_16, imm_16, imm_16
+
+ASM_FUNCTION 009B73
+COMMENT = Create child object in slot `slot` with script `arg1`, offset by (`arg2`, `arg3`), with VAR0=`arg4`, VAR1=(`arg5` + this.VAR1), VAR2=this.slot
+PARAMS  = imm_8, imm_16, imm_16, imm_16, imm_16, imm_16
+
+ASM_FUNCTION 009BE8
+COMMENT = Destroy object in slot `arg`
+PARAMS  = imm_8
+
+ASM_FUNCTION 009C5C
+COMMENT = Unknown ASM $009C5C
+PARAMS  = imm_8, imm_16, imm_8
+
+ASM_FUNCTION 009C6C
+COMMENT = Load VRAM data from list of (transfermode, size, src, dst)
 PARAMS  = addr_24
+
+ASM_FUNCTION 009C94
+COMMENT = Set background mode
+PARAMS  = imm_8
+
+ASM_FUNCTION 009C9A
+COMMENT = Configure layer `arg1` (tilemap size=`arg2`, tilemap VRAM address=`arg3`, tileset VRAM address=`arg4`)
+PARAMS  = imm_8, imm_8, imm_16, imm_16
+
+ASM_FUNCTION 009CBB
+COMMENT = Set sprite sizes and VRAM address
+PARAMS  = imm_8, imm_16, imm_8
+
+ASM_FUNCTION 009CCE
+COMMENT = Set main screen layers to `arg` (hardware register TM)
+PARAMS  = imm_8
+
+ASM_FUNCTION 009CD9
+COMMENT = Enable layers `arg` on main screen (hardware register TM)
+PARAMS  = imm_8
+
+ASM_FUNCTION 009CE4
+COMMENT = Disable layers `arg` on main screen (hardware register TM)
+PARAMS  = imm_8
+
+ASM_FUNCTION 009CEF
+COMMENT = Set sub screen layers to `arg` (hardware register TS)
+PARAMS  = imm_8
+
+ASM_FUNCTION 009CFA
+COMMENT = Enable layers `arg` on sub screen (hardware register TS)
+PARAMS  = imm_8
+
+ASM_FUNCTION 009D05
+COMMENT = Disable layers `arg` on sub screen (hardware register TS)
+PARAMS  = imm_8
+
+ASM_FUNCTION 009DDE
+COMMENT = Enable HDMA channel `arg1` with source `arg2` to hardware register `arg3`, with transfer mode `arg4`
+PARAMS  = imm_8, addr_24, imm_8, imm_8
+
+ASM_FUNCTION 009E5E
+COMMENT = Disable HDMA channel `arg`
+PARAMS  = imm_8
+
+ASM_FUNCTION 009E6C
+COMMENT = Set flags in $3093
+PARAMS  = imm_8
+
+ASM_FUNCTION 009E76
+COMMENT = Clear flags in $3093
+PARAMS  = imm_8
+
+ASM_FUNCTION 009EB4
+COMMENT = Set RGB fixed color for color math
+PARAMS  = imm_8, imm_8, imm_8
+
+ASM_FUNCTION 009ED9
+COMMENT = Add RGB fixed color for color math
+PARAMS  = imm_8, imm_8, imm_8
+
+ASM_FUNCTION 009F85
+COMMENT = Set main screen window masking layers to `arg` (hardware register TMW)
+PARAMS  = imm_8
+
+ASM_FUNCTION 009F90
+COMMENT = Enable window masking for layers `arg` on main screen (hardware register TMW)
+PARAMS  = imm_8
+
+ASM_FUNCTION 009F9B
+COMMENT = Disable window masking for layers `arg` on main screen (hardware register TMW)
+PARAMS  = imm_8
+
+ASM_FUNCTION 009FA6
+COMMENT = Set sub screen window masking layers to `arg` (hardware register TSW)
+PARAMS  = imm_8
+
+ASM_FUNCTION 009FB1
+COMMENT = Enable window masking for layers `arg` on sub screen (hardware register TSW)
+PARAMS  = imm_8
+
+ASM_FUNCTION 009FBC
+COMMENT = Disable window masking for layers `arg` on sub screen (hardware register TSW)
+PARAMS  = imm_8
+
+ASM_FUNCTION 009FC7
+COMMENT = Set screen brightness
+PARAMS  = imm_8
+
+ASM_FUNCTION 009FEA
+COMMENT = Copy `arg3` bytes from `arg1` into [$0500+(`arg2` * 2)]
+PARAMS  = addr_24, imm_8, imm_16
+
+ASM_FUNCTION 009FFD
+COMMENT = Copy `arg3` bytes from `arg1` into [$0700+(`arg2` * 2)]
+PARAMS  = addr_24, imm_8, imm_16
+
+ASM_FUNCTION 00A2AC
+COMMENT = Block script execution until value at address `arg1` is equal to `arg2`
+PARAMS  = imm_16, imm_16
+
+ASM_FUNCTION 00A2C9
+COMMENT = REG = `arg2` - [`arg1`]
+PARAMS  = imm_16, imm_16
+
+ASM_FUNCTION 00A32B
+COMMENT = Unknown math
+PARAMS  = imm_8
+
+ASM_FUNCTION 00A47B
+COMMENT = Acts like a JML, but also HALTs the script? WEIRD WEIRD WEIRD!!!!
+PARAMS  = label_24
+
+ASM_FUNCTION 00D000
+COMMENT = Something to do with sound
+PARAMS  = imm_8
+
+ASM_FUNCTION 00D12A
+COMMENT = Something to do with sound
+PARAMS  = imm_8
+
+ASM_FUNCTION 078E3F
+COMMENT = inc $7396 : inc $7392
+
+ASM_FUNCTION 078E46
+COMMENT = Set $7F8800 to zero (NOTE: probably crashes if called from the S-CPU side)
+
+

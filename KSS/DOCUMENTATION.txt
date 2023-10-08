@@ -4,13 +4,19 @@ Kirby Super Star HAL sprite scripting documentation/specs
 
 RAM ADDRESSES TO WATCH OUT FOR:
 - MAX_OBJ is a constant 61 (61 total object slots)
+- $6010          => Minimum slot to use when allocating a new object
+- $6012          => Maximum slot to use when allocating a new object
 - $6014          => Head of the object linked list
 - $6018          => Next object to be processed (temp inside ProcessObjects)
 - $603C[MAX_OBJ] => Next object in the linked list
 - $62BC[MAX_OBJ] => 8000 set if object is inactive?
-- $633C[MAX_OBJ] => Tick callback address?
-- $63B6[MAX_OBJ] => Tick callback bank? (set 8000 to disable the tick callback)
-- $66AA[MAX_OBJ] => Unknown callback
+- $633C[MAX_OBJ] => Tick callback address
+- $63B6[MAX_OBJ] => Tick callback bank (set 8000 to disable the tick callback)
+- $6436[MAX_OBJ] => Object pose (aka "animation frame")
+- $6536[MAX_OBJ] => Object spritemap address (TODO: spritemap structure)
+- $65B0[MAX_OBJ] => Object spritemap bank (TODO: spritemap structure)
+- $6630[MAX_OBJ] => Object draw callback
+- $66AA[MAX_OBJ] => Unknown callback (move callback?)
 - $6724[MAX_OBJ] => Script sleep timer
 - $679E[MAX_OBJ] => Script program counter
 - $6818[MAX_OBJ] => Script program bank
@@ -18,6 +24,20 @@ RAM ADDRESSES TO WATCH OUT FOR:
     * 80 => Skip a bunch of processing
     * 40 => Skip actionscript
     * 20 => Actionscript on the SA-1 side
+- $6986[MAX_OBJ] => Object X position
+- $6A00[MAX_OBJ] => Object Y position
+- $6A7A[MAX_OBJ] => Object X position fraction (aka subpixels, 1/65536 units)
+- $6AF4[MAX_OBJ] => Object Y position fraction (aka subpixels, 1/65536 units)
+- $6D56[MAX_OBJ] => Object VAR0
+- $6DD0[MAX_OBJ] => Object VAR1
+- $6E4A[MAX_OBJ] => Object VAR2
+- $6EC4[MAX_OBJ] => Object VAR3
+- $6F3E[MAX_OBJ] => Object VAR4
+- $6FB8[MAX_OBJ] => Object VAR5
+- $7032[MAX_OBJ] => Object VAR6
+- $70AC[MAX_OBJ] => Object VAR7
+- $7126[MAX_OBJ] => Object VAR8
+- $71A0[MAX_OBJ] => Object VAR9
 - $724A[MAX_OBJ] => Script work register
 
 ---------------------------------------------------------
@@ -30,7 +50,7 @@ WEIRD THINGS TO INVESTIGATE:
 ---------------------------------------------------------
 
 SCRIPT POINTERS START AT $00B895 (read 4 bytes for a pointer, ignore 4th byte)
-- Amount of total scripts is still unknown
+- It seems like there are only 28 scripts in total (!)
 
 ---------------------------------------------------------
 
@@ -103,6 +123,60 @@ All opcodes below are special "waited" opcodes. The low nibble acts as "WAIT #x"
 Ax    UNKAx       #imm16            // Set $6C62
 Bx    UNKBx       #imm16            // Set $6CDC
 Cx    ASMCALL     long
-Dx    PRESETCALL  #imm8             // I'll admit this has a pretty weird name. To me it looked like some sort of "preset" ASMCALL, where the byte argument indexes into a table of ASMCALLs
+Dx    PRESETCALL  #imm8             // Call standard "hallib" function. Pointers stored at $00B84D. See below for a full list
 Ex    UNKEx       #imm8             // Call $00D12D (sound-something)
 Fx    UNKFx       #imm8             // Call $00D003 (sound-something)
+
+---------------------------------------------------------
+
+FUNCTIONS USED BY PRESETCALL:
+
+00 - 00D000(byte: unknown)   => Something to do with sound
+01 - 00D12A(byte: unknown)   => Something to do with sound
+02 - 009C6C(longptr: config) => Load VRAM data
+  "config" structure:
+    - list of (byte: mode, word: size, longptr: src, word: dst), terminated by mode=FF
+    - mode -> VRAM transfer mode (standard "hallib" stuff):
+      - 00 = word write
+      - 03 = fixed word write
+      - 06 = lobyte write
+      - 09 = fixed lobyte write
+      - 0C = hibyte write
+      - 0F = fixed hibyte write
+      - 12 = word read
+      - 15 = lobyte read
+      - 18 = hibyte read
+      - 1B = word write (inc32)
+      - 1E = fixed word write (inc32)
+      - 21 = lobyte write (inc32)
+      - 24 = fixed lobyte write (inc32)
+      - 27 = hibyte write (inc32)
+      - 2A = fixed hibyte write (inc32)
+      - 2D = word read (inc32)
+      - 30 = lobyte read (inc32)
+      - 33 = hibyte read (inc32)
+      - NOTE: set msb if the data is compressed
+    - size -> Total size of (uncompressed) data in bytes
+    - src  -> Data source
+    - dst  -> Destination VRAM address
+03 - 009C94(byte: bgmode) => Set background mode
+04 - 009C9A(byte: layer, byte: mapsize, word: mapaddr, word: chraddr) => Configure layer
+05 - 009CBB(byte: unk1, word: addr, byte: unk2) => Set sprite sizes and VRAM address
+06 - 009CCE(byte: layers) => Set main screen layers (hardware register TM aka $212C)
+07 - 009CEF(byte: layers) => Set sub screen layers (hardware register TS aka $212D)
+08 - 009F85(byte: layers) => Set main screen window masking layers (hardware register TMW aka $212E)
+09 - 009FA6(byte: layers) => Set sub screen window masking layers (hardware register TSW aka $212F)
+0A - 009FEA(longptr: src, byte: offset, word: size) => Copy `size` bytes from `src` to [$0500 + `offset`*2]
+0B - 009B25(word: script, word: offx, word: offy, word: var0, word: offvar1) => Create child object in any slot between 0 and 31 with script `script`, offset by (`offx`, `offy`), with VAR0=`var0`, VAR1=(this.VAR1 + `offvar1`), VAR2=this.slot
+0C - 009B65(byte: minslot, byte: maxslot, word: script, word: offx, word: offy, word: var0, word: offvar1) => Create child object in any slot between `minslot` and `maxslot` with script `script`, offset by (`offx`, `offy`), with VAR0=`var0`, VAR1=(this.VAR1 + `offvar1`), VAR2=this.slot
+0D - 009B73(byte: slot, word: script, word: offx, word: offy, word: var0, word: offvar1) => Create child object in slot `slot` with script `script`, offset by (`offx`, `offy`), with VAR0=`var0`, VAR1=(this.VAR1 + `offvar1`), VAR2=this.slot
+0E - 009BE8(byte: slot) => Destroy object in slot `slot`
+0F - 009C5C(byte: unk1, word: unk2, byte: unk3) => Unknown
+10 - 009DDE(byte: ch, longptr: src, byte: dst, byte: mode) => Enable HDMA channel `ch` with source `src` ($43x2), to hardware register `dst` ($43x1) with transfer mode `mode` ($43x0)
+11 - 009E5E(byte: ch) => Disable HDMA channel `ch`
+12 - 009E6C(byte: flags) => Set bits in $3093
+13 - 009E76(byte: flags) => Clear bits in $3093
+14 - 009EB4(byte: r, byte: g, byte: b) => Set fixed color for color math
+15 - 009ED9(byte: r, byte: g, byte: b) => Add fixed color for color math
+16 - 00A2AC(word: address, word: value) => Block script execution until value at `address` is equal to `value`
+17 - 00A2C9(word: address, word: value) => Subtract value at `address` from `value` and store to script work register (REG = `value` - [`address`])

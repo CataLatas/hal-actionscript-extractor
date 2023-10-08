@@ -9,7 +9,7 @@ import sys
 
 LABEL_CHARSET = string.ascii_letters + string.digits + '_'  # Valid characters for labels
 
-LAST_SCRIPT = 200  # Amount of scripts
+LAST_SCRIPT = 28  # Amount of scripts
 
 DATA_TYPE_SIZES = {
     'label_16': 2,  # 16-bit address (prefferably a label, when available)
@@ -30,11 +30,11 @@ DATA_TYPE_SIZES = {
 
 # (mnemonic, data types separated by spaces)
 OPCODES = (
-    ('UNK00',       ''),                       # 00
-    ('UNK01',       ''),                       # 01
+    ('END',         ''),                       # 00
+    ('HALT',        ''),                       # 01
     ('WAIT',        'imm_u8'),                 # 02
-    ('UNK03',       'addr_24'),                # 03 - Set $633C and $63B6
-    ('UNK04',       ''),                       # 04 - TODO: ONTICK nop?
+    ('ONTICK',      'addr_24'),                # 03
+    ('ENDTICK',     ''),                       # 04
     ('LOOP',        'imm_8'),                  # 05
     ('LOOP',        'reg'),                    # 06
     ('ENDLOOP',     ''),                       # 07
@@ -45,17 +45,17 @@ OPCODES = (
     ('RTS',         ''),                       # 0C
     ('JML',         'label_24'),               # 0D
     ('JMP',         'label_16'),               # 0E
-    ('MULTIJMP',    'imm_8'),                  # 0F
+    ('MULTIJMP',    'imm_u8'),                 # 0F
     ('JEQ',         'label_16'),               # 10
     ('JNE',         'label_16'),               # 11
     ('BREAKEQ',     'label_16'),               # 12
     ('BREAKNE',     'label_16'),               # 13
-    ('UNK14',       'addr_24'),                # 14 - TODO: ONTICK? SPRITEMAP?
-    ('UNK15',       'addr_16'),                # 15 - TODO: CALLBACK
-    ('UNK16',       'addr_16'),                # 16 - TODO: CALLBACK
-    ('UNK17',       'addr_16'),                # 17 - TODO: CALLBACK
+    ('SPRITEMAP',   'addr_24'),                # 14
+    ('ONDRAW',      'addr_16'),                # 15
+    ('UNK16',       'addr_16'),                # 16 - TODO: ONMOVE?
+    ('MOV',         'reg imm_16'),             # 17
     ('MOV',         'reg addr_16'),            # 18
-    ('MOV',         'addr_16 obj_var'),        # 19
+    ('MOV',         'obj_var addr_16'),        # 19
     ('MOV.b',       'addr_16 imm_8'),          # 1A
     ('MOV.w',       'addr_16 imm_16'),         # 1B
     ('BINOP',       'obj_var imm_u8 imm_16'),  # 1C
@@ -96,7 +96,7 @@ OPCODES_WAITED = (
     ('UNKAx',       'imm_16'),                 # AX - TODO: SET $6C62
     ('UNKBx',       'imm_16'),                 # BX - TODO: SET $6CDC
     ('ASMCALL',     'addr_24'),                # Cx
-    ('PRESETCALL',  'imm_8 imm_8'),            # Dx
+    ('PRESETCALL',  'imm_8'),                  # Dx
     ('UNKEx',       'imm_8'),                  # Ex - TODO: CALL $00D12D / SOUND SOMETHING
     ('UNKFx',       'imm_8'),                  # Fx - TODO: CALL $00D003 / SOUND SOMETHING
 )
@@ -158,9 +158,15 @@ OPCODES_ALT = (
 BINOPS = ('AND', 'OR', 'ADD', 'XOR')
 
 def snes2pc(addr):
+    if addr >= 0xC00000:
+        return addr - 0xC00000
+
     return ((addr & 0x3F0000) >> 1) | (addr & 0x7FFF)
 
-def pc2snes(addr):
+def pc2snes(addr, super_mmc=False):
+    if super_mmc:
+        return addr + 0xC00000
+
     return ((addr & 0x3F8000) << 1) | (addr & 0x7FFF) | 0x8000
 
 # Some epic tests because I was STUCK figuring out lorom conversion for 2 days straight like a dummy
@@ -199,6 +205,8 @@ class Disassembler(object):
         self.pc = 0
         self.was_linebreak = False
         self.force_label = False
+        self.super_mmc = False # HACK: SA-1 stuff
+        self.preset_asmcalls = []
         self.symbols = dict()
         self.asm_functions = dict()
         self.init_asm_functions()
@@ -206,7 +214,7 @@ class Disassembler(object):
 
     @property
     def snes_pc(self):
-        return pc2snes(self.pc)
+        return pc2snes(self.pc, self.super_mmc)
 
     def read_rom(self, amount, signed=False):
         b = self.rom_file.read(amount)
@@ -236,7 +244,7 @@ class Disassembler(object):
             return '${:06X}'.format(value)
         elif data_type == 'obj_var':
             if value > 7:
-                print(f'WARNING: INVALID OBJ_VAR OPERAND {value} @{self.snes_pc:06X}')
+                print(f'WARNING: INVALID OBJ_VAR OPERAND {value} @ {self.snes_pc:06X}')
 
             return 'VAR{}'.format(value)
         elif data_type in ('reg', 'nop'):
@@ -269,6 +277,8 @@ class Disassembler(object):
             self.rom_file.seek(pcstart + self.header_offset)
             self.pc = self.rom_file.tell()
 
+            self.super_mmc = start >= 0xC00000
+
             while self.snes_pc in self.traversed:
                 self.traversed.remove(self.snes_pc)
 
@@ -278,7 +288,7 @@ class Disassembler(object):
 
                 opcode = self.read_rom(1)
                 self.disasm_opcode(opcode)
-                self.force_label = opcode in (0x00, 0x09, 0x0C, 0x0D, 0x0E)
+                self.force_label = opcode in (0x00, 0x01, 0x09, 0x0C, 0x0D, 0x0E)
                 self.pc = self.rom_file.tell()
                 if self.force_label:
                     break
@@ -302,7 +312,7 @@ class Disassembler(object):
 
         if not valid:
             to_write = (indentation + '.byte'.ljust(12) + '${:02X}'.format(opcode)).ljust(40 + len(indentation))
-            to_write += '; {:06X}/{:02X} @ {:06X}\n'.format(self.snes_pc, opcode, self.pc)
+            to_write += '; {:06X}/{:02X}\n'.format(self.snes_pc, opcode)
             self.out_file.write(to_write)
             return
 
@@ -332,22 +342,35 @@ class Disassembler(object):
         comment = ''
         extra = ''
 
-        if mnemonic == 'ASMCALL':
-            address = int.from_bytes(bytes_[1:], byteorder='little')
+        if mnemonic in ('ASMCALL', 'PRESETCALL'):
+            if mnemonic == 'PRESETCALL':
+                preset_id = bytes_[1]
+                if preset_id >= len(self.preset_asmcalls):
+                    address = -1 # Horrible hacks incoming!!!!!!
+                    comment = ' // BAD PRESETCALL'
+                    print(f'WARNING: BAD PRESETCALL: {preset_id:02X} @ {self.snes_pc:06X}')
+                else:
+                    address = self.preset_asmcalls[preset_id]
+                    comment = f' // ASMCALL ${address:06X}'
+            else:
+                comment = ''
+                address = int.from_bytes(bytes_[1:], byteorder='little')
+
             asm_func = self.asm_functions.get(address, None)
             if asm_func:
                 DIRECTIVES = ('.byte', '.word', '.long', '.dword')
-                comment = ' // ' + asm_func['comment'] if asm_func['comment'] else ''
-                
+                if asm_func['comment']:
+                    comment += ' // ' + asm_func['comment']
+
                 # Fucking hell this is horrible
                 for p in asm_func['params']:
                     if p == 'varargs':
                         count = self.read_rom(1)
-                        
+
                         self.pc = self.rom_file.tell()
                         extra += (indentation + '.byte'.ljust(12) + str(count)).ljust(40 + len(indentation))
                         extra += '; {:06X}/{:02X}\n'.format(self.snes_pc, count)
-                        
+
                         for i in range(count):
                             self.pc = self.rom_file.tell()
                             b = self.rom_file.read(2)
@@ -362,7 +385,7 @@ class Disassembler(object):
                         arg = arg.replace('#', '')
                         extra += (indentation + DIRECTIVES[data_size - 1].ljust(12) + arg).ljust(40 + len(indentation))
                         extra += '; {:06X}/{}\n'.format(self.snes_pc, b.hex().upper())
-                        
+
             elif address not in self.bad_asmcall:
                 self.bad_asmcall.add(address)
         elif mnemonic == 'BINOP':
@@ -371,7 +394,7 @@ class Disassembler(object):
             if op in (0, 1, 2, 3):
                 del operands[1]
                 mnemonic = mnemonic.replace('BINOP', BINOPS[op])
-                
+
                 if op == 2:  # ADD, change operand type from HEXADECIMAL immediate to DECIMAL immediate
                     data_type = 'imm_s8' if opcode == 0x1D else 'imm_s16'
                     size = DATA_TYPE_SIZES[data_type]
@@ -400,7 +423,7 @@ class Disassembler(object):
             self.indentation = max(self._indent, self.indentation - self._indent)
 
         to_write = (indentation + mnemonic.ljust(12) + ','.join(operands)).ljust(40 + len(indentation))
-        to_write += '; {:06X}/{} @ {:06X} {}\n'.format(op_addr, bytes_.hex().upper(), self.pc, comment)
+        to_write += '; {:06X}/{} {}\n'.format(op_addr, bytes_.hex().upper(), comment)
         self.out_file.write(to_write + extra)
 
     def init_symbols(self):
@@ -410,12 +433,17 @@ class Disassembler(object):
         if self.sym_file:
             self.parse_sym_file()
 
+        # Read preset ASMCALLs...
+        self.rom_file.seek(0x384D + self.header_offset)
+        for i in range(24):
+            self.preset_asmcalls.append(self.read_rom(3))
+
+        # Now onto the script themselves
         self.rom_file.seek(0x3895 + self.header_offset)
 
         # Add default symbols for each script entry point, if they've not been defined
         for i in range(script_count):
-            address = self.read_rom(3)
-            self.read_rom(1)
+            address = self.read_rom(4) & 0xFFFFFF
             if address not in self.symbols:
                 print(f'Script{i:04X} @ ${address:06X}')
                 self.add_label(address, f'Script{i:04X}')
@@ -425,7 +453,7 @@ class Disassembler(object):
             self.traverse(address)
 
     def add_label(self, address, label, traverse=False):
-        if (address >= 0x400000 and address < 0x808000) or (address & 0xFFFF) < 0x8000:
+        if (address >= 0x400000 and address < 0x808000) or (address < 0xC00000 and (address & 0xFFFF) < 0x8000):
             return
 
         if address not in self.symbols:
@@ -434,12 +462,15 @@ class Disassembler(object):
 
     def traverse(self, start):
         old_pc = self.pc
+        old_super_mmc = self.super_mmc
 
         if start < 0x8000: return
 
         address = snes2pc(start)
         self.rom_file.seek(address + self.header_offset)
         self.pc = self.rom_file.tell()
+
+        self.super_mmc = start >= 0xC00000
 
         while self.snes_pc not in self.traversed:
             op_byte = self.read_rom(1)
@@ -458,8 +489,16 @@ class Disassembler(object):
 
             self.traversed.add(self.snes_pc)
 
-            if op_byte & 0xC0 == 0xC0:  # ASMCALL
-                addr = self.read_rom(3)
+            if op_byte & 0xF0 in (0xC0, 0xD0): # ASMCALL/PRESETCALL
+                if op_byte & 0xF0 == 0xD0: # PRESETCALL
+                    preset_id = self.read_rom(1)
+                    if preset_id < len(self.preset_asmcalls):
+                        addr = self.preset_asmcalls[preset_id]
+                    else:
+                        addr = -1 # HACK: Dummy
+                else: # ASMCALL
+                    addr = self.read_rom(3)
+
                 asm_func = self.asm_functions.get(addr, None)
                 if asm_func:
                     for p in asm_func['params']:
@@ -468,7 +507,9 @@ class Disassembler(object):
                             self.rom_file.read(count*2)  # Read and discard bytes
                         else:
                             data_size = DATA_TYPE_SIZES[p]
-                            b = self.rom_file.read(data_size)  # Read and discard bytes
+                            b = self.read_rom(data_size)  # Read and discard bytes
+                            if p == 'label_24':
+                                self.add_label(b, f'L_{b:06X}')
             elif op_byte in (0x0B, 0x0F):  # MULTIJSR/MULTIJMP
                 count = self.read_rom(1)
                 for i in range(count):
@@ -491,11 +532,12 @@ class Disassembler(object):
                         self.rom_file.read(DATA_TYPE_SIZES[data_type])  # Read and discard bytes
 
             self.pc = self.rom_file.tell()
-            if op_byte in (0x00, 0x09, 0x0C, 0x0D, 0x0E):
+            if op_byte in (0x00, 0x01, 0x09, 0x0C, 0x0D, 0x0E):
                 break
 
         self.rom_file.seek(old_pc)
         self.pc = self.rom_file.tell()
+        self.super_mmc = old_super_mmc
 
     def parse_sym_file(self):
         for i, line in enumerate(self.sym_file):
