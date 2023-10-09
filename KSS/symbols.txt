@@ -1,1 +1,3 @@
-; Nothing here yet...!
+; Subroutines
+SUB_QuickFadeIn  = C9045A ; Full fade-in in two frames
+SUB_QuickFadeOut = C904A6 ; Full fade-out in two frames

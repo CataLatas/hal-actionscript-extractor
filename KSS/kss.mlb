@@ -1,0 +1,434 @@
+﻿SnesPrgRom:050A:SetBGMODE:A = BG mode\n
+SnesPrgRom:0554:ConfigureLayer1:A = tilemap size\nX = VRAM tilemap address\nY = VRAM tileset address
+SnesPrgRom:057B:ConfigureLayer2:A = tilemap size\nX = VRAM tilemap address\nY = VRAM tileset address
+SnesPrgRom:05A0:ConfigureLayer3:A = tilemap size\nX = VRAM tilemap address\nY = VRAM tileset address
+SnesPrgRom:0A56:WaitFrame
+SnesPrgRom:0AC1:Rand
+SnesPrgRom:0B62:All_Bits16_BE
+SnesPrgRom:0B72:All_Bits16
+SnesPrgRom:0B82:All_Bits8
+SnesPrgRom:0C64:InvokeSA1:Invoke code to run on the SA-1
+SnesPrgRom:0C92:InvokeSCPU:Invoke code to run on the S-CPU\n
+SnesPrgRom:0D37:FixOppositeDPad:Remove opposite D-Pad inputs\n
+SnesPrgRom:0D6F-0D7E:OBJ_VAR_PTRS
+SnesPrgRom:0D85:InitializeObjects
+SnesPrgRom:0E72:CreateNewObject:Create a new object occupying any slots between 0 and 61\n\nA = script\nX = X position\nY = Y position\n\nVAR0 thru VAR4 will be set to zero\n\nReturns 0xFFFF if no free slot was found\n
+SnesPrgRom:0E8C:CreateNewObject2:Create a new object\n\nA = script\nX = X position\nY = Y position\n\nWill use VAR0~VAR4 preconfigured in $6000~$6008\nWill allocate the object in any slot between [$6010] and [$6012]\n\nReturns 0xFFFF if no free slot was found\n\n
+SnesPrgRom:0E9E:InitializeNewObject:X     = Object slot\n
+SnesPrgRom:0F35:InitializeObjectScript:Initialize script for object\n\nX = Object slot\nA = Script address\nY = Script bank
+SnesPrgRom:0FF2:ProcessObjects
+SnesPrgRom:1130:FindFreeObjectSlot
+SnesPrgRom:1142:DestroyObject_L
+SnesPrgRom:1146:DestroyObject
+SnesPrgRom:11DF:MAYBE_UnlinkObject_L
+SnesPrgRom:11E3:MAYBE_UnlinkObject
+SnesPrgRom:123A:AS_ReadByte
+SnesPrgRom:1242:AS_ReadByte_L
+SnesPrgRom:124A:AS_ReadWord
+SnesPrgRom:1251:AS_ReadWord_L
+SnesPrgRom:1258:LongCall_6028
+SnesPrgRom:125B:RemoveTickCallback_L
+SnesPrgRom:125F:RemoveTickCallback
+SnesPrgRom:126C:MoveCurrentScriptToSCPU:Move the current script to the S-CPU\n
+SnesPrgRom:127E:MoveCurrentScriptToSA1:Move the current script to the SA-1\n
+SnesPrgRom:128F:AS_Interpret
+SnesPrgRom:12C3:AS_RunInstruction
+SnesPrgRom:1368:AS_BeginAltInterpreter
+SnesPrgRom:1372::Was the last executed instruction "HALT"?
+SnesPrgRom:137A:SetScriptPointer:Set script pointer for object in slot Y\n\nY = Object slot\nA = Script address\nX = Script bank\n
+SnesPrgRom:1388::What's this???
+SnesPrgRom:1392:AS_AltInterpret
+SnesPrgRom:13C6:AS_AltRunInstruction
+SnesPrgRom:1453:AS_End:Actionscript instruction 00\n
+SnesPrgRom:1463:AS_Halt:Actionscript instruction 01\n
+SnesPrgRom:146D:AS_WaitImm:Actionscript instruction 02\n
+SnesPrgRom:147A:AS_OnTick:Actionscript instruction 03\n
+SnesPrgRom:1491:AS_EndTick:Actionscript instruction 04\n
+SnesPrgRom:1497:AS_LoopImm:Actionscript instruction 05\n
+SnesPrgRom:14B3:AS_LoopReg:Actionscript instruction 06\n
+SnesPrgRom:14B8:AS_EndLoop:Actionscript instruction 07\n
+SnesPrgRom:14D1:AS_BreakEq:Actionscript instruction 12\n
+SnesPrgRom:14EB:AS_BreakNe:Actionscript instruction 13\n
+SnesPrgRom:14F2:AS_Jsl:Actionscript instruction 08\n
+SnesPrgRom:1519:AS_Rtl:Actionscript instruction 09\n
+SnesPrgRom:152F:AS_Jsr:Actionscript instruction 0A\n
+SnesPrgRom:1544:AS_MultiJsr:Actionscript instruction 0B\n
+SnesPrgRom:1570:AS_Rts:Actionscript instruction 0C\n
+SnesPrgRom:157C:AS_Jml:Actionscript instruction 0D\n
+SnesPrgRom:158F:AS_Jmp:Actionscript instruction 0E\n
+SnesPrgRom:1597:AS_MultiJmp:Actionscript instruction 0F\n
+SnesPrgRom:15A9:AS_Jeq:Actionscript instruction 10\n
+SnesPrgRom:15B5:AS_Jne:Actionscript instruction 11\n
+SnesPrgRom:15C1:AS_Spritemap:Actionscript instruction 14\n
+SnesPrgRom:15D7:AS_OnDraw:Actionscript instruction 16\n
+SnesPrgRom:15E3:AS_Unk16:Actionscript instruction 16\n
+SnesPrgRom:15EF:AS_MovRegImm:Actionscript instruction 17\n
+SnesPrgRom:15FB:AS_MovRegAbs:Actionscript instruction 18\n
+SnesPrgRom:160B:AS_MovVarAbs:Actionscript instruction 19\n
+SnesPrgRom:162A:AS_MovAbsImm8:Actionscript instruction 1A\n
+SnesPrgRom:163F:AS_MovAbsImm16:Actionscript instruction 1B\n
+SnesPrgRom:167B:AS_BinopAbsImm8:Actionscript instruction 1D\n
+SnesPrgRom:169A:AS_BinopVarImm:Actionscript instruction 1C\n
+SnesPrgRom:16AC:AS_BinopRegImm:Actionscript instruction 1F\n
+SnesPrgRom:16B3:AS_BinopAbsImm16:Actionscript instruction 1E\n
+SnesPrgRom:16EC:AS_MovVarReg:Actionscript instruction 20\n
+SnesPrgRom:1703:AS_MovRegVar:Actionscript instruction 21\n
+SnesPrgRom:171A:AS_WaitReg:Actionscript instruction 22\n
+SnesPrgRom:1731:AS_SetPoseVar:Actionscript instruction 23\n
+SnesPrgRom:1748:AS_SetXPos:Actionscript instruction 26\n
+SnesPrgRom:175A:AS_SetYPos:Actionscript instruction 27\n
+SnesPrgRom:176C:AS_AddXPos:Actionscript instruction 28\n
+SnesPrgRom:177C:AS_AddYPos:Actionscript instruction 29\n
+SnesPrgRom:178C:AS_Unk2A:Actionscript instruction 2A\n
+SnesPrgRom:17A4:AS_Unk2B:Actionscript instruction 2B\n
+SnesPrgRom:17BC:AS_Unk2C:Actionscript instruction 2C\n
+SnesPrgRom:17D5:AS_Unk2D:Actionscript instruction 2D\n
+SnesPrgRom:17EE:AS_Unk2E:Actionscript instruction 2E\n
+SnesPrgRom:1806:AS_Unk2F:Actionscript instruction 2F\n
+SnesPrgRom:182D:AS_Unk30:Actionscript instruction 30\n
+SnesPrgRom:1854:AS_Unk31:Actionscript instruction 31\n
+SnesPrgRom:1882:AS_Unk32:Actionscript instruction 32\n
+SnesPrgRom:18B0:AS_SetPoseImm8:Actionscript instruction 4x\n
+SnesPrgRom:18C5:AS_SetPoseImm16:Actionscript instruction 35\n
+SnesPrgRom:193C:AS_AddPose:Actionscript instruction 5x\n
+SnesPrgRom:1955:AS_IncPose:Actionscript instruction 6x
+SnesPrgRom:195C:AS_DecPose:Actionscript instruction 7x\n
+SnesPrgRom:1963:AS_AsmCall:Actionscript instruction Cx\n
+SnesPrgRom:1983:AS_PresetCall:Actionscript instruction Dx\n
+SnesPrgRom:19A0:AS_Unk33:Actionscript instruction 33\n
+SnesPrgRom:19AC:AS_Unk34:Actionscript instruction 34\n
+SnesPrgRom:19BB:AS_UnkEx:Actionscript instruction Ex\n
+SnesPrgRom:19C9:AS_UnkFx:Actionscript instruction Fx\n
+SnesPrgRom:19D7:AS_Unk24:Actionscript instruction 24\n
+SnesPrgRom:19E7:AS_Unk25:Actionscript instruction 25\n
+SnesPrgRom:19F1:AS_Unk8x:Actionscript instruction 8x\n
+SnesPrgRom:19FD:AS_Unk9x:Actionscript instruction 9x\n
+SnesPrgRom:1A09:AS_UnkAx:Actionscript instruction Ax\n
+SnesPrgRom:1A15:AS_UnkBx:Actionscript instruction Bx\n
+SnesPrgRom:1E62:DisableHdmaChannel
+SnesPrgRom:1FCD:FadeIn_Step:Increment screen brightness by 1\n
+SnesPrgRom:1FDD:FadeOut_Step:Decrement screen brightness by 1\n
+SnesPrgRom:2369:FreezeObject
+SnesPrgRom:2373:UnfreezeObject
+SnesPrgRom:23B6:HideAllObjectsExceptA:Hide all objects, except the one in slot A\n
+SnesPrgRom:23CD:UnhideCurrentObject
+SnesPrgRom:23CF:UnhideObject
+SnesPrgRom:23D9:HideCurrentObject
+SnesPrgRom:23DB:HideObject
+SnesPrgRom:2CCE:SpritemapToOam_MAIN
+SnesPrgRom:3D3B:TrySoftReset
+SnesWorkRam:0036-0037:pad1_repeat_timer
+SnesWorkRam:0038-0039:pad2_repeat_timer
+SnesWorkRam:0100-04FF:dma_queue:00 - transfer mode\n01 - transfer size\n03 - source address\n05 - source bank\n06 - destination VRAM address
+SnesSaveRam:0000-0001:new_object_var0
+SnesSaveRam:0002-0003:new_object_var1
+SnesSaveRam:0004-0005:new_object_var2
+SnesSaveRam:0006-0007:new_object_var3
+SnesSaveRam:0008-0009:new_object_var4
+SnesSaveRam:000A-000B:new_object_script
+SnesSaveRam:000C-000D:new_object_xpos
+SnesSaveRam:000E-000F:new_object_ypos
+SnesSaveRam:0010-0011:min_obj_alloc_slot
+SnesSaveRam:0012-0013:max_obj_alloc_slot
+SnesSaveRam:0014-0015:first_obj
+SnesSaveRam:0018-0019:next_obj
+SnesSaveRam:003C-00BB:OBJ_next
+SnesSaveRam:00BC-0135:OBJ_60BC
+SnesSaveRam:013C-01B5:OBJ_613C
+SnesSaveRam:01BC-023B:OBJ_61BC
+SnesSaveRam:023C-02BB:OBJ_script_id
+SnesSaveRam:02BC-033B:OBJ_is_active:8000 -> Object is inactive\n4000 -> ????
+SnesSaveRam:033C-03B5:OBJ_tick_addr
+SnesSaveRam:03B6-042F:OBJ_tick_bank:Set 8000 to disable the tick callback
+SnesSaveRam:0436-04AF:OBJ_pose
+SnesSaveRam:04B6-052F:OBJ_64B6
+SnesSaveRam:0536-05AF:OBJ_spritemap_addr
+SnesSaveRam:05B0-0629:OBJ_spritemap_bank
+SnesSaveRam:0630-06A9:OBJ_draw_callback
+SnesSaveRam:06AA-0723:OBJ_callback_66AA
+SnesSaveRam:0724-079D:SCR_sleep_timer
+SnesSaveRam:079E-0817:SCR_program_counter
+SnesSaveRam:0818-0891:SCR_bank:Flags in high byte:\n80 -> Skip a bunch of processing\n40 -> Skip actionscript\n20 -> Actionscript on the S-CPU\n
+SnesSaveRam:0892-090B:OBJ_6892
+SnesSaveRam:090C-0985:OBJ_690C
+SnesSaveRam:0986-09FF:OBJ_xpos
+SnesSaveRam:0A00-0A79:OBJ_ypos
+SnesSaveRam:0A7A-0AF3:OBJ_xpos_frac
+SnesSaveRam:0AF4-0B6D:OBJ_ypos_frac
+SnesSaveRam:0B6E-0BE7:OBJ_6B6E
+SnesSaveRam:0BE8-0C61:OBJ_6BE8
+SnesSaveRam:0C62-0CDB:OBJ_6C62
+SnesSaveRam:0CDC-0D55:OBJ_6CDC
+SnesSaveRam:0D56-0DCF:OBJ_var0
+SnesSaveRam:0DD0-0E49:OBJ_var1
+SnesSaveRam:0E4A-0EC3:OBJ_var2
+SnesSaveRam:0EC4-0F3D:OBJ_var3
+SnesSaveRam:0F3E-0FB7:OBJ_var4
+SnesSaveRam:0FB8-1031:OBJ_var5
+SnesSaveRam:1032-10AB:OBJ_var6
+SnesSaveRam:10AC-1125:OBJ_var7
+SnesSaveRam:1126-119F:OBJ_var8
+SnesSaveRam:11A0:OBJ_var9
+SnesSaveRam:124A:SCR_work_register
+SnesSaveRam:127A-12F3:SCR_Stack
+SnesSaveRam:1368-1369:MAYBE_frozen_flag
+SnesSaveRam:136E-136F:current_obj
+SnesSaveRam:1370-1371:previous_obj:Temporary inside ProcessObjects
+SnesRegister:2100:INIDISP:Screen Display Register
+SnesRegister:2101:OBSEL:Object Size and Character Size Register
+SnesRegister:2102:OAMADDL:OAM Address Registers (Low)
+SnesRegister:2103:OAMADDH:OAM Address Registers (High)
+SnesRegister:2104:OAMDATA:OAM Data Write Register
+SnesRegister:2105:BGMODE:BG Mode and Character Size Register
+SnesRegister:2106:MOSAIC:Mosaic Register
+SnesRegister:2107:BG1SC:BG Tilemap Address Registers (BG1)
+SnesRegister:2108:BG2SC:BG Tilemap Address Registers (BG2)
+SnesRegister:2109:BG3SC:BG Tilemap Address Registers (BG3)
+SnesRegister:210A:BG4SC:BG Tilemap Address Registers (BG4)
+SnesRegister:210B:BG12NBA:BG Character Address Registers (BG1&2)
+SnesRegister:210C:BG34NBA:BG Character Address Registers (BG3&4)
+SnesRegister:210D:BG1HOFS:BG Scroll Registers (BG1)
+SnesRegister:210E:BG1VOFS:BG Scroll Registers (BG1)
+SnesRegister:210F:BG2HOFS:BG Scroll Registers (BG2)
+SnesRegister:2110:BG2VOFS:BG Scroll Registers (BG2)
+SnesRegister:2111:BG3HOFS:BG Scroll Registers (BG3)
+SnesRegister:2112:BG3VOFS:BG Scroll Registers (BG3)
+SnesRegister:2113:BG4HOFS:BG Scroll Registers (BG4)
+SnesRegister:2114:BG4VOFS:BG Scroll Registers (BG4)
+SnesRegister:2115:VMAIN:Video Port Control Register
+SnesRegister:2116:VMADDL:VRAM Address Registers (Low)
+SnesRegister:2117:VMADDH:VRAM Address Registers (High)
+SnesRegister:2118:VMDATAL:VRAM Data Write Registers (Low)
+SnesRegister:2119:VMDATAH:VRAM Data Write Registers (High)
+SnesRegister:211A:M7SEL:Mode 7 Settings Register
+SnesRegister:211B:M7A:Mode 7 Matrix Registers
+SnesRegister:211C:M7B:Mode 7 Matrix Registers
+SnesRegister:211D:M7C:Mode 7 Matrix Registers
+SnesRegister:211E:M7D:Mode 7 Matrix Registers
+SnesRegister:211F:M7X:Mode 7 Matrix Registers
+SnesRegister:2120:M7Y:Mode 7 Matrix Registers
+SnesRegister:2121:CGADD:CGRAM Address Register
+SnesRegister:2122:CGDATA:CGRAM Data Write Register
+SnesRegister:2123:W12SEL:Window Mask Settings Registers
+SnesRegister:2124:W34SEL:Window Mask Settings Registers
+SnesRegister:2125:WOBJSEL:Window Mask Settings Registers
+SnesRegister:2126:WH0:Window Position Registers (WH0)
+SnesRegister:2127:WH1:Window Position Registers (WH1)
+SnesRegister:2128:WH2:Window Position Registers (WH2)
+SnesRegister:2129:WH3:Window Position Registers (WH3)
+SnesRegister:212A:WBGLOG:Window Mask Logic registers (BG)
+SnesRegister:212B:WOBJLOG:Window Mask Logic registers (OBJ)
+SnesRegister:212C:TM:Screen Destination Registers
+SnesRegister:212D:TS:Screen Destination Registers
+SnesRegister:212E:TMW:Window Mask Destination Registers
+SnesRegister:212F:TSW:Window Mask Destination Registers
+SnesRegister:2130:CGWSEL:Color Math Registers
+SnesRegister:2131:CGADSUB:Color Math Registers
+SnesRegister:2132:COLDATA:Color Math Registers
+SnesRegister:2133:SETINI:Screen Mode Select Register
+SnesRegister:2134:MPYL:Multiplication Result Registers
+SnesRegister:2135:MPYM:Multiplication Result Registers
+SnesRegister:2136:MPYH:Multiplication Result Registers
+SnesRegister:2137:SLHV:Software Latch Register
+SnesRegister:2138:OAMDATAREAD:OAM Data Read Register
+SnesRegister:2139:VMDATALREAD:VRAM Data Read Register (Low)
+SnesRegister:213A:VMDATAHREAD:VRAM Data Read Register (High)
+SnesRegister:213B:CGDATAREAD:CGRAM Data Read Register
+SnesRegister:213C:OPHCT:Scanline Location Registers (Horizontal)
+SnesRegister:213D:OPVCT:Scanline Location Registers (Vertical)
+SnesRegister:213E:STAT77:PPU Status Register
+SnesRegister:213F:STAT78:PPU Status Register
+SnesRegister:2140:APUIO0:APU IO Registers
+SnesRegister:2141:APUIO1:APU IO Registers
+SnesRegister:2142:APUIO2:APU IO Registers
+SnesRegister:2143:APUIO3:APU IO Registers
+SnesRegister:2180:WMDATA:WRAM Data Register
+SnesRegister:2181:WMADDL:WRAM Address Registers
+SnesRegister:2182:WMADDM:WRAM Address Registers
+SnesRegister:2183:WMADDH:WRAM Address Registers
+SnesRegister:4016:JOYSER0:Old Style Joypad Registers
+SnesRegister:4017:JOYSER1:Old Style Joypad Registers
+SnesRegister:4200:NMITIMEN:Interrupt Enable Register
+SnesRegister:4201:WRIO:IO Port Write Register
+SnesRegister:4202:WRMPYA:Multiplicand Registers
+SnesRegister:4203:WRMPYB:Multiplicand Registers
+SnesRegister:4204:WRDIVL:Divisor & Dividend Registers
+SnesRegister:4205:WRDIVH:Divisor & Dividend Registers
+SnesRegister:4206:WRDIVB:Divisor & Dividend Registers
+SnesRegister:4207:HTIMEL:IRQ Timer Registers (Horizontal - Low)
+SnesRegister:4208:HTIMEH:IRQ Timer Registers (Horizontal - High)
+SnesRegister:4209:VTIMEL:IRQ Timer Registers (Vertical - Low)
+SnesRegister:420A:VTIMEH:IRQ Timer Registers (Vertical - High)
+SnesRegister:420B:MDMAEN:DMA Enable Register
+SnesRegister:420C:HDMAEN:HDMA Enable Register
+SnesRegister:420D:MEMSEL:ROM Speed Register
+SnesRegister:4210:RDNMI:Interrupt Flag Registers
+SnesRegister:4211:TIMEUP:Interrupt Flag Registers
+SnesRegister:4212:HVBJOY:PPU Status Register
+SnesRegister:4213:RDIO:IO Port Read Register
+SnesRegister:4214:RDDIVL:Multiplication Or Divide Result Registers (Low)
+SnesRegister:4215:RDDIVH:Multiplication Or Divide Result Registers (High)
+SnesRegister:4216:RDMPYL:Multiplication Or Divide Result Registers (Low)
+SnesRegister:4217:RDMPYH:Multiplication Or Divide Result Registers (High)
+SnesRegister:4218:JOY1L:Controller Port Data Registers (Pad 1 - Low)
+SnesRegister:4219:JOY1H:Controller Port Data Registers (Pad 1 - High)
+SnesRegister:421A:JOY2L:Controller Port Data Registers (Pad 2 - Low)
+SnesRegister:421B:JOY2H:Controller Port Data Registers (Pad 2 - High)
+SnesRegister:421C:JOY3L:Controller Port Data Registers (Pad 3 - Low)
+SnesRegister:421D:JOY3H:Controller Port Data Registers (Pad 3 - High)
+SnesRegister:421E:JOY4L:Controller Port Data Registers (Pad 4 - Low)
+SnesRegister:421F:JOY4H:Controller Port Data Registers (Pad 4 - High)
+SnesRegister:4300:DMAP0:(H)DMA Control
+SnesRegister:4301:BBAD0:(H)DMA B-Bus Address
+SnesRegister:4302:A1T0L:DMA A-Bus Address / HDMA Table Address (Low)
+SnesRegister:4303:A1T0H:DMA A-Bus Address / HDMA Table Address (High)
+SnesRegister:4304:A1B0:DMA A-Bus Address / HDMA Table Address (Bank)
+SnesRegister:4305:DAS0L:DMA Size / HDMA Indirect Address (Low)
+SnesRegister:4306:DAS0H:DMA Size / HDMA Indirect Address (High)
+SnesRegister:4307:DAS0B:HDMA Indirect Address (Bank)
+SnesRegister:4308:A2A0L:HDMA Mid Frame Table Address (Low)
+SnesRegister:4309:A2A0H:HDMA Mid Frame Table Address (High)
+SnesRegister:430A:NTLR0:HDMA Line Counter
+SnesRegister:4310:DMAP1:(H)DMA Control
+SnesRegister:4311:BBAD1:(H)DMA B-Bus Address
+SnesRegister:4312:A1T1L:DMA A-Bus Address / HDMA Table Address (Low)
+SnesRegister:4313:A1T1H:DMA A-Bus Address / HDMA Table Address (High)
+SnesRegister:4314:A1B1:DMA A-Bus Address / HDMA Table Address (Bank)
+SnesRegister:4315:DAS1L:DMA Size / HDMA Indirect Address (Low)
+SnesRegister:4316:DAS1H:DMA Size / HDMA Indirect Address (High)
+SnesRegister:4317:DAS1B:HDMA Indirect Address (Bank)
+SnesRegister:4318:A2A1L:HDMA Mid Frame Table Address (Low)
+SnesRegister:4319:A2A1H:HDMA Mid Frame Table Address (High)
+SnesRegister:431A:NTLR1:HDMA Line Counter
+SnesRegister:4320:DMAP2:(H)DMA Control
+SnesRegister:4321:BBAD2:(H)DMA B-Bus Address
+SnesRegister:4322:A1T2L:DMA A-Bus Address / HDMA Table Address (Low)
+SnesRegister:4323:A1T2H:DMA A-Bus Address / HDMA Table Address (High)
+SnesRegister:4324:A1B2:DMA A-Bus Address / HDMA Table Address (Bank)
+SnesRegister:4325:DAS2L:DMA Size / HDMA Indirect Address (Low)
+SnesRegister:4326:DAS2H:DMA Size / HDMA Indirect Address (High)
+SnesRegister:4327:DAS2B:HDMA Indirect Address (Bank)
+SnesRegister:4328:A2A2L:HDMA Mid Frame Table Address (Low)
+SnesRegister:4329:A2A2H:HDMA Mid Frame Table Address (High)
+SnesRegister:432A:NTLR2:HDMA Line Counter
+SnesRegister:4330:DMAP3:(H)DMA Control
+SnesRegister:4331:BBAD3:(H)DMA B-Bus Address
+SnesRegister:4332:A1T3L:DMA A-Bus Address / HDMA Table Address (Low)
+SnesRegister:4333:A1T3H:DMA A-Bus Address / HDMA Table Address (High)
+SnesRegister:4334:A1B3:DMA A-Bus Address / HDMA Table Address (Bank)
+SnesRegister:4335:DAS3L:DMA Size / HDMA Indirect Address (Low)
+SnesRegister:4336:DAS3H:DMA Size / HDMA Indirect Address (High)
+SnesRegister:4337:DAS3B:HDMA Indirect Address (Bank)
+SnesRegister:4338:A2A3L:HDMA Mid Frame Table Address (Low)
+SnesRegister:4339:A2A3H:HDMA Mid Frame Table Address (High)
+SnesRegister:433A:NTLR3:HDMA Line Counter
+SnesRegister:4340:DMAP4:(H)DMA Control
+SnesRegister:4341:BBAD4:(H)DMA B-Bus Address
+SnesRegister:4342:A1T4L:DMA A-Bus Address / HDMA Table Address (Low)
+SnesRegister:4343:A1T4H:DMA A-Bus Address / HDMA Table Address (High)
+SnesRegister:4344:A1B4:DMA A-Bus Address / HDMA Table Address (Bank)
+SnesRegister:4345:DAS4L:DMA Size / HDMA Indirect Address (Low)
+SnesRegister:4346:DAS4H:DMA Size / HDMA Indirect Address (High)
+SnesRegister:4347:DAS4B:HDMA Indirect Address (Bank)
+SnesRegister:4348:A2A4L:HDMA Mid Frame Table Address (Low)
+SnesRegister:4349:A2A4H:HDMA Mid Frame Table Address (High)
+SnesRegister:434A:NTLR4:HDMA Line Counter
+SnesRegister:4350:DMAP5:(H)DMA Control
+SnesRegister:4351:BBAD5:(H)DMA B-Bus Address
+SnesRegister:4352:A1T5L:DMA A-Bus Address / HDMA Table Address (Low)
+SnesRegister:4353:A1T5H:DMA A-Bus Address / HDMA Table Address (High)
+SnesRegister:4354:A1B5:DMA A-Bus Address / HDMA Table Address (Bank)
+SnesRegister:4355:DAS5L:DMA Size / HDMA Indirect Address (Low)
+SnesRegister:4356:DAS5H:DMA Size / HDMA Indirect Address (High)
+SnesRegister:4357:DAS5B:HDMA Indirect Address (Bank)
+SnesRegister:4358:A2A5L:HDMA Mid Frame Table Address (Low)
+SnesRegister:4359:A2A5H:HDMA Mid Frame Table Address (High)
+SnesRegister:435A:NTLR5:HDMA Line Counter
+SnesRegister:4360:DMAP6:(H)DMA Control
+SnesRegister:4361:BBAD6:(H)DMA B-Bus Address
+SnesRegister:4362:A1T6L:DMA A-Bus Address / HDMA Table Address (Low)
+SnesRegister:4363:A1T6H:DMA A-Bus Address / HDMA Table Address (High)
+SnesRegister:4364:A1B6:DMA A-Bus Address / HDMA Table Address (Bank)
+SnesRegister:4365:DAS6L:DMA Size / HDMA Indirect Address (Low)
+SnesRegister:4366:DAS6H:DMA Size / HDMA Indirect Address (High)
+SnesRegister:4367:DAS6B:HDMA Indirect Address (Bank)
+SnesRegister:4368:A2A6L:HDMA Mid Frame Table Address (Low)
+SnesRegister:4369:A2A6H:HDMA Mid Frame Table Address (High)
+SnesRegister:436A:NTLR6:HDMA Line Counter
+SnesRegister:4370:DMAP7:(H)DMA Control
+SnesRegister:4371:BBAD7:(H)DMA B-Bus Address
+SnesRegister:4372:A1T7L:DMA A-Bus Address / HDMA Table Address (Low)
+SnesRegister:4373:A1T7H:DMA A-Bus Address / HDMA Table Address (High)
+SnesRegister:4374:A1B7:DMA A-Bus Address / HDMA Table Address (Bank)
+SnesRegister:4375:DAS7L:DMA Size / HDMA Indirect Address (Low)
+SnesRegister:4376:DAS7H:DMA Size / HDMA Indirect Address (High)
+SnesRegister:4377:DAS7B:HDMA Indirect Address (Bank)
+SnesRegister:4378:A2A7L:HDMA Mid Frame Table Address (Low)
+SnesRegister:4379:A2A7H:HDMA Mid Frame Table Address (High)
+SnesRegister:437A:NTLR7:HDMA Line Counter
+SpcRam:00F0:TEST:Testing functions
+SpcRam:00F1:CONTROL:I/O and Timer Control
+SpcRam:00F2:DSPADDR:DSP Address
+SpcRam:00F3:DSPDATA:DSP Data
+SpcRam:00F4:CPUIO0:CPU I/O 0
+SpcRam:00F5:CPUIO1:CPU I/O 1
+SpcRam:00F6:CPUIO2:CPU I/O 2
+SpcRam:00F7:CPUIO3:CPU I/O 3
+SpcRam:00F8:RAMREG1:Memory Register 1
+SpcRam:00F9:RAMREG2:Memory Register 2
+SpcRam:00FA:T0TARGET:Timer 0 scaling target
+SpcRam:00FB:T1TARGET:Timer 1 scaling target
+SpcRam:00FC:T2TARGET:Timer 2 scaling target
+SpcRam:00FD:T0OUT:Timer 0 output
+SpcRam:00FE:T1OUT:Timer 1 output
+SpcRam:00FF:T2OUT:Timer 2 output
+Sa1InternalRam:0000-0001:is_running_on_sa1:FFFF if running code on the SA-1\n0000 if running code on the S-CPU
+Sa1InternalRam:0015-0016:dma_queue_start
+Sa1InternalRam:0017-0018:dma_queue_end
+Sa1InternalRam:0021-0022:oam_current_ptr
+Sa1InternalRam:0028-0029:oam_end_ptr
+Sa1InternalRam:004F-0050:ram_BG1HOFS
+Sa1InternalRam:0051-0052:ram_BG2HOFS
+Sa1InternalRam:0053-0054:ram_BG3HOFS
+Sa1InternalRam:0055-0056:ram_BG1VOFS
+Sa1InternalRam:0057-0058:ram_BG2VOFS
+Sa1InternalRam:0059-005A:ram_BG3VOFS
+Sa1InternalRam:005F:ram_INIDISP
+Sa1InternalRam:0060:ram_OBJSEL
+Sa1InternalRam:0061:ram_BGMODE
+Sa1InternalRam:0063:ram_BG1SC
+Sa1InternalRam:0064:ram_BG2SC
+Sa1InternalRam:0065:ram_BG3SC
+Sa1InternalRam:0067:ram_BG12NBA
+Sa1InternalRam:0068:ram_BG34NBA
+Sa1InternalRam:0069:ram_W12SEL
+Sa1InternalRam:006A:ram_W34SEL
+Sa1InternalRam:006B:ram_WOBJSEL
+Sa1InternalRam:006C:ram_WH0
+Sa1InternalRam:006D:ram_WH1
+Sa1InternalRam:006E:ram_WH2
+Sa1InternalRam:006F:ram_WH3
+Sa1InternalRam:0072:ram_TM
+Sa1InternalRam:0073:ram_TS
+Sa1InternalRam:0074:ram_TMW
+Sa1InternalRam:0075:ram_TSW
+Sa1InternalRam:0076:ram_CGWSEL
+Sa1InternalRam:0077:ram_CGADSUB
+Sa1InternalRam:0078:ram_COLDATA_R
+Sa1InternalRam:0079:ram_COLDATA_G
+Sa1InternalRam:007A:ram_COLDATA_B
+Sa1InternalRam:007B:ram_M7SEL
+Sa1InternalRam:0083-0084:ram_M7A
+Sa1InternalRam:0085-0086:ram_M7B
+Sa1InternalRam:0087-0088:ram_M7C
+Sa1InternalRam:0089-008A:ram_M7D
+Sa1InternalRam:008B-008C:ram_M7X
+Sa1InternalRam:008D-008E:ram_M7Y
+Sa1InternalRam:0091:ram_NMITIMEN
+Sa1InternalRam:0092:ram_HDMAEN
+Sa1InternalRam:02C4-02C5:pad1_raw
+Sa1InternalRam:02C6-02C7:pad2_raw
+Sa1InternalRam:02CC-02CD:pad1_repeat_input
+Sa1InternalRam:02CE-02CF:pad2_repeat_input
+Sa1InternalRam:02D4-02D5:pad1_press
+Sa1InternalRam:02D6-02D7:pad2_press

@@ -9,7 +9,7 @@ import sys
 
 LABEL_CHARSET = string.ascii_letters + string.digits + '_'  # Valid characters for labels
 
-LAST_SCRIPT = 28  # Amount of scripts
+LAST_SCRIPT = 229  # Amount of scripts
 
 DATA_TYPE_SIZES = {
     'label_16': 2,  # 16-bit address (prefferably a label, when available)
@@ -35,7 +35,7 @@ OPCODES = (
     ('WAIT',        'imm_u8'),                 # 02
     ('ONTICK',      'addr_24'),                # 03
     ('ENDTICK',     ''),                       # 04
-    ('LOOP',        'imm_8'),                  # 05
+    ('LOOP',        'imm_u8'),                 # 05
     ('LOOP',        'reg'),                    # 06
     ('ENDLOOP',     ''),                       # 07
     ('JSL',         'label_24'),               # 08
@@ -55,7 +55,7 @@ OPCODES = (
     ('UNK16',       'addr_16'),                # 16 - TODO: ONMOVE?
     ('MOV',         'reg imm_16'),             # 17
     ('MOV',         'reg addr_16'),            # 18
-    ('MOV',         'obj_var addr_16'),        # 19
+    ('MOV',         'obj_var imm_16'),         # 19
     ('MOV.b',       'addr_16 imm_8'),          # 1A
     ('MOV.w',       'addr_16 imm_16'),         # 1B
     ('BINOP',       'obj_var imm_u8 imm_16'),  # 1C
@@ -88,13 +88,13 @@ OPCODES = (
 
 OPCODES_WAITED = (
     ('SETPOSE.b',   'imm_s8'),                 # 4x
-    ('ADDPOSE',     'imm_s8'),                 # 5X
+    ('ADDPOSE',     'imm_s8'),                 # 5x
     ('INCPOSE',     ''),                       # 6x
     ('DECPOSE',     ''),                       # 7x
-    ('UNK8x',       'imm_16'),                 # 8X - TODO: SET $6B6E
-    ('UNK9x',       'imm_16'),                 # 9X - TODO: SET $6BE8
-    ('UNKAx',       'imm_16'),                 # AX - TODO: SET $6C62
-    ('UNKBx',       'imm_16'),                 # BX - TODO: SET $6CDC
+    ('UNK8x',       'imm_16'),                 # 8x - TODO: SET $6B6E
+    ('UNK9x',       'imm_16'),                 # 9x - TODO: SET $6BE8
+    ('UNKAx',       'imm_16'),                 # Ax - TODO: SET $6C62
+    ('UNKBx',       'imm_16'),                 # Bx - TODO: SET $6CDC
     ('ASMCALL',     'addr_24'),                # Cx
     ('PRESETCALL',  'imm_8'),                  # Dx
     ('UNKEx',       'imm_8'),                  # Ex - TODO: CALL $00D12D / SOUND SOMETHING
@@ -243,7 +243,7 @@ class Disassembler(object):
             value = ((value & 0xFFFF0000) >> 16) | ((value & 0xFFFF) << 16)  # addr_32 has a weird-ass format
             return '${:06X}'.format(value)
         elif data_type == 'obj_var':
-            if value > 7:
+            if value > 9:
                 print(f'WARNING: INVALID OBJ_VAR OPERAND {value} @ {self.snes_pc:06X}')
 
             return 'VAR{}'.format(value)
@@ -423,7 +423,7 @@ class Disassembler(object):
             self.indentation = max(self._indent, self.indentation - self._indent)
 
         to_write = (indentation + mnemonic.ljust(12) + ','.join(operands)).ljust(40 + len(indentation))
-        to_write += '; {:06X}/{} {}\n'.format(op_addr, bytes_.hex().upper(), comment)
+        to_write += '; {:06X}/{}{}\n'.format(op_addr, bytes_.hex().upper(), comment)
         self.out_file.write(to_write + extra)
 
     def init_symbols(self):
@@ -443,10 +443,15 @@ class Disassembler(object):
 
         # Add default symbols for each script entry point, if they've not been defined
         for i in range(script_count):
-            address = self.read_rom(4) & 0xFFFFFF
-            if address not in self.symbols:
-                print(f'Script{i:04X} @ ${address:06X}')
-                self.add_label(address, f'Script{i:04X}')
+            address = self.read_rom(3)
+            flags = self.read_rom(1)
+            processor = 'SA-1' if flags & 0x20 == 0 else 'S-CPU'
+            if flags & 0x40 == 0x40:
+                print(f'"Script" {i:04X}: ASM @ ${address:06X} ({processor})')
+            elif address not in self.symbols:
+                print(f'Script {i:04X}: actionscript @ ${address:06X} ({processor})')
+                label = f'Script{i:04X}'
+                self.add_label(address, label)
 
         while self.traverse_queue:
             address = self.traverse_queue.pop()
@@ -551,7 +556,7 @@ class Disassembler(object):
 
                 try:
                     address = int(str_address, 16)
-                    self.symbols[address] = label
+                    self.add_label(address, label)
                 except ValueError:
                     print('Ignoring line {} from {}: Invalid address ({})'.format(i, self.sym_file.name, str_address), file=sys.stderr)
             elif pre_comment:

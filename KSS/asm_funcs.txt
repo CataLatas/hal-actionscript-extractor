@@ -4,21 +4,38 @@
 ;   COMMENT=some comment                     (optional)
 ;
 
+ASM_FUNCTION 00926C
+COMMENT = Move script processing to the S-CPU
+
+ASM_FUNCTION 00927E
+COMMENT = Move script processing to the SA-1
+
+ASM_FUNCTION 009AD5
+COMMENT = Create child object in any slot between 32 and 61 with script `arg2`, VAR0=`arg1`, VAR2=this.slot. NOTE: Will replace an existing object if no free slot is found
+PARAMS  = imm_16, imm_16
+
 ASM_FUNCTION 009B25
-COMMENT = Create child object in any slot between 0 and 31 with script `arg1`, offset by (`arg2`, `arg3`), with VAR0=`arg4`, VAR1=(`arg5` + this.VAR1), VAR2=this.slot
+COMMENT = Create child object in any slot between 0 and 24 with script `arg1`, offset by (`arg2`, `arg3`), with VAR0=`arg4`, VAR1=(`arg5` + this.VAR1), VAR2=this.slot, VAR3=0, VAR4=0
 PARAMS  = imm_16, imm_16, imm_16, imm_16, imm_16
 
 ASM_FUNCTION 009B65
-COMMENT = Create child object in any slot between `arg1` and `arg2`, with script `arg3`, offset by (`arg4`, `arg5`), with VAR0=`arg6`, VAR1=(`arg7` + this.VAR1), VAR2=this.slot
+COMMENT = Create child object in any slot between `arg1` and `arg2`, with script `arg3`, offset by (`arg4`, `arg5`), with VAR0=`arg6`, VAR1=(`arg7` + this.VAR1), VAR2=this.slot, VAR3=0, VAR4=0
 PARAMS  = imm_8, imm_8, imm_16, imm_16, imm_16, imm_16, imm_16
 
 ASM_FUNCTION 009B73
-COMMENT = Create child object in slot `slot` with script `arg1`, offset by (`arg2`, `arg3`), with VAR0=`arg4`, VAR1=(`arg5` + this.VAR1), VAR2=this.slot
+COMMENT = Create child object in slot `arg1` with script `arg2`, offset by (`arg3`, `arg4`), with VAR0=`arg5`, VAR1=(`arg6` + this.VAR1), VAR2=this.slot, VAR3=0, VAR4=0
 PARAMS  = imm_8, imm_16, imm_16, imm_16, imm_16, imm_16
+
+ASM_FUNCTION 009BBC
+COMMENT = Create child object in slot `arg3` with script `arg4`, offset by (`arg5`, `arg6`), with VAR0=`arg7`, VAR1=(`arg8` + tihs.VAR1), VAR2=this.slot, VAR3=`arg1`, VAR4=`arg2`
+PARAMS  = imm_16, imm_16, imm_8, imm_16, imm_16, imm_16, imm_16, imm_16
 
 ASM_FUNCTION 009BE8
 COMMENT = Destroy object in slot `arg`
 PARAMS  = imm_8
+
+ASM_FUNCTION 009BEF
+COMMENT = Destroy all objects except "this"
 
 ASM_FUNCTION 009C5C
 COMMENT = Unknown ASM $009C5C
@@ -27,6 +44,10 @@ PARAMS  = imm_8, imm_16, imm_8
 ASM_FUNCTION 009C6C
 COMMENT = Load VRAM data from list of (transfermode, size, src, dst)
 PARAMS  = addr_24
+
+ASM_FUNCTION 009C78
+COMMENT = Queue VRAM transfer: mode=`arg1`, size=`arg2`, src=`arg3`, dst=`arg4`
+PARAMS  = imm_8, imm_16, addr_24, imm_16
 
 ASM_FUNCTION 009C94
 COMMENT = Set background mode
@@ -64,9 +85,33 @@ ASM_FUNCTION 009D05
 COMMENT = Disable layers `arg` on sub screen (hardware register TS)
 PARAMS  = imm_8
 
+ASM_FUNCTION 009D10
+COMMENT = Unknown ASM $009D10
+PARAMS  = imm_8, imm_8, imm_8, imm_8
+
+ASM_FUNCTION 009D3C
+COMMENT = Set M7X and M7Y
+PARAMS  = imm_16, imm_16
+
+ASM_FUNCTION 009D49
+COMMENT = Unknown ASM $009D49 (Something with sine or cosine)
+PARAMS  = imm_16
+
+ASM_FUNCTION 009D5B
+COMMENT = Unknown ASM $009D5B (Something with sine or cosine)
+PARAMS  = imm_16
+
+ASM_FUNCTION 009D68
+COMMENT = Unknown ASM $009D68 (Something with sine or cosine)
+PARAMS  = imm_16, imm_16
+
+ASM_FUNCTION 009D77
+COMMENT = Unknown ASM $009D77 (Something with sine or cosine)
+PARAMS  = imm_16, imm_16
+
 ASM_FUNCTION 009DDE
-COMMENT = Enable HDMA channel `arg1` with source `arg2` to hardware register `arg3`, with transfer mode `arg4`
-PARAMS  = imm_8, addr_24, imm_8, imm_8
+COMMENT = Enable HDMA channel `arg1` with transfer mode `arg2` to hardware register `arg3`, with source `arg4`
+PARAMS  = imm_8, imm_8, imm_8, addr_24
 
 ASM_FUNCTION 009E5E
 COMMENT = Disable HDMA channel `arg`
@@ -116,6 +161,12 @@ ASM_FUNCTION 009FC7
 COMMENT = Set screen brightness
 PARAMS  = imm_8
 
+ASM_FUNCTION 009FCD
+COMMENT = FADEIN: Increment screen brightness by 1
+
+ASM_FUNCTION 009FDD
+COMMENT = FADEOUT: Decrement screen brightness by 1
+
 ASM_FUNCTION 009FEA
 COMMENT = Copy `arg3` bytes from `arg1` into [$0500+(`arg2` * 2)]
 PARAMS  = addr_24, imm_8, imm_16
@@ -123,6 +174,22 @@ PARAMS  = addr_24, imm_8, imm_16
 ASM_FUNCTION 009FFD
 COMMENT = Copy `arg3` bytes from `arg1` into [$0700+(`arg2` * 2)]
 PARAMS  = addr_24, imm_8, imm_16
+
+ASM_FUNCTION 00A232
+COMMENT = Set (`arg3` / 2) colors on the palette to `arg1`, starting from index `arg2`??
+PARAMS  = imm_16, imm_8, imm_16
+
+ASM_FUNCTION 00A26B
+COMMENT = Check if buttons started being pressed this frame on controller REG
+PARAMS  = imm_16
+
+ASM_FUNCTION 00A27D
+COMMENT = Check if buttons are currently being held on controller REG
+PARAMS  = imm_16
+
+ASM_FUNCTION 00A28F
+COMMENT = Decompress from `arg1` into `arg2`
+PARAMS  = addr_24, addr_24
 
 ASM_FUNCTION 00A2AC
 COMMENT = Block script execution until value at address `arg1` is equal to `arg2`
@@ -132,13 +199,80 @@ ASM_FUNCTION 00A2C9
 COMMENT = REG = `arg2` - [`arg1`]
 PARAMS  = imm_16, imm_16
 
+ASM_FUNCTION 00A2D5
+COMMENT = REG = `arg2` - [`arg1` + this.slot]
+PARAMS  = imm_16, imm_16
+
 ASM_FUNCTION 00A32B
 COMMENT = Unknown math
 PARAMS  = imm_8
 
+ASM_FUNCTION 00A331
+COMMENT = Increment $7368 and freeze all objects except "this"
+
+ASM_FUNCTION 00A34C
+COMMENT = Zero $7368 and unfreeze all objects except "this"
+
+ASM_FUNCTION 00A37D
+COMMENT = Set $770F to 1 and unhide all objects except "this"
+
+ASM_FUNCTION 00A39B
+COMMENT = Zero $770F and hide all objects except "this"
+
+ASM_FUNCTION 00A3B6
+COMMENT = Hide all objects except object in slot REG
+
+ASM_FUNCTION 00A3F1
+COMMENT = Create child object in any slot between 32 and 61 with script `arg1`, VAR0=`arg2`, VAR2=this.slot. NOTE: Will replace an existing object if no free slot is found
+PARAMS  = imm_16, imm_16
+
+ASM_FUNCTION 00A3FD
+COMMENT = Create child object in any slot between 32 and 61 with script `arg1`, VAR0=`arg2`, VAR1=this.VAR1, VAR2=this.slot, VAR3=0, VAR4=0. NOTE: Will replace an existing object if no free slot is found
+PARAMS  = imm_16, imm_16
+
+ASM_FUNCTION 00A40B
+COMMENT = MOV.b REG, `arg1`
+PARAMS  = imm_16
+
+ASM_FUNCTION 00A419
+COMMENT = Copy $6892 and $690C from object in slot `arg` into X position and Y position
+PARAMS  = imm_8
+
+ASM_FUNCTION 00A432
+COMMENT = Set $3097 to `arg` | 0x80000000
+PARAMS  = addr_24
+
+ASM_FUNCTION 00A460
+COMMENT = Set object's $6B6E, $6BE8, $6C62 and $6CDC
+PARAMS  = imm_16, imm_16, imm_16, imm_16
+
 ASM_FUNCTION 00A47B
 COMMENT = Acts like a JML, but also HALTs the script? WEIRD WEIRD WEIRD!!!!
 PARAMS  = label_24
+
+ASM_FUNCTION 00A4B8
+COMMENT = Set X position to `arg1` + ?????
+PARAMS  = imm_16, imm_16, imm_16
+
+ASM_FUNCTION 00A4E4
+COMMENT = Set Y position to `arg1` + ?????
+PARAMS  = imm_16, imm_16, imm_16
+
+ASM_FUNCTION 00A510
+COMMENT = Set VAR0 to `arg1`, set $3037[`arg1`] to `arg2` and $303D[`arg1`] to `arg3`
+PARAMS  = imm_8, imm_16, imm_16
+
+ASM_FUNCTION 00A555
+COMMENT = Create child object in any slot between `arg1` and `arg2` with script `arg3`, offset by (`arg4`, `arg5`), with VAR0=`arg6`, VAR1=(`arg7` + this.VAR1), VAR2=this.slot, VAR3=0, VAR4=0
+PARAMS  = imm_8, imm_8, imm_16, imm_16, imm_16, imm_16, imm_16
+
+ASM_FUNCTION 00CE64
+COMMENT = Write `arg` to SPC port 2 ($2142)
+PARAMS  = imm_8
+
+ASM_FUNCTION 00CE78
+COMMENT = Add `arg` to SPC port 2 ($2142)
+PARAMS  = imm_s8
 
 ASM_FUNCTION 00D000
 COMMENT = Something to do with sound
@@ -148,10 +282,15 @@ ASM_FUNCTION 00D12A
 COMMENT = Something to do with sound
 PARAMS  = imm_8
 
+ASM_FUNCTION 00D2F3
+COMMENT = Unknown ASM $00D2F3
+PARAMS  = imm_8
+
 ASM_FUNCTION 078E3F
 COMMENT = inc $7396 : inc $7392
 
 ASM_FUNCTION 078E46
 COMMENT = Set $7F8800 to zero (NOTE: probably crashes if called from the S-CPU side)
 
-
+ASM_FUNCTION C90619
+COMMENT = Zero VAR0 through VAR7

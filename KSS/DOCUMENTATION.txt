@@ -13,8 +13,8 @@ RAM ADDRESSES TO WATCH OUT FOR:
 - $633C[MAX_OBJ] => Tick callback address
 - $63B6[MAX_OBJ] => Tick callback bank (set 8000 to disable the tick callback)
 - $6436[MAX_OBJ] => Object pose (aka "animation frame")
-- $6536[MAX_OBJ] => Object spritemap address (TODO: spritemap structure)
-- $65B0[MAX_OBJ] => Object spritemap bank (TODO: spritemap structure)
+- $6536[MAX_OBJ] => Object spritemap address (set 8000 to make the object not be drawn)
+- $65B0[MAX_OBJ] => Object spritemap bank
 - $6630[MAX_OBJ] => Object draw callback
 - $66AA[MAX_OBJ] => Unknown callback (move callback?)
 - $6724[MAX_OBJ] => Script sleep timer
@@ -22,8 +22,8 @@ RAM ADDRESSES TO WATCH OUT FOR:
 - $6818[MAX_OBJ] => Script program bank
   - Extra flags in high byte
     * 80 => Skip a bunch of processing
-    * 40 => Skip actionscript
-    * 20 => Actionscript on the SA-1 side
+    * 40 => "Script" is actually ASM and not an actionscript (wut???????)
+    * 20 => Actionscript/ASM runs on the S-CPU side
 - $6986[MAX_OBJ] => Object X position
 - $6A00[MAX_OBJ] => Object Y position
 - $6A7A[MAX_OBJ] => Object X position fraction (aka subpixels, 1/65536 units)
@@ -41,27 +41,33 @@ RAM ADDRESSES TO WATCH OUT FOR:
 - $724A[MAX_OBJ] => Script work register
 
 ---------------------------------------------------------
+SPRITEMAP FORMAT:
 
-WEIRD THINGS TO INVESTIGATE:
-1. Apparently "sprites" and "scripts" aren't a separate concept anymore? A sprite can only run a single script??? (TODO: NEEDS CONFIRMATION)
-2. KSS uses the SA-1 chip. Some sprites are processed by the SNES side, while others can be offloaded to the SA-1 side (TODO: $6818 SEEMS RELATED)
-3. The mysterious new interpreter that was added
+A "spritemap" defines how an object is drawn. It tells the game how to arrange each sprite tile that composes an object
+
+List of 16-bit pointers for each pose (animation frame) to the actual spritemap structure:
+  - 00 => Flags (01=big tile, 02=end spritemap)
+  - 01 => X offset
+  - 02 => Y offset
+  - 03 => Tile ID
+  - 04 => OAM attributes
 
 ---------------------------------------------------------
 
-SCRIPT POINTERS START AT $00B895 (read 4 bytes for a pointer, ignore 4th byte)
-- It seems like there are only 28 scripts in total (!)
+SCRIPT POINTERS START AT $00B895 (read 4 bytes for a pointer, 4th byte contains the same flags described above at $6818)
+- There are a total of 229 scripts
+  * Although most of them are ASM, and not "actionscripts". Only 19 of these 229 are actually actionscripts
 
 ---------------------------------------------------------
 
 OPCODES (regular interpreter):
 (looks like someone was finally bothered about different MOVs and BINOPs not being adjacent lol)
 
-00    UNK00     (END?)
-01    UNK01
+00    END
+01    HALT                        // Like "END", but doesn't destroy the object
 02    WAIT      #imm8
-03    UNK03     long
-04    UNK04
+03    ONTICK    long
+04    ENDTICK
 05    LOOP      #imm8
 06    LOOP      reg
 07    ENDLOOP
@@ -77,12 +83,12 @@ OPCODES (regular interpreter):
 11    JNE       abs
 12    BREAKEQ   abs               // JEQ and break out of loop (pop 3 bytes off of the stack)
 13    BREAKNE   abs               // Ditto but JNE
-14    UNK14     long              // Possibly either SPRITEMAP or ONTICK
-15    UNK15     abs               // Possibly one of the ONMOVE/ONPOSITION/ONDRAW callbacks
-16    UNK16     abs               // Possibly one of the ONMOVE/ONPOSITION/ONDRAW callbacks
-17    UNK17     abs               // Possibly one of the ONMOVE/ONPOSITION/ONDRAW callbacks
+14    SPRITEMAP long
+15    ONDRAW    abs
+16    UNK16     abs               // ONMOVE?
+17    MOV       reg, #imm16
 18    MOV       reg, abs
-19    MOV       abs, var
+19    MOV       var, #imm16
 1A    MOV.b     abs, #imm8
 1B    MOV.w     abs, #imm16
 1C    BINOP     var, op, #imm16   // op can be (0=AND, 1=OR, 2=ADD, 3=EOR)
