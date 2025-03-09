@@ -22,7 +22,7 @@ RAM ADDRESSES TO WATCH OUT FOR:
 - $6818[MAX_OBJ] => Script program bank
   - Extra flags in high byte
     * 80 => Skip a bunch of processing
-    * 40 => "Script" is actually ASM and not an actionscript (wut???????)
+    * 40 => "Script" is actually "native ASM" (directly calls routines to wait/yield, etc)
     * 20 => Actionscript/ASM runs on the S-CPU side
 - $6986[MAX_OBJ] => Object X position
 - $6A00[MAX_OBJ] => Object Y position

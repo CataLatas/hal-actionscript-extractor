@@ -1,5 +1,28 @@
+L_13A8CC                       = 13A8CC
+L_16AA0B                       = 16AA0B
+
 ; Scripts
 Script01_Kirby                 = 14A000 ; 01
+SCR01_IdleBlink                = 14A790 ; Idle blinking animation
+
+; KIRBY STATES (KST for Kirby STate)
+KST00_EnterDoor                = 14A5AE ; Entering a door
+KST01_DiscardAbility           = 14A74B ; Discard copy ability
+KST02_Land                     = 14A74E ; Landing on the ground
+KST03_Idle                     = 14A773 ; Just chilling
+KST04_BeginWalk                = 14A816 ; Begin walking
+KST05_Walk                     = 14A820 ; Walking
+KST06_BeginDash                = 14A93A ; Begin dashing
+KST07_Dash                     = 14A945 ; Dash
+KST08_Skid                     = 14A9D8 ; Change walk direction
+KST09_Jump                     = 14AA2B ; Jump
+KST0A_JumpPeak                 = 14AA40 ; Jump peak
+KST0B_Fall                     = 14AABC ; Falling
+KST0C_LandHeadEnemy            = 14ABD5 ; Land head-first on enemy
+KST0D_LandHead                 = 14AC4B ; Land head-first
+KST0E_Unknown                  = 14AC98 ; Unknown
+KST0F_Crouch                   = 14ACB7 ; Crouch
+
 Script02_KirbyParticle         = 16AA3A ; 02
 SCR02_BumpStar                 = 16AA84 ; 02, VAR3=0  (Bump into a wall, ground or ceiling)
 SCR02_SkidSmoke                = 16AB36 ; 02, VAR3=1  (Start dashing or skid)
@@ -23,13 +46,13 @@ SCR02_KParticle12              = 16B0A0 ; 02, VAR3=18
 SCR02_HiJumpStar               = 16B1E5 ; 02, VAR3=19 (Hi-jump stars)
 SCR02_KParticle14              = 16AEE5 ; 02, VAR3=20
 SCR02_VerticalShake            = 16AEE2 ; 02, VAR3=21 (Vertical screen shake)
-SCR02_KParticle16              = 16B22A ; 02, VAR3=22
+SCR02_TomatoHeal               = 16B22A ; 02, VAR3=22 (Tomato full heal)
 SCR02_KParticle17              = 16B252 ; 02, VAR3=23
 SCR02_BossHurt                 = 16B26F ; 02, VAR3=24 (Boss was hit)
 SCR02_KParticle19              = 16B293 ; 02, VAR3=25
 SCR02_KParticle1A              = 16AECE ; 02, VAR3=26
 SCR02_SparkParticle            = 16B2F5 ; 02, VAR3=27 (Spark ability particles)
-SCR02_KParticle1C              = 16B206 ; 02, VAR3=28
+SCR02_DrinkHeal                = 16B206 ; 02, VAR3=28 (Drink heal)
 SCR02_EnemyHit                 = 16AC0C ; 02, VAR3=29 (Enemy was hit)
 SCR02_SwallowSparkles          = 16AC23 ; 02, VAR3=30 (Copy ability sparkles when swallowing enemy)
 SCR02_TornadoSmoke             = 16AB93 ; 02, VAR3=31 (Tornado smoke)
@@ -71,7 +94,11 @@ SCR05_Drink                    = 19B7E2 ; 05, VAR0=3
 SCR05_Item04                   = 19B830 ; 05, VAR0=4
 SCR05_MetaSword                = 19BA6F ; 05, VAR0=5
 
-Script06_WarpStar              = 23A000 ; 06 TODO: And other stuf...?
+Script06_WarpStar              = 23A000 ; 06 TODO: And other stuff...?
+
+Script09_PauseScreen           = 38AFC9 ; 09 (Pause screen)
+SCR09_Confirm                  = 38B017 ; 09
+SCR09_Unpause                  = 38B01C ; 09
 
 Script0A_MuseumDisplay         = 25BC53 ; 0A
 SCR0A_Museum00                 = 25BC8D ; 0A, VAR2=0
@@ -161,7 +188,69 @@ SCR3F_0D                       = 2FBD09 ; 3F, VAR0=13
 
 Script40_Scarfy                = 26BA73 ; 40 (Cute flying explosive enemy)
 Script41_SirKibble             = 2DBB28 ; 41 (Cutter enemy)
+
+; VAR0  = health
+; VAR1  = facing as usual
+; VAR2  = flags -- during walking: (01=don't cycle walk animation; 02=faster walk cycle)
+; VAR3  = ???
+; VAR4  = ???
+; VAR5  = freeze timer (appear yellow and shake)
+; VAR6  = frame for walk cycle
+; VAR7  = ???
+; VAR8  = ???
+; VAR9  = ???
+; $0784 = ???
+; $0785 = timer for automatic state transition
+; $0786 = flags (02 set when retreating)
+; $0787 = ???
+; $0788 = ???
+; $0789 = set to 1 during a state transition
+; $078A = some kind of countdown
+; $078B = iframes
+;
+; $0798 = X velocity backup
+; $079A = Y velocity backup
+; $079C = script sleep timer backup
+; $079D = ???
+; $079E = X position backup
+; $07A0 = X fraction backup
+; $07A1 = Y position backup
+; $07A3 = Y fraction backup
+; $07A4 = pose backup
+;
+; $07A9 = mosaic CHR bankswitch index
 Script42_MetaKnightBoss        = 2BABFF ; 42 (Boss battle)
+
+SCR42_MetaKnightFight          = 2BAC6E ; Kirby has picked up the sword
+
+; METAKNIGHT STATES (MST for Metaknight STate)
+MST00_Rest                     = 2BACCE ; "Rest" for 48 frames
+MST01_Retreat                  = 2BACC2 ; Retreat
+MST02_DoubleSlashUp            = 2BAD5D ; Double slash up
+MST03_Charge                   = 2BADDC ; Charge at player. Do a random attack (may retreat if low on health) if 30 pixels away from the player in the X axis
+MST04_JumpForward              = 2BAD08 ; Jump forward
+MST05_JumpUp                   = 2BAD01 ; Jump up
+MST06_Walk                     = 2BACDA ; Walk forward, don't retreat if player charges
+MST07_AirSlash                 = 2BAD82 ; Air slash
+MST08_SpinSlash                = 2BADAF ; Spin jump slash
+MST09_StrikeDown               = 2BADCF ; Strike down from air
+MST0A_Landing                  = 2BAD41 ; Land
+MST0B_Unknown                  = 2BAD6E
+MST0C_JumpForwardAirSlash      = 2BACE9 ; Jump forward then air slash
+MST0D_JumpUpAirSlash           = 2BACAA ; Jump up then air slash
+MST0E_Slash                    = 2BADF1 ; Slash
+MST0F_TripleSlash              = 2BAE15 ; Triple slash
+MST10_Lunge                    = 2BAE40 ; Lunge at player
+MST11_Unknown                  = 2BAE65
+MST12_Block                    = 2BAE59 ; Block player attack
+MST13_Unknown                  = 2BACF7
+MST14_Unknown                  = 2BAD2C
+MST15_LandStrikeDown           = 2BAD36 ; Land after striking down, screen shake + sound
+MST16_17_DropSword             = 2BAE96 ; Drop sword after being defeated
+MST18_MaskBreak                = 2BAEB8 ; Mask break + flee
+MST19_Fled                     = 2BAF0F ; Fled after mask broke (star rod piece appears)
+
+
 Script43_WhispyWoods           = 2CA9B3 ; 43 (Boss battle)
 Script44_PaintRoller           = 2CA000 ; 44 (Artist boss battle)
 Script45_MrShineAndMrBright    = 28AAEE ; 45 (Sun and Moon boss battle)
@@ -194,7 +283,7 @@ Script69_TitleScreen           = 3DA9EB ; 69
 Script6A_Story                 = 36AC96 ; 6A
 
 Script6C_LevelIntro            = 34A000 ; 6C (Level introduction scene)
-
+Script6D_GameOver              = 2EA1B4 ; 6D
 Script6E_KirbyWalkToCenter     = 19A424 ; 6E (Walk to center after getting Star Rod piece)
 Script6F_SecretSwitch          = 29BF14 ; 6F
 

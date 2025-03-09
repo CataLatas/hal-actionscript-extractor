@@ -268,7 +268,7 @@ class Disassembler(object):
             bytes_ += b
             operands.append(self.datatype_to_str(data_type, b))
 
-        if waited is not None:
+        if waited is not None and waited != 0:
             operands.append(('' if len(operands) == 0 else ' ') + f'WAIT #{waited}')
 
         if not self.was_linebreak:
@@ -292,16 +292,16 @@ class Disassembler(object):
             if asm_func:
                 DIRECTIVES = ('.byte', '.word', '.long', '.dword')
                 comment = ' // ' + asm_func['comment'] if asm_func['comment'] else ''
-                
+
                 # Fucking hell this is horrible
                 for p in asm_func['params']:
                     if p == 'varargs':
                         count = self.read_rom(1)
-                        
+
                         self.pc = self.rom_file.tell()
                         extra += (indentation + '.byte'.ljust(12) + str(count)).ljust(40 + len(indentation))
                         extra += '; {:06X}/{:02X}\n'.format(self.nes_pc, count)
-                        
+
                         for i in range(count):
                             self.pc = self.rom_file.tell()
                             b = self.rom_file.read(2)
@@ -316,9 +316,14 @@ class Disassembler(object):
                         arg = arg.replace('#', '')
                         extra += (indentation + DIRECTIVES[data_size - 1].ljust(12) + arg).ljust(40 + len(indentation))
                         extra += '; {:06X}/{}\n'.format(self.nes_pc, b.hex().upper())
-                        
+
             elif address not in self.bad_asmcall:
                 self.bad_asmcall.add(address)
+        elif mnemonic == 'ONTICK':
+            address = int.from_bytes(bytes_[1:], byteorder='little')
+            asm_func = self.asm_functions.get(address, None)
+            if asm_func and asm_func['comment']:
+                comment = ' // ' + asm_func['comment']
         elif mnemonic == 'BINOP':
             # Now THIS is what I call hacky shit!
             if opcode == 0x25:
@@ -331,14 +336,19 @@ class Disassembler(object):
             if op in (0, 1, 2, 3):
                 del operands[1]
                 mnemonic = mnemonic.replace('BINOP', BINOPS[op])
-                
+
                 if op == 2:  # ADD, change operand type from HEXADECIMAL immediate to DECIMAL immediate
                     data_type = 'imm_s8'
                     size = DATA_TYPE_SIZES[data_type]
                     self.rom_file.seek(-size, os.SEEK_CUR)
                     operands[-1] = self.datatype_to_str(data_type, self.rom_file.read(size))
         elif mnemonic in ('MULTIJMP', 'MULTIJSR', 'MULTICALL', 'MULTIJSL'):
-            count = bytes_[1]
+            # Hack to fix a programming mistake in the original actionscript!
+            # The MULTIJMP instruction at $26A8CF is defined to expect 3 pointers, but 4 pointers are actually defined!
+            if self.nes_pc == 0x26A8CF:
+                count = 4
+            else:
+                count = bytes_[1]
 
             if mnemonic in ('MULTICALL', 'MULTIJSL'):
                 data_type = 'label_24'
@@ -394,15 +404,31 @@ class Disassembler(object):
             print(f'Script{i:02X} @ ${address:06X}')
             self.add_label(address, f'Script{i:02X}')
 
+        self.rom_file.seek(0x21*0x2000 + 0x0CFF + INES_SIZE)
+        lo = self.rom_file.read(0xEF)
+        hi = self.rom_file.read(0xEF)
+        bank = self.rom_file.read(0xEF)
+
+        kirby_states = set()
+
+        for i in range(0xEF):
+            address = (bank[i] << 16) | (hi[i] << 8) | lo[i]
+            kirby_states.add(address)
+            print(f'KirbyState{i:02X} @ ${address:06X}')
+            self.lower_prg = 0x21
+            self.add_label(address, f'KirbyState{i:02X}')
+
         while self.traverse_queue:
             address = self.traverse_queue.pop()
             if address in entry_points:
                 self.lower_prg = None
+            elif address in kirby_states:
+                self.lower_prg = 0x21
 
             self.traverse(address)
 
     def add_label(self, address, label, traverse=False):
-        if (address >> 16) < 0x14 or (address >> 16) >= 0x3E or (address & 0xFFFF) < 0xA000:
+        if (address >> 16) < 0x13 or (address >> 16) >= 0x3E or (address & 0xFFFF) < 0xA000 or (address & 0xFFFF) > 0xC000:
             return
 
         if address not in self.symbols:

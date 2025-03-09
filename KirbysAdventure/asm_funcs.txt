@@ -20,28 +20,34 @@ ASM_FUNCTION 00C082
 ASM_FUNCTION 00C086
   COMMENT = Write 0xFF to $37 and wait a frame
 
+ASM_FUNCTION 00C94C
+  COMMENT = Palette fade (in?) step
+
+ASM_FUNCTION 00C996
+  COMMENT = Palette fade (out?) step
+
 ASM_FUNCTION 00DE45
   COMMENT = Unknown ASM $DE45
   PARAMS = imm_8
 
 ASM_FUNCTION 00DE4B
-  COMMENT = Unknown ASM $DE4B
+  COMMENT = Play sound effect
   PARAMS = imm_8
 
 ASM_FUNCTION 00DE51
-  COMMENT = Create a child object with script `arg1` offset by (`arg2`, `arg3`, `arg4`). With VAR0=`arg5`, VAR1=(this.VAR1+`arg6`)
+  COMMENT = Create a child object with script `arg1` offset by (`arg2`, `arg3`, `arg4`). With VAR0=`arg5`, VAR1=(self.VAR1+`arg6`)
   PARAMS = imm_8, imm_8, imm_8, imm_8, imm_8, imm_8
 
 ASM_FUNCTION 00DED0
-  COMMENT = Create in any slot between `arg1` and `arg2` a child object with script `arg3` offset by (`arg4`, `arg5`, `arg6`). With VAR0=`arg7`, VAR1=(this.VAR1+`arg8`)
+  COMMENT = Create in any slot between `arg1` and `arg2` a child object with script `arg3` offset by (`arg4`, `arg5`, `arg6`). With VAR0=`arg7`, VAR1=(self.VAR1+`arg8`)
   PARAMS = imm_8, imm_8, imm_8, imm_8, imm_8, imm_8, imm_8, imm_8
 
 ASM_FUNCTION 00DEE1
-  COMMENT = Create in slot `arg1` a child object with script `arg2` offset by (`arg3`, `arg4`, `arg5`). With VAR0=`arg6`, VAR1=(this.VAR1+`arg7`)
+  COMMENT = Create in slot `arg1` a child object with script `arg2` offset by (`arg3`, `arg4`, `arg5`). With VAR0=`arg6`, VAR1=(self.VAR1+`arg7`)
   PARAMS = imm_8, imm_8, imm_8, imm_8, imm_8, imm_8, imm_8
 
 ASM_FUNCTION 00DEF1
-  COMMENT = Replace child object in slot `arg1` to new one with scriot `arg2` offset by (`arg3`, `arg4`, `arg5`). With VAR0=`arg6`, VAR1=(this.VAR1+`arg7`)
+  COMMENT = Replace child object in slot `arg1` to new one with script `arg2` offset by (`arg3`, `arg4`, `arg5`). With VAR0=`arg6`, VAR1=(self.VAR1+`arg7`)
   PARAMS = imm_8, imm_8, imm_8, imm_8, imm_8, imm_8, imm_8
 
 ASM_FUNCTION 00DF06
@@ -60,15 +66,15 @@ ASM_FUNCTION 00DF38
   PARAMS = imm_8, imm_8
 
 ASM_FUNCTION 00DF44
-  COMMENT = Set $0036 to `arg`
+  COMMENT = Set PPUMASK
   PARAMS = imm_8
 
 ASM_FUNCTION 00DF4B
-  COMMENT = Set bits in $0036
+  COMMENT = Set bits in PPUMASK
   PARAMS = imm_8
 
 ASM_FUNCTION 00DF55
-  COMMENT = Clear bits in $0036
+  COMMENT = Clear bits in PPUMASK
   PARAMS = imm_8
 
 ASM_FUNCTION 00DF61
@@ -84,7 +90,7 @@ ASM_FUNCTION 00DFA3
   PARAMS = imm_16, imm_8
 
 ASM_FUNCTION 00DFB6
-  COMMENT = SUB reg, #arg2, arg1[this.script_index]
+  COMMENT = SUB reg, #arg2, arg1[self.script_index]
   PARAMS = imm_16, imm_8
 
 ASM_FUNCTION 00DFC9
@@ -96,24 +102,24 @@ ASM_FUNCTION 00DFDF
   PARAMS = imm_8
 
 ASM_FUNCTION 00DFE5
-  COMMENT = Set MSB of OBJ_tick_bank for all other objects
+  COMMENT = Freeze all objects
 
 ASM_FUNCTION 00DFFB
-  COMMENT = Clear MSB of OBJ_tick_bank for all other objects
+  COMMENT = Unfreeze all objects
 
 ASM_FUNCTION 00E23C
   COMMENT = Unknown ASM $E23C
   PARAMS = imm_16
 
 ASM_FUNCTION 00E26A
-  COMMENT = Unknown ASM $E26A
+  COMMENT = Set X velocity (respect facing)
   PARAMS = imm_16
 
 ASM_FUNCTION 00E298
-  COMMENT = MOV.w $01A3, #$0000
+  COMMENT = Set PPUSCROLL to zero
 
 ASM_FUNCTION 00E2A1
-  COMMENT = ADD.w $01A3, #arg
+  COMMENT = Add `arg` to PPUSCROLL
   PARAMS = imm_16
 
 ASM_FUNCTION 00E2D9
@@ -124,46 +130,312 @@ ASM_FUNCTION 00E2F1
   COMMENT = Unknown ASM $E2F1
   PARAMS = addr_24
 
+ASM_FUNCTION 14A0D5
+  COMMENT = Initialize Kirby variables?
+
+ASM_FUNCTION 14A15C
+  COMMENT = Check if ($05A2 != 0 && current_room == 0x07) -- Room 0x07 is the multilevel hub!
+
+ASM_FUNCTION 14A162
+  COMMENT = Check if current room ID is 0x07 (multilevel hub)
+
+ASM_FUNCTION 14A173
+  COMMENT = Check if current room ID is 0x2A (goal bonus)
+
+ASM_FUNCTION 14A186
+  COMMENT = Freeze all objects in slots 9 through 17 (enemies, enemy projectiles and misc)
+
+ASM_FUNCTION 14A196
+  COMMENT = Fade-in from white?
+
+ASM_FUNCTION 14A1AF
+  COMMENT = Check if (kirby_health < 8)
+
+ASM_FUNCTION 14A1E8
+  COMMENT = Unknown ASM $14A1E8 (return VAR0 if `$05E0 != 0x0E`, otherwise return 5)
+
+ASM_FUNCTION 14A26E
+  COMMENT = Set Kirby's X velocity (negative if `VAR1 ^ VAR2 < 0`)
+  PARAMS = imm_16
+
+ASM_FUNCTION 14A58A
+  COMMENT = Destroy all objects in slots 3, 4 and 5 (Kirby particles)
+
+ASM_FUNCTION 14A595
+  COMMENT = Store Kirby's position
+
+ASM_FUNCTION 14A804
+  COMMENT = Set Kirby's idle pose
+
+ASM_FUNCTION 14B3BE
+  COMMENT = Set Kirby's idle pose (copy ability)
+
+ASM_FUNCTION 15A0AD
+  COMMENT = Set Kirby's idle pose (sword)
+
+ASM_FUNCTION 15ACB9
+  COMMENT = Set Kirby's idle pose (parasol)
+
+ASM_FUNCTION 15BC4C
+  COMMENT = Remove UFO ability
+
+ASM_FUNCTION 15BC88
+  COMMENT = Store current level progress in $78D2
+
+ASM_FUNCTION 15BC92
+  COMMENT = Add bonus minigame score and lives. Return 1 if there are still extra lives to add
+
+ASM_FUNCTION 15BD68
+  COMMENT = Store screen center coordinates to $0553 and $0555
+
+ASM_FUNCTION 15BF07
+  COMMENT = Call $38BD3D
+
+ASM_FUNCTION 16A0C4
+  COMMENT = Check if player is not holding the B Button
+
+ASM_FUNCTION 16A2CD
+  COMMENT = Store Kirby's X position to VAR2 and VAR3
+
+ASM_FUNCTION 16A2DA
+  COMMENT = Restore Kirby's X position from VAR2 and VAR3
+
+ASM_FUNCTION 16A2E7
+  COMMENT = Remove ability if all uses depleted (return 0 if all uses depleted)
+
+ASM_FUNCTION 16A3AE
+  COMMENT = Check if player is not holding the B Button (duplicate of ASM $16A0C4)
+
+ASM_FUNCTION 16A54B
+  COMMENT = Decrement ability uses and remove if depleted (return 0 if depleted)
+
+ASM_FUNCTION 16A679
+  COMMENT = Check if Kirby is not touching the ground (TODO: confirm this)
+
+ASM_FUNCTION 16A683
+  COMMENT = Return 1 if timer in VAR2 reached zero OR player is holding the B Button
+
+ASM_FUNCTION 16A694
+  COMMENT = Back drop input handler (decrement VAR2 timer, check ground collision, handle inputs)
+
+ASM_FUNCTION 16AC15
+  COMMENT = Set pose to 0x58 + (frame_counter % 4)
+
 ASM_FUNCTION 16AD77
   COMMENT = Unknown ASM $16AD77
   PARAMS = imm_8, imm_8
 
-ASM_FUNCTION 21801F
-  COMMENT = Unknown ASM $21801F
+ASM_FUNCTION 16B1EE
+  COMMENT = Set X velocity to opposite of Kirby's
+
+ASM_FUNCTION 16B21D
+  COMMENT = Get drink heal amount (2 on normal game, 1 on extra game)
+
+ASM_FUNCTION 16B23C
+  COMMENT = Heal Kirby by 1 unit (return 1 if fully healed)
+
+ASM_FUNCTION 16B82D
+  COMMENT = Set pose to one of [0x0C, 0x0A, 0x08] based on remaining ability uses
+
+ASM_FUNCTION 16B8EE
+  COMMENT = Copy spritemap and pose from parent object, and destroy parent object
+
+ASM_FUNCTION 17A0B2
+  COMMENT = Set Kirby's idle pose (star rod)
+
+ASM_FUNCTION 17AC7C
+  COMMENT = Set Kirby's idle pose (hammer)
+
+ASM_FUNCTION 18A9EA
+  COMMENT = Limit Kirby's velocity to 2.0px/f
+
+ASM_FUNCTION 18AADF
+  COMMENT = Set VAR2 and VAR3
   PARAMS = imm_8, imm_8
 
+ASM_FUNCTION 18ACBE
+  COMMENT = Destroy fireball particles
+
+ASM_FUNCTION 18AFD8
+  COMMENT = Set Kirby's idle pose (mouthful)
+
+ASM_FUNCTION 19A150
+  COMMENT = Check if player has pressed Start
+
+ASM_FUNCTION 19A15B
+  COMMENT = Store (VAR1 + 1) in $05FE
+
+ASM_FUNCTION 19A3DC
+  COMMENT = Store a random number from 0 to 4 in $0784 (TODO: confirm this)
+
+ASM_FUNCTION 19ACA2
+  COMMENT = Copy $0182 to $0186, $018A, $018E, $0192, $0196, $019A and $019E
+
+ASM_FUNCTION 19ADCB
+  COMMENT = Give one extra life
+
+ASM_FUNCTION 19ADD1
+  COMMENT = Add score based on VAR1: [0, 100, 200, 800, 2000, 5000]
+
+ASM_FUNCTION 19AE2C
+  COMMENT = Store parent object's position in $07DE and $07E0
+
+ASM_FUNCTION 19AE4B
+  COMMENT = Set position to $07DE and $07E0 (previously stored parent object's position)
+
+ASM_FUNCTION 19AE66
+  COMMENT = Warp parent object to self and make parent's script jump to $19AC50
+
+ASM_FUNCTION 19AFF0
+  COMMENT = Copy parent object's VAR3 to self
+
+ASM_FUNCTION 19B2E9
+  COMMENT = Set object's script ID to 7 (wtf...?)
+
+ASM_FUNCTION 19B383
+  COMMENT = Set VAR0 to (VAR0 + 1) % 8, then set pose to (VAR0 << 1) respecting facing
+
+ASM_FUNCTION 19B38E
+  COMMENT = Set pose to (VAR0 << 1) respecting facing
+
+ASM_FUNCTION 19B397
+  COMMENT = Set pose to ($05E4 << 1) + arg
+  PARAMS = imm_8
+
+ASM_FUNCTION 19B642
+  COMMENT = Return 0 if Kirby is not moving, 1 if moving only on the X axis, 2 if moving on the Y axis
+
+ASM_FUNCTION 19BAD4
+  COMMENT = Set position to top center of the screen
+
+ASM_FUNCTION 218015
+  COMMENT = Return 0 if MSB of $05E4 is set, otherwise return 1
+
+ASM_FUNCTION 21801F
+  COMMENT = Maybe set sloped pose? (first = regular, second = slope)
+  PARAMS = imm_8, imm_8
+
+ASM_FUNCTION 2186FB
+  COMMENT = Zero Kirby's X velocity
+
 ASM_FUNCTION 218710
-  COMMENT = Set Kirby's X2 velocity
+  COMMENT = Set Kirby's X velocity
+  PARAMS = imm_16
 
 ASM_FUNCTION 21884D
   COMMENT = Zero Kirby's Y velocity
 
 ASM_FUNCTION 21885C
   COMMENT = Set Kirby's Y velocity
+  PARAMS = imm_16
 
 ASM_FUNCTION 218FDC
-  COMMENT = Set pose (+1 if MSB of VAR1 is set)
+  COMMENT = Set pose (respect facing)
   PARAMS = imm_8
 
 ASM_FUNCTION 218FF5
   COMMENT = Return (frame_counter & 3)
 
+ASM_FUNCTION 2195CD
+  COMMENT = Update Kirby's position
+
 ASM_FUNCTION 21987D
   COMMENT = Zero Kirby's velocities
 
-ASM_FUNCTION 21A0D5
-  COMMENT = Initialize Kirby variables?
+ASM_FUNCTION 219883
+  COMMENT = Set swimming flag??
 
-ASM_FUNCTION 21A186
-  COMMENT = Set MSB of OBJ_tick_bank for all objects with slot between 9 and 18
+ASM_FUNCTION 21988D
+  COMMENT = Set Kirby's underwater flag
+
+ASM_FUNCTION 219893
+  COMMENT = Clear Kirby's underwater flag
+
+ASM_FUNCTION 2198D5
+  COMMENT = Get facing as 0 or 0x80
+
+ASM_FUNCTION 219952
+  COMMENT = Create or replace kirby particle (slots 3 through 5) of type `arg3`, offset by (`arg1`, `arg2`) with VAR0=0, VAR1=self.VAR1+`arg4`
+  PARAMS = imm_8, imm_8, imm_8, imm_8
+
+ASM_FUNCTION 2199D8
+  COMMENT = Create new kirby particle (any slot) of type `arg3`, offset by (`arg1`, `arg2`) with VAR0=0, VAR1=self.VAR1+`arg4`
+  PARAMS = imm_8, imm_8, imm_8, imm_8
+
+ASM_FUNCTION 2199EA
+  COMMENT = Create kirby projectile (slots 6 through 8) of type `arg3`, offset by (`arg1`, `arg2`) with VAR0=0, VAR1=self.VAR1+`arg4`
+  PARAMS = imm_8, imm_8, imm_8, imm_8
+
+ASM_FUNCTION 219A6A
+  COMMENT = Unknown ASM $219A6A
+  PARAMS = imm_16, imm_16
+
+ASM_FUNCTION 219BE0
+  COMMENT = Get Kirby's walking state (0=stopped, 1=walking, 2=dashing). Dashing is defined as `vel_x > 0x014C`, roughly 1.3 px/f
+
+ASM_FUNCTION 219BF7
+  COMMENT = Get Kirby's sub-state (0=STOP, 1=WALK, 2=DASH, 3=FALL, 4=WATER_STOP, 5=WATER_WALK, 6=SWIM, 7=LEAVE_WATER)
+
+ASM_FUNCTION 219CB3
+  COMMENT = Load some palette? (Kirby's palette?)
+
+ASM_FUNCTION 219D72
+  COMMENT = Is holding Up outside water
+
+ASM_FUNCTION 219D82
+  COMMENT = Check if Kirby's Y velocity is negative (moving upwards)
+
+ASM_FUNCTION 219DB6
+  COMMENT = Set Kirby's velocities to (-1.0, -3.0), respecting facing
+
+ASM_FUNCTION 219DF2
+  COMMENT = Check if player is not holding the B Button
+
+ASM_FUNCTION 219ED3
+  COMMENT = Fade-out step
+
+ASM_FUNCTION 219EE1
+  COMMENT = Clear "landed head-first on enemy" flag
+
+ASM_FUNCTION 219EEA
+  COMMENT = Freeze all objects and set kirby flag 0x80 (can't pause flag?)
+
+ASM_FUNCTION 219EF6
+  COMMENT = Unfreeze all objects and clear kirby flag 0x80 (can't pause flag?)
+
+ASM_FUNCTION 2284A4
+  COMMENT = Store VAR1 in $0784[self]
+
+ASM_FUNCTION 2284AD
+  COMMENT = Copy $0784[self.parent] to $0784[self]
+
+ASM_FUNCTION 2284DB
+  COMMENT = Flip sprite horizontally (actually toggle LSB of pose)
+
+ASM_FUNCTION 22851C
+  COMMENT = Apply gravity constant 0x15, with terminal velocity 3.0 px/f
 
 ASM_FUNCTION 22859F
   COMMENT = Unknown ASM $22859F
   PARAMS = imm_16
 
 ASM_FUNCTION 228829
-  COMMENT = Set pose to 0 (1 if MSB of VAR1 is set)
-  PARAMS = imm_8
+  COMMENT = Set pose to 0 (respect facing)
+
+ASM_FUNCTION 22883F
+  COMMENT = Set pose to 0 (1 if MSB of VAR2 is set)
+
+ASM_FUNCTION 228851
+  COMMENT = Face towards Kirby
+
+ASM_FUNCTION 2289F3
+  COMMENT = Lock camera scrolling
+
+ASM_FUNCTION 228AE7
+  COMMENT = Get facing as 0 or 1
+
+ASM_FUNCTION 228B24
+  COMMENT = Check if REG == (VAR0 >> 1)
 
 ASM_FUNCTION 228B61
   COMMENT = Unknown ASM $228B61
@@ -194,7 +466,7 @@ ASM_FUNCTION 228C19
   PARAMS = imm_8
 
 ASM_FUNCTION 228C53
-  COMMENT = Unknown ASM $228C53
+  COMMENT = Set pose (respect facing)
   PARAMS = imm_8
 
 ASM_FUNCTION 228C5F
@@ -210,8 +482,11 @@ ASM_FUNCTION 228C87
   PARAMS = imm_8, imm_8, imm_8
 
 ASM_FUNCTION 228CAA
-  COMMENT = Unknown ASM $228CAA
+  COMMENT = Set X velocity, respect facing (negative to "walk backwards")
   PARAMS = imm_16
+
+ASM_FUNCTION 228E74
+  COMMENT = Check if Y velocity is negative
 
 ASM_FUNCTION 228EFB
   COMMENT = Unknown ASM $228EFB
@@ -225,6 +500,109 @@ ASM_FUNCTION 228FCE
   COMMENT = Unknown ASM $228FCE
   PARAMS = imm_8
 
+ASM_FUNCTION 229009
+  COMMENT = Call $3DBCFC
+
+ASM_FUNCTION 229075
+  COMMENT = Set pose to 0 (1 if MSB of VAR4 is set)
+
+ASM_FUNCTION 229084
+  COMMENT = Set X velocity (velocity is negative if MSB of VAR4 is set)
+  PARAMS = imm_16
+
+ASM_FUNCTION 2290BA
+  COMMENT = VAR1 = -VAR1 (invert facing?)
+
 ASM_FUNCTION 2291D8
   COMMENT = Teleport to parent object
+
+ASM_FUNCTION 22927C
+  COMMENT = Get $0784[self]
+
+ASM_FUNCTION 22932F
+  COMMENT = Set X velocity to `arg2` (respect facing), Y velocity to `arg3`, then wait `arg1` frames
+  PARAMS = imm_8, imm_16, imm_16
+
+ASM_FUNCTION 229340
+  COMMENT = Set X velocity to `arg1` (respect facing) and Y velocity to `arg2`
+  PARAMS = imm_16, imm_16
+
+ASM_FUNCTION 229591
+  COMMENT = Create a child object with script 0x59 in any slot between 9 and 18, offset by (0, 0) with VAR0=`arg1`, VAR1=self.VAR1+`arg2`, VAR3=`arg3`, VAR4=`arg4` (complement if MSB of VAR1 is set), VAR5=`arg5`, VAR6=self.script, VAR7=0
+  PARAMS = imm_8, imm_8, imm_8, imm_8, imm_8
+
+ASM_FUNCTION 2296B9
+  COMMENT = Unknown ASM $2296B9
+  PARAMS = imm_16
+
+ASM_FUNCTION 23A455
+  COMMENT = Check if not in room `arg`
+  PARAMS = imm_16
+
+ASM_FUNCTION 24A4AE
+  COMMENT = Unknown ASM $24A4AE
+  PARAMS = imm_8
+
+ASM_FUNCTION 24A4CA
+  COMMENT = Unknown ASM $24A4CA
+  PARAMS = imm_16
+
+ASM_FUNCTION 24AEEB
+  COMMENT = Move object 8 pixels forward
+
+ASM_FUNCTION 24B1AB
+  COMMENT = Get sign of Y distance from Kirby
+
+ASM_FUNCTION 24B748
+  COMMENT = Move object 6 pixels forward
+
+ASM_FUNCTION 25A930
+  COMMENT = Check if there's water directly below
+
+ASM_FUNCTION 26BC37
+  COMMENT = Check if Y distance from Kirby is less than 4
+
+ASM_FUNCTION 2BAC4D
+  COMMENT = Set on-screen position to (0xE4, 0x30)
+
+ASM_FUNCTION 2BB55C
+  COMMENT = Set Meta Knight's walking pose
+
+ASM_FUNCTION 2BB5EF
+  COMMENT = Change Meta Knight's walking direction, set random state transition timer and store 0x00 to $0786
+
+ASM_FUNCTION 2BB609
+  COMMENT = Set random state transition timer and store 0x02 to $0786
+
+ASM_FUNCTION 2BB61B
+  COMMENT = Face towards Kirby, set random state transition timer and store 0x00 to $0786
+
+ASM_FUNCTION 2BB632
+  COMMENT = Set random state transition timer and store 0x00 to $0786
+
+ASM_FUNCTION 2BB665
+  COMMENT = Set state transition timer to 48 frames and store 0x00 to $0786
+
+ASM_FUNCTION 2BB765
+  COMMENT = Meta Knight leap after being defeated
+
+; TICK
+ASM_FUNCTION 38B061
+  COMMENT = Jump to $38B01C when the player presses A, B or Start
+
+; TICK
+ASM_FUNCTION 38B076
+  COMMENT = Jump to $38B017 when the player presses A, B or Start (two options: continue/exit stage, stored in VAR0)
+
+ASM_FUNCTION 38B0C4
+  COMMENT = Hide all objects
+
+ASM_FUNCTION 38B0DA
+  COMMENT = Unhide all objects
+
+ASM_FUNCTION 38B113
+  COMMENT = Restore palette and CHR banks after unpausing?
+
+ASM_FUNCTION 38B13B
+  COMMENT = Tricky graphics stuff
 

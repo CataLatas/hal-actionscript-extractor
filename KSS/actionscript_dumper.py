@@ -288,7 +288,7 @@ class Disassembler(object):
 
                 opcode = self.read_rom(1)
                 self.disasm_opcode(opcode)
-                self.force_label = opcode in (0x00, 0x01, 0x09, 0x0C, 0x0D, 0x0E)
+                self.force_label = self.force_label or opcode in (0x00, 0x01, 0x09, 0x0C, 0x0D, 0x0E)
                 self.pc = self.rom_file.tell()
                 if self.force_label:
                     break
@@ -348,6 +348,7 @@ class Disassembler(object):
                 if preset_id >= len(self.preset_asmcalls):
                     address = -1 # Horrible hacks incoming!!!!!!
                     comment = ' // BAD PRESETCALL'
+                    self.force_label = True
                     print(f'WARNING: BAD PRESETCALL: {preset_id:02X} @ {self.snes_pc:06X}')
                 else:
                     address = self.preset_asmcalls[preset_id]
@@ -358,6 +359,10 @@ class Disassembler(object):
 
             asm_func = self.asm_functions.get(address, None)
             if asm_func:
+                # HACK: This specific ASMCALL converts the "interpreted script" into a "native ASM" script, effectively stopping the interpreter
+                if address == 0x00A47B:
+                    self.force_label = True
+
                 DIRECTIVES = ('.byte', '.word', '.long', '.dword')
                 if asm_func['comment']:
                     comment += ' // ' + asm_func['comment']
@@ -447,7 +452,7 @@ class Disassembler(object):
             flags = self.read_rom(1)
             processor = 'SA-1' if flags & 0x20 == 0 else 'S-CPU'
             if flags & 0x40 == 0x40:
-                print(f'"Script" {i:04X}: ASM @ ${address:06X} ({processor})')
+                print(f'"Script" {i:04X}: native @ ${address:06X} ({processor})')
             elif address not in self.symbols:
                 print(f'Script {i:04X}: actionscript @ ${address:06X} ({processor})')
                 label = f'Script{i:04X}'

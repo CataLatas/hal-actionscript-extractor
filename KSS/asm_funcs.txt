@@ -247,8 +247,8 @@ COMMENT = Set object's $6B6E, $6BE8, $6C62 and $6CDC
 PARAMS  = imm_16, imm_16, imm_16, imm_16
 
 ASM_FUNCTION 00A47B
-COMMENT = Acts like a JML, but also HALTs the script? WEIRD WEIRD WEIRD!!!!
-PARAMS  = label_24
+COMMENT = Jump to address and convert script to "native ASM"
+PARAMS  = addr_24
 
 ASM_FUNCTION 00A4B8
 COMMENT = Set X position to `arg1` + ?????
@@ -266,6 +266,9 @@ ASM_FUNCTION 00A555
 COMMENT = Create child object in any slot between `arg1` and `arg2` with script `arg3`, offset by (`arg4`, `arg5`), with VAR0=`arg6`, VAR1=(`arg7` + this.VAR1), VAR2=this.slot, VAR3=0, VAR4=0
 PARAMS  = imm_8, imm_8, imm_16, imm_16, imm_16, imm_16, imm_16
 
+ASM_FUNCTION 00A94B
+COMMENT = Unknown ASM $00A94B
+
 ASM_FUNCTION 00CE64
 COMMENT = Write `arg` to SPC port 2 ($2142)
 PARAMS  = imm_8
@@ -273,6 +276,9 @@ PARAMS  = imm_8
 ASM_FUNCTION 00CE78
 COMMENT = Add `arg` to SPC port 2 ($2142)
 PARAMS  = imm_s8
+
+ASM_FUNCTION 00CEAB
+COMMENT = Unknown ASM $00CEAB
 
 ASM_FUNCTION 00D000
 COMMENT = Something to do with sound
@@ -285,6 +291,44 @@ PARAMS  = imm_8
 ASM_FUNCTION 00D2F3
 COMMENT = Unknown ASM $00D2F3
 PARAMS  = imm_8
+
+ASM_FUNCTION 00D883
+COMMENT = A bunch of unknown initialization
+
+ASM_FUNCTION 00DB67
+COMMENT = Set up some color math windowing (TODO: look in depth)
+
+ASM_FUNCTION 00EDB6
+COMMENT = Unknown ASM $00EDB6
+
+ASM_FUNCTION 018000
+COMMENT = Unknown ASM $018000
+
+ASM_FUNCTION 018088
+COMMENT = Unknown ASM $018088
+
+ASM_FUNCTION 0182AD
+COMMENT = Ends up creating a new object, specifics still unknown (TODO)
+
+ASM_FUNCTION 038C77
+COMMENT = Unknown ASM $038C77
+
+ASM_FUNCTION 03A04A
+COMMENT = Unknown ASM $03A04A
+
+ASM_FUNCTION 03D61D
+COMMENT = Unknown ASM 03D61D
+
+ASM_FUNCTION 059996
+COMMENT = Unknown ASM 059996
+
+ASM_FUNCTION 059AE3
+COMMENT = Unknown ASM 059AE3
+
+ASM_FUNCTION 05E680
+COMMENT = Create new object with script ID 0x001D then do other stuff (TODO)
+PARAMS  = imm_16, imm_16, imm_16
+
 
 ASM_FUNCTION 078E3F
 COMMENT = inc $7396 : inc $7392
